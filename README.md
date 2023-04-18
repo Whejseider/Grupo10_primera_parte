@@ -5,9 +5,9 @@ Trabajo grupal final de la materia Programación III de la Facultad de Ingenier�
 
 Hay que modificar los links
 
-- [@Bustamante, Joaquín Mendez](https://github.com/Whejseider)
+- [@Bustamante, Joaquín Mendez](https://github.com/JoaquinBustamante96)
 - [@Juliano, Francisco](https://github.com/Whejseider)
-- [@Romanazzi, Bautista](https://github.com/Whejseider)
+- [@Romanazzi, Bautista](https://github.com/Blautista)
 - [@Vallone, Franco](https://github.com/Whejseider)
 
 
