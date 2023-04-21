@@ -1,4 +1,4 @@
-package modelo;
+package modelo.alarma;
 
 public abstract class SistemaAlarma implements ISistemaAlarma {
     private int cantCamaras;

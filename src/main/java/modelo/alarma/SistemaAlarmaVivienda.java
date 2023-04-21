@@ -1,4 +1,4 @@
-package modelo;
+package modelo.alarma;
 
 public class SistemaAlarmaVivienda extends SistemaAlarma {
 
@@ -37,7 +37,7 @@ public class SistemaAlarmaVivienda extends SistemaAlarma {
 
     @Override
     public String getDetalles() {
-        return "[Sistema de Alarma de Vivienda]\n" +
+        return "[Sistema de Alarma de Viviendas]\n" +
                 "Camaras = " + super.getCantCamaras() +
                 "\nBotones de Arrepentimiento = " + super.getCantBtnAntiPanico() +
                 "\nMovil de seguimiento = " + (super.isTieneMovilSeguimiento()? "Tiene movil de seguimiento" : "No tiene movil de seguimiento") +

@@ -1,4 +1,4 @@
-package modelo;
+package modelo.alarma;
 
 public interface ISistemaAlarma {
     double valorAgregarCamara = 3000;
