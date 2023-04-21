@@ -1,4 +1,4 @@
-package presentacion.CapaNegocio;
+package presentacion.CapaNegocioInterfaces;
 
 public interface IServicioAlarma {
     public double getPrecio();
