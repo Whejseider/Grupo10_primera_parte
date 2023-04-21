@@ -6,8 +6,5 @@ public interface ISistemaAlarma {
     double valorAgregarMovilSeguimiento = 7500;
 
     double getPrecio();
-    double agregarCamara();
-    double agregarBtnAntiPanico();
-    double agregarMovilSeguimiento();
     String getDetalles();
 }
