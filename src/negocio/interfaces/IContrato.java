@@ -1,4 +1,4 @@
-package presentacion.CapaNegocioInterfaces;
+package negocio.interfaces;
 
 public interface IContrato {
     public void agregarCamara();

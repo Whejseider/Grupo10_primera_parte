@@ -1,4 +1,4 @@
-package presentacion.CapaNegocioInterfaces;
+package negocio.interfaces;
 
 public interface IFactura extends Cloneable {
     public String generaFactura(IAbonado abonado);
