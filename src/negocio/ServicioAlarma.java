@@ -6,18 +6,18 @@ public class ServicioAlarma implements IServicioAlarma {
 	private boolean tieneMovil;
 	private int cantCamaras;
 	private int cantBotonesAntipanico;
-	
-	static double precioCamara = 3000;
-	static double precioMovil = 7500;
-	static double precioBotonAntipanico = 2000;
-	
+
+	private final double precioCamara = 3000;
+	private final double precioMovil = 7500;
+	private final double precioBotonAntipanico = 2000;
+
 	/**
-     * Constructor para ServicioAlarma.
-     *
-     * @param tieneMovil Si debe contar con movil de acompañamiento
-     * @param cantCamaras Cantidad de camaras de videovigilancia.
-     * @param cantBotonesAntipanico Cantidad de botones antipánico.
-     */
+	 * Constructor para ServicioAlarma.
+	 *
+	 * @param tieneMovil            Si debe contar con movil de acompañamiento
+	 * @param cantCamaras           Cantidad de camaras de videovigilancia.
+	 * @param cantBotonesAntipanico Cantidad de botones antipánico.
+	 */
 	public ServicioAlarma(boolean tieneMovil, int cantCamaras, int cantBotonesAntipanico) {
 		assert cantCamaras >= 0 : "La cantidad de camaras no puede ser negativa";
 		assert cantBotonesAntipanico >= 0 : "La cantidad de botones antipanico no puede ser negativa";
@@ -26,39 +26,42 @@ public class ServicioAlarma implements IServicioAlarma {
 		this.cantCamaras = cantCamaras;
 		this.cantBotonesAntipanico = cantBotonesAntipanico;
 	}
-	
+
 	/**
-	 * Constructor para ServicioAlarma donde no se incluye ningún servicio adicional.
+	 * Constructor para ServicioAlarma donde no se incluye ningún servicio
+	 * adicional.
 	 */
 	public ServicioAlarma() {
 		this(false, 0, 0);
 	};
-	
-	static void setPrecioCamara(double precio) {
-		assert precio > 0 : "El precio debe ser mayor a cero";
-		precioCamara = precio;
-	}
-	
-	static void setPrecioBotonAntipanico(double precio) {
-		assert precio > 0 : "El precio debe ser mayor a cero";
-		precioBotonAntipanico = precio;
-	}
-	
-	static void setPrecioMovil(double precio) {
-		assert precio > 0 : "El precio debe ser mayor a cero";
-		precioMovil = precio;
-	}
 
-	static double getPrecioCamara() {
+	public double getPrecioCamara() {
 		return precioCamara;
 	}
-	
-	static double getPrecioBotonAntipanico() {
-		return precioBotonAntipanico;
+
+	private double getPrecioCamaras() {
+		return this.cantCamaras * precioCamara;
 	}
-	
-	static double getPrecioMovil() {
-		return precioMovil;
+
+	public double getPrecioBotonAntipanico() {
+		return this.precioBotonAntipanico;
+	}
+
+	private double getPrecioBotones() {
+		return this.cantBotonesAntipanico * precioBotonAntipanico;
+	}
+
+	private double getPrecioMovil() {
+		if (this.tieneMovil)
+			return precioMovil;
+		return 0;
+	}
+
+	@Override
+	public double getPrecio() {
+		double precio = this.getPrecioCamaras() + this.getPrecioBotones() + this.getPrecioMovil();
+		assert precio > 0;
+		return precio;
 	}
 
 	@Override

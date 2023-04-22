@@ -5,5 +5,4 @@ public interface IAbonado {
 
     public void agregaContrato(IContrato contrato);
 
-    public String getDetalleContratos();
 }
