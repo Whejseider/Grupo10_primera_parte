@@ -1,8 +1,6 @@
 package negocio.interfaces;
 
 public interface IServicioAlarma {
-    public double getPrecio();
-
     public void agregarCamaras(int cantidad);
 
     public void setCamaras(int cantidad);
@@ -11,7 +9,15 @@ public interface IServicioAlarma {
 
     public void setBotonesAntipanico(int cantidad);
 
+    public int getCantCamaras();
+
+    public int getCantBotonesAntipanico();
+
+    public boolean getTieneMovil();
+
     public void contratarMovil();
+
+    public double getPrecio();
 
     public void quitarMovil();
 

@@ -7,9 +7,9 @@ public class ServicioAlarma implements IServicioAlarma {
 	private int cantCamaras;
 	private int cantBotonesAntipanico;
 
-	static double precioCamara = 3000;
-	static double precioMovil = 7500;
-	static double precioBotonAntipanico = 2000;
+	private final double precioCamara = 3000;
+	private final double precioMovil = 7500;
+	private final double precioBotonAntipanico = 2000;
 
 	/**
 	 * Constructor para ServicioAlarma.
@@ -19,8 +19,8 @@ public class ServicioAlarma implements IServicioAlarma {
 	 * @param cantBotonesAntipanico Cantidad de botones antipánico.
 	 */
 	public ServicioAlarma(boolean tieneMovil, int cantCamaras, int cantBotonesAntipanico) {
-		assert cantCamaras > 0 : "La cantidad de camaras no puede ser negativa";
-		assert cantBotonesAntipanico > 0 : "La cantidad de botones antipanico no puede ser negativa";
+		assert cantCamaras >= 0 : "La cantidad de camaras no puede ser negativa";
+		assert cantBotonesAntipanico >= 0 : "La cantidad de botones antipanico no puede ser negativa";
 
 		this.tieneMovil = tieneMovil;
 		this.cantCamaras = cantCamaras;
@@ -35,23 +35,16 @@ public class ServicioAlarma implements IServicioAlarma {
 		this(false, 0, 0);
 	};
 
-	static void setPrecioCamara(double precio) {
-		assert precio > 0 : "El precio no puede ser negativo";
-		precioCamara = precio;
-	}
-
-	static void setPrecioBotonAntipanico(double precio) {
-		assert precio > 0 : "El precio no puede ser negativo";
-		precioBotonAntipanico = precio;
-	}
-
-	static void setPrecioMovil(double precio) {
-		assert precio > 0 : "El precio no puede ser negativo";
-		precioMovil = precio;
+	public double getPrecioCamara() {
+		return precioCamara;
 	}
 
 	private double getPrecioCamaras() {
 		return this.cantCamaras * precioCamara;
+	}
+
+	public double getPrecioBotonAntipanico() {
+		return this.precioBotonAntipanico;
 	}
 
 	private double getPrecioBotones() {
@@ -59,10 +52,8 @@ public class ServicioAlarma implements IServicioAlarma {
 	}
 
 	private double getPrecioMovil() {
-		if (this.tieneMovil) {
+		if (this.tieneMovil)
 			return precioMovil;
-		}
-
 		return 0;
 	}
 
@@ -112,4 +103,20 @@ public class ServicioAlarma implements IServicioAlarma {
 	public void quitarMovil() {
 		this.tieneMovil = false;
 	}
+
+	@Override
+	public int getCantCamaras() {
+		return this.cantCamaras;
+	}
+
+	@Override
+	public int getCantBotonesAntipanico() {
+		return this.cantBotonesAntipanico;
+	}
+
+	@Override
+	public boolean getTieneMovil() {
+		return this.tieneMovil;
+	}
+
 }
