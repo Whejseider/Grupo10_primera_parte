@@ -4,8 +4,8 @@ public class PromocionPlatino extends Promocion {
 
     public PromocionPlatino() {
         super();
-        this.descuentoComercio = 0.3;
-        this.descuentoVivienda = 0.35;
+        this.descuentoComercio = 0.35;
+        this.descuentoVivienda = 0.30;
         this.nominal = false;
     }
 

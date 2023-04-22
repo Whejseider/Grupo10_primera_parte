@@ -60,7 +60,7 @@ public class ServicioAlarma implements IServicioAlarma {
 	@Override
 	public double getPrecio() {
 		double precio = this.getPrecioCamaras() + this.getPrecioBotones() + this.getPrecioMovil();
-		assert precio > 0;
+		assert precio >= 0;
 		return precio;
 	}
 
