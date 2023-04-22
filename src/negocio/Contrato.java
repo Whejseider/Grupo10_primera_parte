@@ -1,9 +1,10 @@
 package negocio;
 
+import negocio.interfaces.IContrato;
 import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
-public abstract class Contrato {
+public abstract class Contrato implements IContrato {
     private static int numero = 0;
     private static int ID;
     private String domicilio;
@@ -34,6 +35,11 @@ public abstract class Contrato {
 
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
+    }
+
+    @Override
+    public String getDetalle() {
+        return "";
     }
 
     public abstract double getPrecio(IPromocion promocionActual);

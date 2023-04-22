@@ -1,9 +1,9 @@
 package negocio.interfaces;
 
 public interface IContrato {
-    public void agregarCamara();
+    public void agregarCamaras(int cantidad);
 
-    public void agregarBotonAntipanico();
+    public void agregarBtnesAntipanico(int cantidad);
 
     public void contratarMovilAcompaniamiento();
 
