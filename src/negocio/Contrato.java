@@ -6,15 +6,20 @@ import negocio.interfaces.IServicioAlarma;
 
 public abstract class Contrato implements IContrato {
     private static int numero = 0;
-    private static int ID;
+    private int ID;
     private String domicilio;
     private IServicioAlarma servicioAlarma;
 
     public Contrato(String domicilio, IServicioAlarma servicioAlarma) {
         assert (domicilio != null);
         assert (servicioAlarma != null);
-        ID = numero++;
+        this.ID = numero++;
         this.servicioAlarma = servicioAlarma;
+        this.domicilio = domicilio;
+    }
+
+    public String getDomicilio() {
+        return this.domicilio;
     }
 
     public void agregarCamaras(int cantidad) {
