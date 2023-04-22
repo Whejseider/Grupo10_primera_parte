@@ -42,6 +42,23 @@ public abstract class Contrato implements IContrato {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
 
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Contrato)) {
+            return false;
+        }
+
+        Contrato contrato = (Contrato) obj;
+
+        //No es necesario fijarse si el ID es igual porque es autoincremental.
+        return this.domicilio.equals(contrato.getDomicilio());
+    }
+
     public abstract double getPrecio(IPromocion promocionActual);
 
 }
