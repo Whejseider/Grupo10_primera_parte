@@ -122,15 +122,15 @@ public class ServicioAlarma implements IServicioAlarma {
 		String detalle = "";
 		
 		if (this.cantCamaras > 0) {
-			detalle += "Camaras x" + this.cantCamaras + " ---- " + this.getPrecioCamaras() + "$";
+			detalle += "Camaras x" + this.cantCamaras + " ---- " + this.getPrecioCamaras() + "$\n";
 		}
 		
 		if (this.cantBotonesAntipanico > 0) {
-			detalle += "Botones Antipanico x" + this.cantBotonesAntipanico + " ---- " + this.getPrecioBotones() + "$";
+			detalle += "Botones Antipanico x" + this.cantBotonesAntipanico + " ---- " + this.getPrecioBotones() + "$\n";
 		}
 		
 		if (this.tieneMovil) {
-			detalle += "Movil de acompañamiento ---- " + this.getPrecioMovil() + "$";
+			detalle += "Movil de acompañamiento ---- " + this.getPrecioMovil() + "$\n";
 		}
 		
 		return detalle;
