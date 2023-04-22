@@ -4,12 +4,11 @@ import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
 public class ContratoVivienda extends Contrato {
+    private final double PRECIO_BASE = 8500;
 
     public ContratoVivienda(String domicilio, IServicioAlarma servicioAlarma) {
         super(domicilio, servicioAlarma);
     }
-
-    private final double PRECIO_BASE = 8500;
 
     @Override
     protected double getPrecioBase() {

@@ -11,6 +11,4 @@ public interface IContrato {
 
     public double getPrecio();
 
-    public String getDetalle();
-
 }

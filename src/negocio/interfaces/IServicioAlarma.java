@@ -8,6 +8,4 @@ public interface IServicioAlarma {
     public void agregarBtnesAntipanico(int cantidad);
 
     public void contratarMovilAcompaniamiento();
-
-    public String getDetalle();
 }

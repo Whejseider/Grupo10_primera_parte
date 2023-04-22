@@ -37,11 +37,6 @@ public abstract class Contrato implements IContrato {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
 
-    @Override
-    public String getDetalle() {
-        return "";
-    }
-
     public abstract double getPrecio(IPromocion promocionActual);
 
 }
