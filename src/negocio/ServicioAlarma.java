@@ -120,17 +120,18 @@ public class ServicioAlarma implements IServicioAlarma {
 	@Override
 	public String getDetalle() {
 		String detalle = "";
+		String separador = " ---- $";
 		
 		if (this.cantCamaras > 0) {
-			detalle += "Camaras x" + this.cantCamaras + " ---- " + this.getPrecioCamaras() + "$\n";
+			detalle += "Camaras x" + this.cantCamaras + separador + this.getPrecioCamaras() + "\n";
 		}
 		
 		if (this.cantBotonesAntipanico > 0) {
-			detalle += "Botones Antipanico x" + this.cantBotonesAntipanico + " ---- " + this.getPrecioBotones() + "$\n";
+			detalle += "Botones Antipanico x" + this.cantBotonesAntipanico +  separador + this.getPrecioBotones() + "\n";
 		}
 		
 		if (this.tieneMovil) {
-			detalle += "Movil de acompañamiento ---- " + this.getPrecioMovil() + "$\n";
+			detalle += "Movil de acompañamiento" + separador + this.getPrecioMovil() + "\n";
 		}
 		
 		return detalle;
