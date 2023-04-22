@@ -24,11 +24,11 @@ public abstract class Contrato implements IContrato {
 
     public void agregarBtnesAntipanico(int cantidad) {
         assert (cantidad >= 0);
-        this.servicioAlarma.agregarBtnesAntipanico(cantidad);
+        this.servicioAlarma.agregarBotonesAntipanico(cantidad);
     }
 
     public void contratarMovilAcompaniamiento() {
-        this.servicioAlarma.contratarMovilAcompaniamiento();
+        this.servicioAlarma.contratarMovil();
     }
 
     protected abstract double getPrecioBase();

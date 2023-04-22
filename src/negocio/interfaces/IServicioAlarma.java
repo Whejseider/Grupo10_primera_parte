@@ -5,7 +5,14 @@ public interface IServicioAlarma {
 
     public void agregarCamaras(int cantidad);
 
-    public void agregarBtnesAntipanico(int cantidad);
+    public void setCamaras(int cantidad);
 
-    public void contratarMovilAcompaniamiento();
+    public void agregarBotonesAntipanico(int cantidad);
+
+    public void setBotonesAntipanico(int cantidad);
+
+    public void contratarMovil();
+
+    public void quitarMovil();
+
 }
