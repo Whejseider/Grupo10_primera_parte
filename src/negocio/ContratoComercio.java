@@ -4,7 +4,7 @@ import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
 public class ContratoComercio extends Contrato {
-    private double PRECIO_BASE = 10000;
+    private final double PRECIO_BASE = 10000;
 
     public ContratoComercio(String domicilio, IServicioAlarma servicioAlarma) {
         super(domicilio, servicioAlarma);

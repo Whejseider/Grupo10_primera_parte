@@ -6,15 +6,20 @@ import negocio.interfaces.IServicioAlarma;
 
 public abstract class Contrato implements IContrato {
     private static int numero = 0;
-    private static int ID;
+    private int ID;
     private String domicilio;
     private IServicioAlarma servicioAlarma;
 
     public Contrato(String domicilio, IServicioAlarma servicioAlarma) {
         assert (domicilio != null);
         assert (servicioAlarma != null);
-        ID = numero++;
+        this.ID = numero++;
         this.servicioAlarma = servicioAlarma;
+        this.domicilio = domicilio;
+    }
+
+    public String getDomicilio() {
+        return this.domicilio;
     }
 
     public void agregarCamaras(int cantidad) {
@@ -35,6 +40,23 @@ public abstract class Contrato implements IContrato {
 
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Contrato)) {
+            return false;
+        }
+
+        Contrato contrato = (Contrato) obj;
+
+        //No es necesario fijarse si el ID es igual porque es autoincremental.
+        return this.domicilio.equals(contrato.getDomicilio());
     }
 
     public abstract double getPrecio(IPromocion promocionActual);

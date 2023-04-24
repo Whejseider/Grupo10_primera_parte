@@ -1,7 +1,5 @@
 package negocio.interfaces;
 
 public interface IFactura extends Cloneable {
-    public String generaFactura(IAbonado abonado);
-
-    public IFactura getInstance();
+	String getDetalle();
 }
