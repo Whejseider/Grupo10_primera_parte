@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
+import negocio.interfaces.IPromocion;
 
 public abstract class Abonado implements IAbonado {
     private String nombre;
@@ -16,6 +17,7 @@ public abstract class Abonado implements IAbonado {
         assert (dni != null);
         this.nombre = nombre;
         this.dni = dni;
+        this.contratos = new ArrayList<IContrato>();
     }
 
     public void agregaContrato(IContrato contrato) {
@@ -33,14 +35,14 @@ public abstract class Abonado implements IAbonado {
     }
 
     @Override
-    public double getPagoNeto() {
+    public double getPagoNeto(IPromocion promo) {
         ArrayList<IContrato> contratos = getContratos();
         IContrato contrato;
         Iterator<IContrato> iterator = contratos.iterator();
         Double pagoNeto = 0.0;
         while (iterator.hasNext()) {
             contrato = iterator.next();
-            pagoNeto = pagoNeto + contrato.getPrecio();
+            pagoNeto = pagoNeto + contrato.getPrecio(promo);
         }
         return pagoNeto;
     }
