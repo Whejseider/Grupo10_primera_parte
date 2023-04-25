@@ -1,9 +1,11 @@
 package negocio.interfaces;
 
-public interface IAbonado extends IFactura {
+public interface IAbonado extends IFactura, Cloneable {
 
-    public void agregaContrato(IContrato contrato);
+    void agregaContrato(IContrato contrato);
 
-    public int cantidadDeContratos();
+    int cantidadDeContratos();
+
+    Object clone() throws CloneNotSupportedException;
 
 }

@@ -52,4 +52,22 @@ public abstract class Abonado implements IAbonado {
         return this.contratos.size();
     }
 
+//    Revisar si es asi para clonar un arrayList, busque y es lo unico que encontre
+//    El profe dijo que nunca hay que usar new adentro de un clon
+//        -Fran V
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Abonado abonadoClon = null;
+        try {
+            abonadoClon = (Abonado) super.clone();
+            abonadoClon.contratos = new ArrayList<>(contratos.size());
+            for (IContrato contrato : contratos) {
+                abonadoClon.contratos.add((IContrato) contrato.clone());
+            }
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return abonadoClon;
+    }
+
 }
