@@ -9,9 +9,13 @@ public class Cheque extends PagoDecorator {
 //        this.factura.setTotalAPagarMdP(this.factura.getTotalAPagarMdP()*descEfectivo);
     }
 
+    /**
+     * Decora el total a pagar por medio de pago (CHEQUE) del contrato aplicando el descuento
+     * @return valor total a pagar del contrato aplicado con el aumento
+     */
     @Override
     public double getTotalAPagarMdP() {
-        return this.factura.getTotalAPagarMdP()*descEfectivo;
+        return this.factura.getTotalAPagarMdP()*incCheque;
     }
 
     @Override

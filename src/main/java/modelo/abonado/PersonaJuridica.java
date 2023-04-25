@@ -8,6 +8,13 @@ public class PersonaJuridica extends Abonado {
     }
 
 
+    /**
+     * Pago del servicio de persona Juridica<br>
+     * En el tercer pago se aplica el descuento del 50%
+     * @param contrato El contrato que se desea saber el precio a pagar
+     * @param i Numero de iteracion usado para persona juridica
+     * @return precio del pago del servicio de una persona Juridica
+     */
     @Override
     public double getPagoDeServicio(IContrato contrato, int i) {
         double pago;

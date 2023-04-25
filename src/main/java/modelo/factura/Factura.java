@@ -15,6 +15,12 @@ public class Factura implements Facturable {
     private static int _ID = 0;
     private final int ID;
 
+    /**
+     * Constructor de Factura que genera una factura dado un abonado<br>
+     * y una lista de contratos
+     * @param abonado abonado
+     * @param contrataciones lista de contratos del abonado
+     */
     public Factura(IAbonado abonado, List<IContrato> contrataciones) {
         this.abonado = abonado;
         this.contrataciones = contrataciones;
@@ -23,7 +29,10 @@ public class Factura implements Facturable {
         this.ID = ++_ID;
     }
 
-
+    /**
+     * Devuelve el valor a pagar en bruto de todos los servicios del contrato
+     * @return el valor a pagar en bruto de todos los servicios del contrato
+     */
     private double getPagoDeServicios() {
         double pago = 0;
 
@@ -43,9 +52,13 @@ public class Factura implements Facturable {
         return this.totalAPagarMdP;
     }
 
+    /**
+     * Detalles de la factura
+     * @return devuelve los detalles de la factura con sus precios
+     */
     @Override
     public String getDetalles() {
-        double pago = 0;
+        double pago;
 
         StringBuilder detalles = new StringBuilder();
         String separator = "-----------\n";
@@ -109,6 +122,7 @@ public class Factura implements Facturable {
 
     @Override
     public void setAbonado(IAbonado abonado) {
+        assert abonado != null : "El abonado no existe o es null!";
         this.abonado = abonado;
     }
 
@@ -118,14 +132,18 @@ public class Factura implements Facturable {
     }
 
     public void setContrataciones(List<IContrato> contrataciones) {
+        assert contrataciones.isEmpty() : "Debe existir almenos una contrato!";
         this.contrataciones = contrataciones;
     }
 @Override
     public void setTotalAPagar(double totalAPagar) {
+        assert totalAPagar >= 0: "El monto debe ser positivo!";
         this.totalAPagar = totalAPagar;
     }
 @Override
     public void setTotalAPagarMdP(double totalAPagarMdP) {
+    assert totalAPagarMdP >= 0: "El monto debe ser positivo!";
+
         this.totalAPagarMdP = totalAPagarMdP;
     }
 
@@ -136,6 +154,8 @@ public class Factura implements Facturable {
 
     @Override
     public void setMedioDePago(String medioDePago) {
+        assert medioDePago.isEmpty(): "El medio de pago no puede ser vacio!";
+
         this.medioDePago = medioDePago;
     }
 

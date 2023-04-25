@@ -6,8 +6,11 @@ import modelo.domicilio.Domicilio;
 import java.util.List;
 
 public interface IAbonado extends Cloneable {
+    /**
+     * Bonificacion que se realiza en el pago a partir del tercer serivicio<br>
+     * si el abonado es de tipo Persona Juridica
+     */
     double porcBonificacionJuridica = 0.5;
-
 
     String getNombre();
 

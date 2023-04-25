@@ -12,6 +12,10 @@ import modelo.pago.Efectivo;
 
 public class Prueba {
 
+    /**
+     * Clase de prueba
+     * @param args
+     */
     public static void main(String[] args) {
         IServicioAlarma servicioAlarma = new ServicioAlarmaVivienda();
 

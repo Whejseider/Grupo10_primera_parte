@@ -13,6 +13,12 @@ public abstract class Abonado implements IAbonado {
     private List<IContrato> contratos;
     private List<Domicilio> domicilios;
 
+    /**
+     * Constructor de la clase Abonado<br>
+     * Recibe como parametro un nombre y un dni
+     * @param nombre nombre del abonado
+     * @param dni del abonado
+     */
     public Abonado(String nombre, String dni) {
         this.nombre = nombre;
         this.dni = dni;
@@ -43,6 +49,12 @@ public abstract class Abonado implements IAbonado {
         return this.domicilios;
     }
 
+    /**
+     * Devuelve el precio a pagar de un servicio figurado en un contrato<br>
+     * @param contrato El contrato que se desea saber el precio a pagar
+     * @param i Numero de iteracion usado para persona juridica
+     * @return el Precio a pagar de un servicio dado un contrato
+     */
     @Override
     public double getPagoDeServicio(IContrato contrato, int i) {
         return contrato.getPrecio();

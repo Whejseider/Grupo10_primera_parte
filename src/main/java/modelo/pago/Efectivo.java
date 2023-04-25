@@ -11,6 +11,10 @@ public class Efectivo extends PagoDecorator {
 
     }
 
+    /**
+     * Decora el total a pagar por medio de pago (EFECTIVO) del contrato aplicando el descuento
+     * @return valor total a pagar del contrato aplicado con el descuento
+     */
     @Override
     public double getTotalAPagarMdP() {
         return this.factura.getTotalAPagarMdP()*descEfectivo;

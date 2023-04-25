@@ -14,7 +14,15 @@ public class Contrato implements IContrato {
     private int cantBAPs;
     private boolean tieneMovil;
 
+    /**
+     * Genera un contrato dado un Servicio y un Domicilio con el precio base del servicio
+     * @param servicioAlarma Tipo del servicio de alarma Vivienda o Comercio
+     * @param domicilio Domicilio al cual se le hara el contrato con el servicio
+     */
     public Contrato(IServicioAlarma servicioAlarma, Domicilio domicilio) {
+        assert servicioAlarma != null : "Se debe ingresar un servicio!";
+        assert domicilio != null : "Se debe ingresar un domicilio!";
+
         this.servicioAlarma = servicioAlarma;
         this.domicilio = domicilio;
         this.ID = _ID++;
@@ -24,8 +32,19 @@ public class Contrato implements IContrato {
         this.tieneMovil = false;
     }
 
+    /**
+     * Devuelve el precio de un contrato sin aplicar descuentos ni promociones<br>
+     * donde cantBAPs es cantidad de Botones AntiPanico
+     * PRE: precio >= 0, cantCamaras >= 0, cantBAPs >= 0
+     * POST: Precio del contrato >= 0
+     * @return precio del contrato
+     */
     @Override
     public double getPrecio() {
+        assert this.precio >= 0;
+        assert cantCamaras >= 0;
+        assert cantBAPs >= 0;
+
         return this.precio +
                 (cantCamaras * precioCamara) +
                 (cantBAPs * precioBAP) +
@@ -33,6 +52,7 @@ public class Contrato implements IContrato {
     }
 
     public void setPrecio(double precio) {
+        assert precio >= 0: "El precio no puede ser una cantidad negativa!";
         this.precio = precio;
     }
 
@@ -43,21 +63,25 @@ public class Contrato implements IContrato {
 
     @Override
     public void agregarCamaras(int cantidad) {
+        assert cantidad >= 0: "La cantidad no puede ser una cantidad negativa!";
         this.cantCamaras += cantidad;
     }
 
     @Override
     public void eliminarCamaras(int cantidad) {
+        assert cantidad >= 0: "La cantidad no puede ser una cantidad negativa!";
         this.cantCamaras -= cantidad;
     }
 
     @Override
     public void agregarBAPs(int cantidad) {
+        assert cantidad >= 0: "La cantidad no puede ser una cantidad negativa!";
         this.cantBAPs += cantidad;
     }
 
     @Override
     public void eliminarBAPs(int cantidad) {
+        assert cantidad >= 0: "La cantidad no puede ser una cantidad negativa!";
         this.cantBAPs -= cantidad;
     }
 
@@ -92,6 +116,7 @@ public class Contrato implements IContrato {
 
     @Override
     public void setServicioAlarma(IServicioAlarma servicioAlarma) {
+        assert servicioAlarma != null: "El servicio de alarma debe existir!";
         this.servicioAlarma = servicioAlarma;
     }
 
@@ -102,6 +127,7 @@ public class Contrato implements IContrato {
 
     @Override
     public void setDomicilio(Domicilio domicilio) {
+        assert domicilio != null: "El domicilio debe existir!";
         this.domicilio = domicilio;
     }
 
