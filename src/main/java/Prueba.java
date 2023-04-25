@@ -44,7 +44,14 @@ public class Prueba {
         Facturable factura = new Factura(abonado, abonado.getContratos());
         factura = new Efectivo(factura);
 
+        Facturable facturaClon = (Facturable) factura.clone();
+
+        factura.setTotalAPagarMdP(2500);
+
         System.out.println(factura.getDetalles());
+
+        System.out.println("FACTURA CLONADA:");
+        System.out.println(facturaClon.getDetalles());
 
     }
 }

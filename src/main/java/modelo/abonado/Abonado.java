@@ -80,6 +80,7 @@ public abstract class Abonado implements IAbonado {
         this.domicilios.remove(domicilio);
     }
 
+    @Override
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

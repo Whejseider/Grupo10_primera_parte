@@ -172,11 +172,11 @@ public class Factura implements Facturable {
         Factura nuevaFactura;
         try {
             nuevaFactura = (Factura) super.clone();
-            nuevaFactura.contrataciones = new ArrayList<>(contrataciones.size());
-            for (IContrato contrato : contrataciones) {
+            nuevaFactura.contrataciones = new ArrayList<>(this.contrataciones.size());
+            for (IContrato contrato : this.contrataciones) {
                 nuevaFactura.contrataciones.add((IContrato) contrato.clone());
             }
-            nuevaFactura.abonado = (IAbonado) abonado.clone();
+            nuevaFactura.abonado = (IAbonado) this.abonado.clone();
         } catch (CloneNotSupportedException e) {
             throw new InternalError(e.toString());
         }

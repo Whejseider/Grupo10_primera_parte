@@ -14,6 +14,8 @@ public interface IAbonado extends Cloneable {
 
     String getNombre();
 
+    void setNombre(String nombre);
+
     String getDni();
 
     List<IContrato> getContratos();

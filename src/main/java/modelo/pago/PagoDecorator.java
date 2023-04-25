@@ -75,8 +75,12 @@ public abstract class PagoDecorator implements Facturable {
 
     @Override
     public Object clone() {
-        return this.factura.clone();
+        Object clone;
+        try {
+            clone = super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
     }
-
-
 }
