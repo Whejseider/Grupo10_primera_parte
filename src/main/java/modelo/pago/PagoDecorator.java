@@ -38,10 +38,10 @@ public abstract class PagoDecorator implements Facturable {
         return this.factura.getTotalAPagar();
     }
 
-    @Override
-    public String getDetalles() {
-        return this.factura.getDetalles();
-    }
+//    @Override
+//    public String getDetalles() {
+//        return this.factura.getDetalles();
+//    }
 
     @Override
     public IAbonado getAbonado() {
@@ -58,15 +58,15 @@ public abstract class PagoDecorator implements Facturable {
         return this.factura.getContrataciones();
     }
 
-    @Override
-    public String getMedioDePago() {
-        return this.factura.getMedioDePago();
-    }
-
-    @Override
-    public double getTotalAPagarMdP() {
-        return this.factura.getTotalAPagarMdP();
-    }
+//    @Override
+//    public String getMedioDePago() {
+//        return this.factura.getMedioDePago();
+//    }
+//
+//    @Override
+//    public double getTotalAPagarMdP() {
+//        return this.factura.getTotalAPagarMdP();
+//    }
 
     @Override
     public void setMedioDePago(String medioDePago) {

@@ -97,8 +97,7 @@ public class Factura implements Facturable {
         detalles.append(separator);
 
         detalles.append("Total a pagar: ").append(getTotalAPagar()).append("\n");
-        detalles.append("Descuento por medio de pago (").append(getMedioDePago()).append("): ").append(getTotalAPagar() - getTotalAPagarMdP()).append("\n");
-        detalles.append("Total a pagar con descuento por medio de pago: ").append(getTotalAPagarMdP()).append("\n");
+
 
         return detalles.toString();
     }
