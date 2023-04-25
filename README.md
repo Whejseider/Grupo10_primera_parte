@@ -1,6 +1,7 @@
-# Sistema de Contratación de Servicios de Seguridad (Chequeen esto estoy medio perdido :( )
+# Sistema de Contratación de Servicios de Seguridad 
 
 Trabajo grupal final de la materia Programación III de la Facultad de Ingeniería de la Universidad de Mar del Plata.
+(Chequeen esto estoy medio perdido :(, al codigo tambien le falta la docu y los asserts y emprolijarlo )
 ## Autores (Grupo 10)
 
 Hay que modificar los links
