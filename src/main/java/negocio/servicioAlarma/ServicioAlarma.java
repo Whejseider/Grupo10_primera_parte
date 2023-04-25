@@ -119,4 +119,14 @@ public class ServicioAlarma implements IServicioAlarma {
 		return this.tieneMovil;
 	}
 
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		IServicioAlarma servicioAlarma = null;
+		try{
+			servicioAlarma = (IServicioAlarma) super.clone();
+		} catch (CloneNotSupportedException e){
+			e.printStackTrace();
+		}
+		return servicioAlarma;
+	}
 }

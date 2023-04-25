@@ -15,4 +15,9 @@ public class AbonadoJuridico extends Abonado {
         return getPagoNeto(promo);
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
+    }
+
 }

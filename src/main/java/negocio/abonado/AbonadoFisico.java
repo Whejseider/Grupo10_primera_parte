@@ -13,4 +13,16 @@ public class AbonadoFisico extends Abonado {
         return this.getPagoNeto(promo);
     }
 
+    @Override
+    public Object clone() {
+        Object clon = null;
+
+        try {
+            clon = super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+        return clon;
+    }
 }

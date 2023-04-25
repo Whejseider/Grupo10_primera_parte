@@ -20,4 +20,8 @@ public class ContratoVivienda extends Contrato {
         return promocionActual.getPrecioConDescuento(this);
     }
 
+    @Override
+    public Object clone() {
+        return super.clone();
+    }
 }
