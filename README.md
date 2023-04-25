@@ -2,7 +2,7 @@
 ## TO DO
 
 * Facturas y su clonacion
-* Clonar abonados de tipo fisico
+* ~~Clonar abonados de tipo fisico~~
 * Fijarse que no se puedan agregar contratos duplicados independientemente del abonado (tirar exception)
 * Fijarse que no se puedan crear abonados con mismo dni (tirar exception)
 * Gestionar promociones (para estos tres ultimos creo que hay que hacer una clase mas que englobe todo)
