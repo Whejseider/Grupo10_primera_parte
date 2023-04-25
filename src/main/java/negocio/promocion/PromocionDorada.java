@@ -1,4 +1,7 @@
-package negocio;
+package negocio.promocion;
+
+import negocio.contrato.ContratoComercio;
+import negocio.contrato.ContratoVivienda;
 
 public class PromocionDorada extends Promocion {
 

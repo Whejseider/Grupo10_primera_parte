@@ -1,4 +1,4 @@
-package negocio;
+package negocio.pago;
 
 import negocio.interfaces.IFactura;
 import negocio.interfaces.IPromocion;

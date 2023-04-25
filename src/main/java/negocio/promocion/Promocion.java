@@ -1,4 +1,4 @@
-package negocio;
+package negocio.promocion;
 
 import negocio.interfaces.IPromocion;
 

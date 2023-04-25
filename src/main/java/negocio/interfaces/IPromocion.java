@@ -1,7 +1,7 @@
 package negocio.interfaces;
 
-import negocio.ContratoComercio;
-import negocio.ContratoVivienda;
+import negocio.contrato.ContratoComercio;
+import negocio.contrato.ContratoVivienda;
 
 public interface IPromocion {
 

@@ -1,4 +1,4 @@
-package negocio;
+package negocio.servicioAlarma;
 
 import negocio.interfaces.IServicioAlarma;
 

@@ -1,4 +1,4 @@
-package negocio;
+package negocio.abonado;
 
 import java.util.ArrayList;
 import java.util.Iterator;
