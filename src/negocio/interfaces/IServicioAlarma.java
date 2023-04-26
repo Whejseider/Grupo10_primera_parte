@@ -1,6 +1,6 @@
 package negocio.interfaces;
 
-public interface IServicioAlarma {
+public interface IServicioAlarma extends Cloneable {
     public void agregarCamaras(int cantidad);
 
     public void setCamaras(int cantidad);
@@ -20,5 +20,7 @@ public interface IServicioAlarma {
     public double getPrecio();
 
     public void quitarMovil();
+    
+    public IServicioAlarma clone() throws CloneNotSupportedException;
 
 }

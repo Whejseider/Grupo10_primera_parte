@@ -5,5 +5,6 @@ public interface IAbonado extends IFactura {
     public void agregaContrato(IContrato contrato);
 
     public int cantidadDeContratos();
-
+    
+    public IAbonado clone() throws CloneNotSupportedException;
 }

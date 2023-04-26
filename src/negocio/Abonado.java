@@ -33,12 +33,15 @@ public abstract class Abonado implements IAbonado {
     public ArrayList<IContrato> getContratos() {
         return contratos;
     }
+    
+    protected Iterator<IContrato> getIteratorContratos() {
+    	return this.getContratos().iterator();
+    }
 
     @Override
     public double getPagoNeto(IPromocion promo) {
-        ArrayList<IContrato> contratos = getContratos();
         IContrato contrato;
-        Iterator<IContrato> iterator = contratos.iterator();
+        Iterator<IContrato> iterator = getIteratorContratos();
         Double pagoNeto = 0.0;
         while (iterator.hasNext()) {
             contrato = iterator.next();
@@ -51,5 +54,22 @@ public abstract class Abonado implements IAbonado {
     public int cantidadDeContratos() {
         return this.contratos.size();
     }
-
+    
+    @Override
+    public IAbonado clone() throws CloneNotSupportedException {
+        Abonado abonadoClonado = null;
+        abonadoClonado = (Abonado) super.clone();
+        
+        ArrayList<IContrato> contratosClonados = new ArrayList<IContrato>();
+        Iterator<IContrato> iterator = this.getIteratorContratos();
+        
+        while (iterator.hasNext()) {
+        	IContrato contrato = (IContrato) iterator.next().clone();
+        	contratosClonados.add(contrato);
+        }
+        
+        abonadoClonado.contratos = contratosClonados;
+        
+		return abonadoClonado;
+	}
 }
