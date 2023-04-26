@@ -1,4 +1,11 @@
-package negocio;
+package prueba;
+
+import negocio.ContratoComercio;
+import negocio.ContratoVivienda;
+import negocio.PromocionDorada;
+import negocio.PromocionPlatino;
+import negocio.ServicioAlarma;
+import negocio.SinPromocion;
 
 public class PruebaContrato {
   public static void main(String args[]) {

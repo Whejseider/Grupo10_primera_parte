@@ -1,5 +1,16 @@
-package negocio;
+package prueba;
 
+import negocio.Abonado;
+import negocio.AbonadoFisico;
+import negocio.AbonadoJuridico;
+import negocio.Contrato;
+import negocio.ContratoComercio;
+import negocio.ContratoVivienda;
+import negocio.PagoEfectivoDecorator;
+import negocio.PromocionDorada;
+import negocio.PromocionPlatino;
+import negocio.ServicioAlarma;
+import negocio.SinPromocion;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IFactura;
 
