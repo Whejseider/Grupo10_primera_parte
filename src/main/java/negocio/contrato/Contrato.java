@@ -61,18 +61,4 @@ public abstract class Contrato implements IContrato {
 
     public abstract double getPrecio(IPromocion promocionActual);
 
-    //Siempre clonable
-    @Override
-    public Object clone() {
-        Contrato contratoClon = null;
-
-        try {
-            contratoClon = (Contrato) super.clone();
-            contratoClon.servicioAlarma = (IServicioAlarma) this.servicioAlarma.clone();
-        }catch (CloneNotSupportedException e){
-            e.printStackTrace();
-        }
-
-        return contratoClon;
-    }
 }
