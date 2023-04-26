@@ -21,4 +21,6 @@ public interface IServicioAlarma {
 
     public void quitarMovil();
 
+    Object clone() throws CloneNotSupportedException;
+
 }

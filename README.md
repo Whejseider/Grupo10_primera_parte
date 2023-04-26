@@ -2,7 +2,7 @@
 ## TO DO
 
 * Facturas y su clonacion
-* Clonar abonados de tipo fisico
+* ~~Clonar abonados de tipo fisico~~
 * Fijarse que no se puedan agregar contratos duplicados independientemente del abonado (tirar exception)
 * Fijarse que no se puedan crear abonados con mismo dni (tirar exception)
 * Gestionar promociones (para estos tres ultimos creo que hay que hacer una clase mas que englobe todo)
@@ -22,7 +22,7 @@ Hay que modificar los links
 - [@Vallone, Franco](https://github.com/Whejseider)
 
 
-## Descripción General (Esto lo hice con chatGPT como para rellenar y probar algunas cosas)
+## Descripción General
 
 El proyecto consiste en la programación de un sistema para gestionar contrataciones de servicios de monitoreo y seguridad, así como también la gestión de abonados y facturación. El sistema debe contemplar la contratación de servicios de monitoreo de alarmas en viviendas y comercios, así como la posibilidad de agregar cámaras, botones antipánico y móvil de acompañamiento. El valor de cada servicio debe quedar claro y dependerá del tipo de servicio contratado y de los adicionales agregados. Los abonados pueden ser de dos tipos: persona física o jurídica y pueden pagar en efectivo, cheque o tarjeta, lo que afectará el valor de la tarifa. La empresa aplica promociones a sus servicios y se debe tener en cuenta para la facturación. El sistema debe permitir generar reportes de facturación y solicitar duplicados de cualquier objeto de tipo factura
 ## Informe
