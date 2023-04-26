@@ -58,7 +58,16 @@ public abstract class Contrato implements IContrato {
         //No es necesario fijarse si el ID es igual porque es autoincremental.
         return this.domicilio.equals(contrato.getDomicilio());
     }
-
+    
+    @Override
+    public IContrato clone() throws CloneNotSupportedException {
+    	Contrato contratoCloneado = (Contrato) super.clone();
+    	
+    	contratoCloneado.servicioAlarma = (ServicioAlarma) this.servicioAlarma.clone();
+    	
+    	return contratoCloneado;
+    }
+   
     public abstract double getPrecio(IPromocion promocionActual);
 
 }

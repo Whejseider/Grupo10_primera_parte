@@ -7,4 +7,5 @@ public interface IFactura extends Cloneable {
 
 	public double getPagoMedioDePago(IPromocion promo);
 
+	public IFactura clone() throws CloneNotSupportedException;
 }
