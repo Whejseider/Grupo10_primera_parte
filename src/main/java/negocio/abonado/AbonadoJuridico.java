@@ -1,4 +1,4 @@
-package negocio;
+package negocio.abonado;
 
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IPromocion;

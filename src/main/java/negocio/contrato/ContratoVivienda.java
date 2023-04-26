@@ -1,12 +1,12 @@
-package negocio;
+package negocio.contrato;
 
 import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
-public class ContratoComercio extends Contrato {
-    private final double PRECIO_BASE = 10000;
+public class ContratoVivienda extends Contrato {
+    private final double PRECIO_BASE = 8500;
 
-    public ContratoComercio(String domicilio, IServicioAlarma servicioAlarma) {
+    public ContratoVivienda(String domicilio, IServicioAlarma servicioAlarma) {
         super(domicilio, servicioAlarma);
     }
 
