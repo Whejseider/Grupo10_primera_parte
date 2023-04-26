@@ -1,14 +1,6 @@
-package prueba;
+package negocio;
 
-import negocio.servicioAlarma.ServicioAlarma;
-import negocio.promocion.SinPromocion;
-import negocio.abonado.Abonado;
-import negocio.abonado.AbonadoJuridico;
-import negocio.contrato.ContratoVivienda;
 import negocio.interfaces.IFactura;
-import negocio.pago.PagoEfectivoDecorator;
-import negocio.promocion.PromocionDorada;
-import negocio.promocion.PromocionPlatino;
 
 public class PruebaAbonado {
 	public static void main(String args[]) {

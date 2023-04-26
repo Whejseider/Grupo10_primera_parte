@@ -1,8 +1,4 @@
-package negocio.promocion;
-
-import negocio.contrato.ContratoComercio;
-import negocio.contrato.ContratoVivienda;
-import negocio.promocion.Promocion;
+package negocio;
 
 public class SinPromocion extends Promocion {
 
