@@ -58,7 +58,7 @@ public abstract class Abonado implements IAbonado {
     @Override
     public IAbonado clone() throws CloneNotSupportedException {
         Abonado abonadoClonado = (Abonado) super.clone();
-        abonadoClonado.contratos.clear();
+        abonadoClonado.contratos = new ArrayList<IContrato>();
 
         Iterator<IContrato> iterator = this.getIteratorContratos();
 
