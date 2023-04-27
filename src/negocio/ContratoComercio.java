@@ -15,9 +15,6 @@ public class ContratoComercio extends Contrato {
         return this.PRECIO_BASE;
     }
 
-    /**
-     * 
-     */
     @Override
     public double getPrecio(IPromocion promocionActual) {
         return promocionActual.getPrecioConDescuento(this);

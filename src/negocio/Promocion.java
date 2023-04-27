@@ -10,10 +10,16 @@ public abstract class Promocion implements IPromocion {
     public Promocion() {
     }
 
+    /**
+     * @return Verdadero si el tipo de descuento de la promoción es nominal.
+     */
     public boolean esNominal() {
         return this.nominal;
     }
 
+    /**
+     * @return Verdadero si el tipo de descuento de la promoción es porcentual.
+     */
     public boolean esPorcentual() {
         return !this.nominal;
     }

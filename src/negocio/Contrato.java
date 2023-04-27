@@ -118,7 +118,7 @@ public abstract class Contrato implements IContrato {
     }
    
     /**
-     * Obtiene el precio total del contrato, con la promocion pasada como parametro.
+     * Obtiene el precio con descuento por promoción del contrato.
      * 
      * <b>pre:</b> La promocion debe estar definida 
      * 
