@@ -1,15 +1,18 @@
 
-## TO DO
+## TO DO 
 
+```
 * Facturas y su clonacion
 * ~~Clonar abonados de tipo fisico~~
 * Fijarse que no se puedan agregar contratos duplicados independientemente del abonado (tirar exception)
 * Fijarse que no se puedan crear abonados con mismo dni (tirar exception)
-* Gestionar promociones (para estos tres ultimos creo que hay que hacer una clase mas que englobe todo)
+* Gestionar promociones (para estos tres ultimos creo que hay que hacer una *clase mas que englobe todo*)
+* Crear una *clase global* Empresa o Sistema (Se podria aplicar Singleton??)
 * ~~Hacer factories para contrato y abonado~~
 * Hacer el main con pruebas
 * Hacer el uml
 # Sistema de Contratación de Servicios de Seguridad
+```
 
 Trabajo grupal final de la materia Programación III de la Facultad de Ingeniería de la Universidad de Mar del Plata.
 ## Autores (Grupo 10)
