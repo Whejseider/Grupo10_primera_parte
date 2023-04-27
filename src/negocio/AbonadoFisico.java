@@ -3,7 +3,11 @@ package negocio;
 import negocio.interfaces.IPromocion;
 
 public class AbonadoFisico extends Abonado {
-
+	
+	/**
+	 * Constructor de la clase AbonadoFisico. Crea un nuevo abonado físico. 
+	 * El contrato es igual al especificado en la clase padre.
+	 */
     public AbonadoFisico(String nombre, String dni) {
         super(nombre, dni);
     }

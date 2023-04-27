@@ -5,6 +5,10 @@ import negocio.interfaces.IPromocion;
 
 public class AbonadoJuridico extends Abonado {
 
+	/**
+	 * Constructor de la clase AbonadoJurídico. Crea un nuevo abonado jurídico. 
+	 * El contrato es igual al especificado en la clase padre.
+	 */
     public AbonadoJuridico(String nombre, String dni) {
         super(nombre, dni);
     }
@@ -16,6 +20,10 @@ public class AbonadoJuridico extends Abonado {
         return getPagoNeto(promo);
     }
     
+    /**
+     * Método para clonar el abonado. 
+     * Siempre tira excepcion al no ser posible clonar abonados de tipo jurídico.
+     */
     @Override
     public IAbonado clone() throws CloneNotSupportedException {
     	throw new CloneNotSupportedException("No se puede clonar un abonado de tipo jurídico");
