@@ -5,13 +5,13 @@ import negocio.interfaces.IServicioAlarma;
 
 public class ContratoFactory {
 
-
     /**
      * Genera un contrato de cierto tipo<br>
      * Ya sea de tipo <b>Vivienda</b> o <b>Comercio</b>
-     * @param tipo Tipo de contrato. Vivienda o Comercio
-     * @param domicilio Domicilio del contrato
-     * @param tieneMovil Si tiene o no movil de seguimiento
+     *
+     * @param tipo        Tipo de contrato. Vivienda o Comercio
+     * @param domicilio   Domicilio del contrato
+     * @param tieneMovil  Si tiene o no movil de seguimiento
      * @param cantBotones Cantidad de botones anti panico
      * @param cantCamaras Cantidad de camaras
      * @return Contrato de tipo Vivienda o Comercio
