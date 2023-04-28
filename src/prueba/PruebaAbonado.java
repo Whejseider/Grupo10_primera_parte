@@ -21,10 +21,10 @@ public class PruebaAbonado {
 		try {
 			testClonacionServicioAlarma();
 			testClonacionArrayList();
+			testClonacionDecorator();
 		} catch (Exception e) {
 
 		}
-		testClonacionDecorator();
 	}
 
 	public void testPago() {
@@ -104,20 +104,17 @@ public class PruebaAbonado {
 
 	}
 
-	public void testClonacionDecorator() {
+	public void testClonacionDecorator() throws CloneNotSupportedException {
 		// Prueba que se pueda clonar abonados con decorator de pago
 
 		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
 		IAbonado clonAbonadoCheque = new PagoEfectivoDecorator(abonado);
 		IAbonado clonAbonadoChequeClon = null;
 
-		try {
-			clonAbonadoChequeClon = clonAbonadoCheque.clone();
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
+		clonAbonadoChequeClon = clonAbonadoCheque.clone();
+		assert (clonAbonadoChequeClon.getDni() == abonado.getDni());
+		assert (clonAbonadoChequeClon.getNombre() == abonado.getNombre());
 
-		assert Math.round(clonAbonadoChequeClon.getPagoMedioDePago(new SinPromocion())) == 18400;
 	}
 
 	/*

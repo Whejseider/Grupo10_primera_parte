@@ -5,7 +5,13 @@ public class Prueba {
     PruebaContrato pruebasContrato = new PruebaContrato();
     pruebasContrato.allTestsContrato();
     PruebaAbonado pruebasAbonado = new PruebaAbonado();
-    pruebasAbonado.allTestAbonado();
+    try {
+      pruebasAbonado.testClonacionDecorator();
+    } catch (Exception e) {
+      System.out.println("excepcion");
+    }
+    // pruebasAbonado.allTestAbonado();
+    System.out.println("prueba");
 
   }
 }

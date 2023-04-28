@@ -8,6 +8,10 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     public boolean tieneContrato(IContrato contrato);
 
+    public String getDni();
+
+    public String getNombre();
+
     public IAbonado clone() throws CloneNotSupportedException;
 
     /**

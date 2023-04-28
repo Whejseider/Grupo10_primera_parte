@@ -80,6 +80,14 @@ public abstract class PagoDecorator implements IAbonado {
 	 */
 	protected abstract double getModificador();
 
+	public String getNombre() {
+		return this.abonado.getNombre();
+	}
+
+	public String getDni() {
+		return this.abonado.getDni();
+	}
+
 	@Override
 	public void agregaContrato(IContrato contrato) {
 		this.abonado.agregaContrato(contrato);
