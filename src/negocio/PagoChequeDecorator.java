@@ -1,11 +1,11 @@
 package negocio;
 
-import negocio.interfaces.IFactura;
+import negocio.interfaces.IFacturable;
 
 public class PagoChequeDecorator extends PagoDecorator {
 	private final double modificador = 1.1;
 
-	public PagoChequeDecorator(IFactura facturable) {
+	public PagoChequeDecorator(IFacturable facturable) {
 		super(facturable);
 	}
 
@@ -15,7 +15,7 @@ public class PagoChequeDecorator extends PagoDecorator {
 	}
 	
 	@Override
-	public IFactura clone() throws CloneNotSupportedException {
-		return (IFactura) new PagoChequeDecorator(this.getFacturable().clone());
+	public IFacturable clone() throws CloneNotSupportedException {
+		return (IFacturable) new PagoChequeDecorator(this.getFacturable().clone());
 	}
 }

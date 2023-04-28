@@ -81,6 +81,11 @@ public abstract class Contrato implements IContrato {
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
+    
+    public String getDetalle(IPromocion promo) {
+    	// TODO: refactorizar y agregar el detalle de los servicios
+    	return "\nContrato N°"+this.ID+ "\nTotal $" + this.getPrecio(promo) + "\n";
+    }
 
     /**
      * Devuelve verdadero si dos contratos se consideran iguales. Son iguales si coincide su domicilio.<br>

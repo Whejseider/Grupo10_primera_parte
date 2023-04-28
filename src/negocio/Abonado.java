@@ -11,6 +11,7 @@ public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
     private ArrayList<IContrato> contratos;
+    private ArrayList<Factura> facturas;
 
     /**
      * Constructor de la clase Abonado.
@@ -26,6 +27,7 @@ public abstract class Abonado implements IAbonado {
         this.nombre = nombre;
         this.dni = dni;
         this.contratos = new ArrayList<IContrato>();
+        this.facturas = new ArrayList<Factura>();
         assert(contratos != null);
     }
 
@@ -40,10 +42,62 @@ public abstract class Abonado implements IAbonado {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
-
+    
+    /**
+     * Genera un detalle de los contratos actuales del abonado.
+     */
     @Override
-    public String getDetalle() {
-        return null;
+    public String getDetalle(IPromocion promo) {
+        Iterator<IContrato> iterator = this.getIteratorContratos();
+        StringBuilder detalle = new StringBuilder();
+        
+        detalle.append("DNI: " + this.dni + "\n");
+        detalle.append("NOMBRE: " + this.nombre + "\n");
+        
+        while (iterator.hasNext()) {
+            IContrato contrato = iterator.next();
+            detalle.append(contrato.getDetalle(promo));
+            detalle.append("\n");
+        }
+        
+        return detalle.toString();
+    }
+    
+    /**
+     * Devuelve una nueva factura con el estado actual de los contratos
+     */
+    public Factura generarFactura(IPromocion promo) {
+    	return new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+    }
+    
+    /**
+     * Agrega una nueva factura a la lista de facturas
+     */
+    public void agregarFactura(Factura factura) {
+    	assert factura != null;
+    	this.facturas.add(factura);
+    }
+    
+    /**
+     * Genera una factura con los el estado actual de los contratos del abonado, y se agrega a la lista de facturas.
+     */
+    public void facturar(IPromocion promo) { 
+    	assert promo != null;
+    	this.agregarFactura(this.generarFactura(promo));
+    }
+    
+    /**
+     * Genera un detalle completo de todas las facturas del abonado.
+     */
+    public String getDetalleFacturas() {
+    	String separador = "------------\n";
+    	String detalle = separador;
+    	for (Factura factura : facturas) {
+    		detalle += factura.getDetalle();
+    		detalle += separador;
+		}
+    	
+    	return detalle;
     }
 
     /**
@@ -76,6 +130,16 @@ public abstract class Abonado implements IAbonado {
             pagoNeto = pagoNeto + contrato.getPrecio(promo);
         }
         return pagoNeto;
+    }
+    
+    public boolean tieneContrato(IContrato contrato) {
+    	Iterator<IContrato> iterator = this.getIteratorContratos();
+    	
+    	while (iterator.hasNext()) {    		
+    		if (contrato.equals(iterator.next())) return true;
+    	}
+    	
+    	return false;
     }
 
     /**

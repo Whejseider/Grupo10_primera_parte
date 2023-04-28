@@ -1,6 +1,6 @@
 package negocio.interfaces;
 
-public interface IContrato extends Cloneable {
+public interface IContrato extends Cloneable, IDetallable {
     public void agregarCamaras(int cantidad);
 
     public void agregarBtnesAntipanico(int cantidad);
