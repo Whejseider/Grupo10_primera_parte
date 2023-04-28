@@ -1,8 +1,6 @@
 package negocio;
 
 import negocio.interfaces.IAbonado;
-import negocio.interfaces.IContrato;
-import negocio.interfaces.IPromocion;
 
 public class PagoEfectivoDecorator extends PagoDecorator {
 	private final double modificador = 0.8;

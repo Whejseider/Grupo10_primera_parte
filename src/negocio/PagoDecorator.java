@@ -1,7 +1,5 @@
 package negocio;
 
-import java.util.ArrayList;
-
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
