@@ -1,6 +1,8 @@
 package negocio;
 
-public class Factura  {
+import negocio.interfaces.IFactura;
+
+public class Factura implements IFactura {
 	private final String concepto;
 	private final double subtotal;
 	private double valorNeto;
@@ -25,12 +27,13 @@ public class Factura  {
 	public double getValorNeto() {
 		return valorNeto;
 	}
-	
+
 	public void setValorNeto(double valorNeto) {
 		this.valorNeto = valorNeto;
 	}
 
 	public String getDetalle() {
-		return "FACTURA N°"+this.id+"\n"+this.concepto +  "SUBTOTAL: $" +Double.toString(subtotal) + "\nTOTAL: $" + Double.toString(valorNeto) + "\n";
+		return "FACTURA N°" + this.id + "\n" + this.concepto + "SUBTOTAL: $" + Double.toString(subtotal) + "\nTOTAL: $"
+				+ Double.toString(valorNeto) + "\n";
 	}
 }

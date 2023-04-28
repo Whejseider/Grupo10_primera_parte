@@ -12,6 +12,6 @@ public interface IContrato extends Cloneable, IDetallable {
     public double getPrecio();
 
     public String getDomicilio();
-    
+
     public IContrato clone() throws CloneNotSupportedException;
 }

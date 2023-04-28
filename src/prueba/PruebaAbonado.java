@@ -92,24 +92,16 @@ public class PruebaAbonado {
 		}
 
 		assert Math.round(clonAbonadoChequeClon.getPagoMedioDePago(new SinPromocion())) == 18400;
-		
-		
-		
-		
-		
+
 		// ------------- PRUEBAS FACTURACION
-		
-		
-		
-		
-		
+
 		abonado.facturar(new SinPromocion());
 		abonado.agregaContrato(contratoComercio);
 		IFacturable abonadoCheque = new PagoChequeDecorator(abonado);
 		abonadoCheque.facturar(new SinPromocion());
-		
+
 		System.out.println(abonadoCheque.getDetalleFacturas());
-		
+
 		System.out.println("Pruebas abonado bien");
 	}
 }

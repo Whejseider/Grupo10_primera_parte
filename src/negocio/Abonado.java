@@ -5,21 +5,22 @@ import java.util.Iterator;
 
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
+import negocio.interfaces.IFactura;
 import negocio.interfaces.IPromocion;
 
 public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
     private ArrayList<IContrato> contratos;
-    private ArrayList<Factura> facturas;
+    private ArrayList<IFactura> facturas;
 
     /**
      * Constructor de la clase Abonado.
-     *  
+     * 
      * <b>pre: </b>: El nombre y dni tienen que estar definidos y no ser vacíos
      * 
      * @param nombre El nombre del abonado a crear
-     * @param dni El DNI del abonado a crear
+     * @param dni    El DNI del abonado a crear
      */
     public Abonado(String nombre, String dni) {
         assert nombre != null && !nombre.isEmpty();
@@ -27,8 +28,8 @@ public abstract class Abonado implements IAbonado {
         this.nombre = nombre;
         this.dni = dni;
         this.contratos = new ArrayList<IContrato>();
-        this.facturas = new ArrayList<Factura>();
-        assert(contratos != null);
+        this.facturas = new ArrayList<IFactura>();
+        assert (contratos != null);
     }
 
     /**
@@ -42,7 +43,7 @@ public abstract class Abonado implements IAbonado {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
-    
+
     /**
      * Genera un detalle de los contratos actuales del abonado.
      */
@@ -50,58 +51,60 @@ public abstract class Abonado implements IAbonado {
     public String getDetalle(IPromocion promo) {
         Iterator<IContrato> iterator = this.getIteratorContratos();
         StringBuilder detalle = new StringBuilder();
-        
+
         detalle.append("DNI: " + this.dni + "\n");
         detalle.append("NOMBRE: " + this.nombre + "\n");
-        
+
         while (iterator.hasNext()) {
             IContrato contrato = iterator.next();
             detalle.append(contrato.getDetalle(promo));
             detalle.append("\n");
         }
-        
+
         return detalle.toString();
     }
-    
+
     /**
      * Devuelve una nueva factura con el estado actual de los contratos
      */
-    public Factura generarFactura(IPromocion promo) {
-    	return new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+    public IFactura generarFactura(IPromocion promo) {
+        return new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
     }
-    
+
     /**
      * Agrega una nueva factura a la lista de facturas
      */
-    public void agregarFactura(Factura factura) {
-    	assert factura != null;
-    	this.facturas.add(factura);
+    public void agregarFactura(IFactura factura) {
+        assert factura != null;
+        this.facturas.add(factura);
     }
-    
+
     /**
-     * Genera una factura con los el estado actual de los contratos del abonado, y se agrega a la lista de facturas.
+     * Genera una factura con los el estado actual de los contratos del abonado, y
+     * se agrega a la lista de facturas.
      */
-    public void facturar(IPromocion promo) { 
-    	assert promo != null;
-    	this.agregarFactura(this.generarFactura(promo));
+    public void facturar(IPromocion promo) {
+        assert promo != null;
+        this.agregarFactura(this.generarFactura(promo));
     }
-    
+
     /**
      * Genera un detalle completo de todas las facturas del abonado.
      */
     public String getDetalleFacturas() {
-    	String separador = "------------\n";
-    	String detalle = separador;
-    	for (Factura factura : facturas) {
-    		detalle += factura.getDetalle();
-    		detalle += separador;
-		}
-    	
-    	return detalle;
+        String separador = "------------\n";
+        String detalle = separador;
+        for (IFactura factura : facturas) {
+            detalle += factura.getDetalle();
+            detalle += separador;
+        }
+
+        return detalle;
     }
 
     /**
      * Obtiene la lista de contratos del abonado.
+     * 
      * @return La lista de contratos.
      */
     public ArrayList<IContrato> getContratos() {
@@ -131,15 +134,16 @@ public abstract class Abonado implements IAbonado {
         }
         return pagoNeto;
     }
-    
+
     public boolean tieneContrato(IContrato contrato) {
-    	Iterator<IContrato> iterator = this.getIteratorContratos();
-    	
-    	while (iterator.hasNext()) {    		
-    		if (contrato.equals(iterator.next())) return true;
-    	}
-    	
-    	return false;
+        Iterator<IContrato> iterator = this.getIteratorContratos();
+
+        while (iterator.hasNext()) {
+            if (contrato.equals(iterator.next()))
+                return true;
+        }
+
+        return false;
     }
 
     /**
@@ -151,8 +155,10 @@ public abstract class Abonado implements IAbonado {
     }
 
     /**
-     * Devuelve un clon del abonado. 
-     * @throws CloneNotSupportedException Si no se pudo clonar. Es el caso para abonados de tipo jurídico.
+     * Devuelve un clon del abonado.
+     * 
+     * @throws CloneNotSupportedException Si no se pudo clonar. Es el caso para
+     *                                    abonados de tipo jurídico.
      */
     @Override
     public IAbonado clone() throws CloneNotSupportedException {
@@ -168,33 +174,35 @@ public abstract class Abonado implements IAbonado {
 
         return abonadoClonado;
     }
-    
+
     /**
      * Obtiene el DNI del abonado
+     * 
      * @return El DNI del abonado
      */
     public String getDni() {
-    	return this.dni;
+        return this.dni;
     }
-    
+
     /**
      * Obtiene el nombre del abonado
+     * 
      * @return El nombre del abonado
      */
     public String getNombre() {
-    	return this.nombre;
+        return this.nombre;
     }
-    
+
     /**
-     * Devuelve verdadero si dos abonados se consideran iguales. Son iguales si coincide su DNI.<br>
+     * Devuelve verdadero si dos abonados se consideran iguales. Son iguales si
+     * coincide su DNI.<br>
      * 
      * @param obj El objeto a comparar.
      * @return Verdadero si son iguales.
      */
     @Override
-    public boolean equals(Object obj)
-    {
-    	
+    public boolean equals(Object obj) {
+
         if (obj == this) {
             return true;
         }
