@@ -16,6 +16,6 @@ public class PagoEfectivoDecorator extends PagoDecorator {
 
 	@Override
 	public IAbonado clone() throws CloneNotSupportedException {
-		return (IAbonado) new PagoEfectivoDecorator(this.getFacturable().clone());
+		return (IAbonado) super.clone();
 	}
 }

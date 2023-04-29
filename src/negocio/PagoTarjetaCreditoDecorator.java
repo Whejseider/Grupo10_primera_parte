@@ -16,7 +16,7 @@ public class PagoTarjetaCreditoDecorator extends PagoDecorator {
 
 	@Override
 	public IAbonado clone() throws CloneNotSupportedException {
-		return (IAbonado) new PagoTarjetaCreditoDecorator(this.getFacturable().clone());
+		return (IAbonado) super.clone();
 	}
 
 }

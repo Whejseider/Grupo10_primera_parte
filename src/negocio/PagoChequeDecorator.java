@@ -16,6 +16,7 @@ public class PagoChequeDecorator extends PagoDecorator {
 
 	@Override
 	public IAbonado clone() throws CloneNotSupportedException {
-		return (IAbonado) new PagoChequeDecorator(this.getFacturable().clone());
+
+		return (IAbonado) super.clone();
 	}
 }

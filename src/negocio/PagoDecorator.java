@@ -1,5 +1,7 @@
 package negocio;
 
+import javax.print.attribute.standard.RequestingUserName;
+
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
@@ -71,7 +73,9 @@ public abstract class PagoDecorator implements IAbonado {
 
 	@Override
 	public IAbonado clone() throws CloneNotSupportedException {
-		return (IAbonado) super.clone();
+		PagoDecorator clonDecorator = (PagoDecorator) super.clone();
+		clonDecorator.abonado = abonado.clone();
+		return clonDecorator;
 	}
 
 	/**
