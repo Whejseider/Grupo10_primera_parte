@@ -2,7 +2,7 @@ package negocio;
 
 import negocio.interfaces.IFactura;
 
-public class Factura implements IFactura {
+public class Factura implements IFactura, Cloneable {
 	private final String concepto;
 	private final double subtotal;
 	private double valorNeto;
@@ -30,6 +30,10 @@ public class Factura implements IFactura {
 
 	public void setValorNeto(double valorNeto) {
 		this.valorNeto = valorNeto;
+	}
+
+	public IFactura clone() throws CloneNotSupportedException {
+		return (IFactura) super.clone();
 	}
 
 	public String getDetalle() {
