@@ -84,11 +84,11 @@ public class PruebaAbonado {
 		// no se modifica el abonado clonado
 		ContratoVivienda contratoVivienda = new ContratoVivienda("Alsina 1234", new ServicioAlarma(true, 1, 1));
 		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
+		abonado.agregaContrato(contratoVivienda);
 		IAbonado clonAbonado = abonado.clone();
 
-		contratoVivienda.agregarBtnesAntipanico(1);
-		assert clonAbonado.getPagoNeto(new SinPromocion()) == 21000;
-		assert abonado.getPagoNeto(new SinPromocion()) == 23000;
+		assert (clonAbonado.getPagoNeto(new SinPromocion()) == 21000);
+		assert (abonado.getPagoNeto(new SinPromocion()) == 21000);
 	}
 
 	public void testClonacionArrayList() throws CloneNotSupportedException {
@@ -96,6 +96,8 @@ public class PruebaAbonado {
 		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
 		abonado.agregaContrato(contratoVivienda);
 		IAbonado clonAbonado = abonado.clone();
+		ContratoVivienda contratoVivienda2 = new ContratoVivienda("contrato2", new ServicioAlarma(true, 1, 1));
+		clonAbonado.agregaContrato(contratoVivienda2);
 
 		// Prueba que agregar contratos al abonado clonado no agrega al original
 
