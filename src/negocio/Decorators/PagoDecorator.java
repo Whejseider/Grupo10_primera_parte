@@ -1,6 +1,4 @@
-package negocio;
-
-import javax.print.attribute.standard.RequestingUserName;
+package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
