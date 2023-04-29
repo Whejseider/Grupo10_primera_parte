@@ -1,7 +1,7 @@
 
 ## TO DO 
 
-- [] Facturas y su clonacion
+- [x] Facturas y su clonacion
 - [x] Clonar abonados de tipo fisico
 - [] Fijarse que no se puedan agregar contratos duplicados independientemente del abonado (tirar exception)
 - [] Fijarse que no se puedan crear abonados con mismo dni (tirar exception)
