@@ -4,11 +4,11 @@ import negocio.Abonado;
 import negocio.AbonadoFisico;
 import negocio.AbonadoJuridico;
 import negocio.ContratoVivienda;
-import negocio.PagoEfectivoDecorator;
 import negocio.PromocionDorada;
 import negocio.PromocionPlatino;
 import negocio.ServicioAlarma;
 import negocio.SinPromocion;
+import negocio.decorators.PagoEfectivoDecorator;
 import negocio.interfaces.IAbonado;
 
 public class PruebaAbonado {

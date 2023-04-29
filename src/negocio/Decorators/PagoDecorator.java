@@ -1,6 +1,4 @@
-package negocio;
-
-import javax.print.attribute.standard.RequestingUserName;
+package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
@@ -21,6 +19,7 @@ public abstract class PagoDecorator implements IAbonado {
 	 * @param abonado El facturable a decorar
 	 */
 	public PagoDecorator(IAbonado abonado) {
+		
 		assert abonado != null : "El facturable no puede ser nulo";
 
 		this.abonado = abonado;

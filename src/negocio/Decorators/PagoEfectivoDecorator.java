@@ -1,4 +1,4 @@
-package negocio;
+package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 

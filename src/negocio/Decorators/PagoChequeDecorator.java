@@ -1,11 +1,11 @@
-package negocio;
+package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 
-public class PagoTarjetaCreditoDecorator extends PagoDecorator {
-	private final double modificador = 1.05;
+public class PagoChequeDecorator extends PagoDecorator {
+	private final double modificador = 1.1;
 
-	public PagoTarjetaCreditoDecorator(IAbonado facturable) {
+	public PagoChequeDecorator(IAbonado facturable) {
 		super(facturable);
 	}
 
@@ -16,7 +16,7 @@ public class PagoTarjetaCreditoDecorator extends PagoDecorator {
 
 	@Override
 	public IAbonado clone() throws CloneNotSupportedException {
+
 		return (IAbonado) super.clone();
 	}
-
 }
