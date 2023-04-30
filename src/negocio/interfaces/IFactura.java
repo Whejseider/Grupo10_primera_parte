@@ -1,6 +1,6 @@
 package negocio.interfaces;
 
-public interface IFactura {
+public interface IFactura extends Cloneable {
 	public String getDetalle();
 
 	public String getConcepto();
@@ -10,5 +10,7 @@ public interface IFactura {
 	public double getValorNeto();
 
 	public void setValorNeto(double valorNeto);
+
+	public IFactura clone() throws CloneNotSupportedException;
 
 }

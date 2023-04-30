@@ -20,7 +20,9 @@ public interface IServicioAlarma extends Cloneable {
     public double getPrecio();
 
     public void quitarMovil();
-    
+
     public IServicioAlarma clone() throws CloneNotSupportedException;
+
+    public String getDetalle();
 
 }

@@ -3,6 +3,7 @@ package negocio;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import negocio.excepciones.SinContratosException;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
@@ -53,7 +54,7 @@ public abstract class Abonado implements IAbonado {
         StringBuilder detalle = new StringBuilder();
 
         detalle.append("DNI: " + this.dni + "\n");
-        detalle.append("NOMBRE: " + this.nombre + "\n");
+        detalle.append("NOMBRE: " + this.nombre + "\n\n");
 
         while (iterator.hasNext()) {
             IContrato contrato = iterator.next();
@@ -67,7 +68,11 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve una nueva factura con el estado actual de los contratos
      */
-    public IFactura generarFactura(IPromocion promo) {
+    public IFactura generarFactura(IPromocion promo) throws SinContratosException {
+        if (this.cantidadDeContratos() == 0) {
+            throw new SinContratosException();
+        }
+
         return new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
     }
 
@@ -80,11 +85,12 @@ public abstract class Abonado implements IAbonado {
     }
 
     /**
-     * Genera una factura con los el estado actual de los contratos del abonado, y
-     * se agrega a la lista de facturas.
+     * Genera una factura con el estado actual de los contratos del abonado, y se
+     * agrega a la lista de facturas.
      */
-    public void facturar(IPromocion promo) {
+    public void facturar(IPromocion promo) throws SinContratosException {
         assert promo != null;
+
         this.agregarFactura(this.generarFactura(promo));
     }
 
@@ -103,12 +109,28 @@ public abstract class Abonado implements IAbonado {
     }
 
     /**
+     * Obtiene la lista de facturas del abonado.
+     * 
+     * @return La lista de facturas.
+     */
+    public ArrayList<IFactura> getFacturas() {
+        return facturas;
+    }
+
+    /**
      * Obtiene la lista de contratos del abonado.
      * 
      * @return La lista de contratos.
      */
     public ArrayList<IContrato> getContratos() {
         return contratos;
+    }
+
+    /**
+     * Devuelve un iterator para las facturas del abonado.
+     */
+    protected Iterator<IFactura> getIteratorFacturas() {
+        return this.getFacturas().iterator();
     }
 
     /**
@@ -125,6 +147,8 @@ public abstract class Abonado implements IAbonado {
      */
     @Override
     public double getPagoNeto(IPromocion promo) {
+        assert promo != null;
+
         IContrato contrato;
         Iterator<IContrato> iterator = getIteratorContratos();
         Double pagoNeto = 0.0;
@@ -136,14 +160,17 @@ public abstract class Abonado implements IAbonado {
     }
 
     public boolean tieneContrato(IContrato contrato) {
-        Iterator<IContrato> iterator = this.getIteratorContratos();
+        assert contrato != null;
+        assert this.contratos != null;
+        return this.contratos.contains(contrato);
+    }
 
-        while (iterator.hasNext()) {
-            if (contrato.equals(iterator.next()))
-                return true;
-        }
-
-        return false;
+    /**
+     * Obtiene la cantidad de facturas del abonado
+     */
+    @Override
+    public int cantidadDeFacturas() {
+        return this.facturas.size();
     }
 
     /**
@@ -164,12 +191,19 @@ public abstract class Abonado implements IAbonado {
     public IAbonado clone() throws CloneNotSupportedException {
         Abonado abonadoClonado = (Abonado) super.clone();
         abonadoClonado.contratos = new ArrayList<IContrato>();
+        abonadoClonado.facturas = new ArrayList<IFactura>();
 
-        Iterator<IContrato> iterator = this.getIteratorContratos();
+        Iterator<IContrato> iteratorContratos = this.getIteratorContratos();
+        Iterator<IFactura> iteratorFacturas = this.getIteratorFacturas();
 
-        while (iterator.hasNext()) {
-            IContrato contrato = (IContrato) iterator.next().clone();
+        while (iteratorContratos.hasNext()) {
+            IContrato contrato = (IContrato) iteratorContratos.next().clone();
             abonadoClonado.contratos.add(contrato);
+        }
+
+        while (iteratorFacturas.hasNext()) {
+            IFactura factura = (IFactura) iteratorFacturas.next().clone();
+            abonadoClonado.facturas.add(factura);
         }
 
         return abonadoClonado;

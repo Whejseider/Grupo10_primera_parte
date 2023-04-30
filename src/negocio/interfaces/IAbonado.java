@@ -1,10 +1,14 @@
 package negocio.interfaces;
 
+import negocio.excepciones.SinContratosException;
+
 public interface IAbonado extends Cloneable, IDetallable {
 
     public void agregaContrato(IContrato contrato);
 
     public int cantidadDeContratos();
+
+    public int cantidadDeFacturas();
 
     public boolean tieneContrato(IContrato contrato);
 
@@ -30,9 +34,9 @@ public interface IAbonado extends Cloneable, IDetallable {
      */
     public double getPagoMedioDePago(IPromocion promo);
 
-    public IFactura generarFactura(IPromocion promo);
+    public IFactura generarFactura(IPromocion promo) throws SinContratosException;
 
-    public void facturar(IPromocion promo);
+    public void facturar(IPromocion promo) throws SinContratosException;
 
     public void agregarFactura(IFactura factura);
 
