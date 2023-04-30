@@ -2,6 +2,10 @@ package negocio;
 
 import negocio.interfaces.IPromocion;
 
+/**
+ * Clase abstracta para las promociones para contratos. Permite crear
+ * subclases que implementen sus propios descuentos.
+ */
 public abstract class Promocion implements IPromocion {
     protected double descuentoComercio;
     protected double descuentoVivienda;

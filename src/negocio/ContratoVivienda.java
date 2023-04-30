@@ -3,6 +3,9 @@ package negocio;
 import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
+/**
+ * Subclase para contratos de vivienda.
+ */
 public class ContratoVivienda extends Contrato {
     private final double PRECIO_BASE = 8500;
 

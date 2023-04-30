@@ -3,6 +3,9 @@ package negocio;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IPromocion;
 
+/**
+ * Subclase para abonados de tipo jurídico.
+ */
 public class AbonadoJuridico extends Abonado {
 
 	/**

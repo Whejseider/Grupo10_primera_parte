@@ -2,6 +2,9 @@ package negocio;
 
 import negocio.interfaces.IAbonado;
 
+/**
+ * Factory para abonados.
+ */
 public class AbonadoFactory {
 
     /**
