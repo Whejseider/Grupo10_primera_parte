@@ -7,7 +7,7 @@ public interface IAbonado extends Cloneable, IDetallable {
     public void agregaContrato(IContrato contrato);
 
     public int cantidadDeContratos();
-    
+
     public int cantidadDeFacturas();
 
     public boolean tieneContrato(IContrato contrato);
