@@ -102,4 +102,12 @@ public class Sistema {
         getAbonado(dni).agregaContrato(nuevoContrato);
 
     }
+
+    public ArrayList<IFactura> getFacturasEmitidas() {
+        ArrayList<IFactura> facturas = new ArrayList<>();
+        for (IAbonado abonado : this.abonados)
+            if (abonado.cantidadDeFacturas() > 0)
+                facturas.addAll(abonado.getFacturasEmitidas());
+        return facturas;
+    }
 }

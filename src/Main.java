@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 import negocio.PromocionDorada;
 import negocio.Sistema;
 import negocio.excepciones.AbonadoDuplicadoException;
@@ -14,6 +16,8 @@ public class Main {
         main.testContratoDuplicado();
         System.out.println("\n-------------------------------------------------------------\n");
         main.testCrearContratoYFacturarConDecorator();
+
+        main.muestraFacturasEmitidas();
     }
 
     public void testAbonadoDuplicado() {
@@ -89,6 +93,10 @@ public class Main {
 
     public void muestraFacturasEmitidas() {
         Sistema sistema = Sistema.getInstance();
+        ArrayList<IFactura> facturas = sistema.getFacturasEmitidas();
+        for (IFactura factura : facturas) {
+            System.out.println(factura.getDetalle());
+        }
 
     }
 

@@ -1,5 +1,7 @@
 package negocio.interfaces;
 
+import java.util.ArrayList;
+
 import negocio.excepciones.SinContratosException;
 
 public interface IAbonado extends Cloneable, IDetallable {
@@ -39,4 +41,7 @@ public interface IAbonado extends Cloneable, IDetallable {
     public void agregarFactura(IFactura factura);
 
     public String getDetalleFacturas();
+
+    public ArrayList<IFactura> getFacturasEmitidas();
+
 }

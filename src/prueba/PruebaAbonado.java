@@ -177,7 +177,7 @@ public class PruebaAbonado {
 		// ---- TEST FACTURACION SIN CONTRATOS
 
 		try {
-			abonado.facturar(sinPromo);
+			abonado.generarFactura(sinPromo);
 		} catch (SinContratosException e) {
 			assert abonado.cantidadDeFacturas() == 0;
 		}
@@ -185,9 +185,9 @@ public class PruebaAbonado {
 		// ---- TEST GENERACION DE FACTURAS
 
 		abonado.agregaContrato(contratoVivienda);
-		abonado.facturar(sinPromo);
+		abonado.generarFactura(sinPromo);
 		abonado.agregaContrato(contratoComercio);
-		abonado.facturar(sinPromo);
+		abonado.generarFactura(sinPromo);
 
 		assert abonado.cantidadDeFacturas() == 2;
 

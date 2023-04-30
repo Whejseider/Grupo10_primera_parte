@@ -65,6 +65,10 @@ public abstract class Abonado implements IAbonado {
         return detalle.toString();
     }
 
+    public ArrayList<IFactura> getFacturasEmitidas() {
+        return this.facturas;
+    }
+
     /**
      * Devuelve una nueva factura con el estado actual de los contratos y la agrega
      */
