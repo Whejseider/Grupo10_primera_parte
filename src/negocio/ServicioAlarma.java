@@ -118,9 +118,30 @@ public class ServicioAlarma implements IServicioAlarma {
 	public boolean getTieneMovil() {
 		return this.tieneMovil;
 	}
-	
+
 	@Override
 	public IServicioAlarma clone() throws CloneNotSupportedException {
-    	return (IServicioAlarma) super.clone();
-    }
+		return (IServicioAlarma) super.clone();
+	}
+
+	private String getDetalleServicio(String descripcion, int cantidad) {
+		if (cantidad > 0) {
+			return "	" + descripcion + " x" + cantidad + "\n";
+		}
+
+		return "";
+	}
+
+	public String getDetalle() {
+		StringBuilder detalle = new StringBuilder();
+
+		detalle.append(getDetalleServicio("Camaras", cantCamaras));
+		detalle.append(getDetalleServicio("Botones antipanico", cantBotonesAntipanico));
+
+		if (tieneMovil) {
+			detalle.append(getDetalleServicio("Móviles", 1));
+		}
+
+		return detalle.toString();
+	}
 }

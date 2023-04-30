@@ -54,7 +54,7 @@ public abstract class Abonado implements IAbonado {
 		StringBuilder detalle = new StringBuilder();
 
 		detalle.append("DNI: " + this.dni + "\n");
-		detalle.append("NOMBRE: " + this.nombre + "\n");
+		detalle.append("NOMBRE: " + this.nombre + "\n\n");
 
 		while (iterator.hasNext()) {
 			IContrato contrato = iterator.next();

@@ -37,7 +37,13 @@ public class Factura implements IFactura {
 	}
 
 	public String getDetalle() {
-		return "FACTURA N°" + this.id + "\n" + this.concepto + "SUBTOTAL: $" + Double.toString(subtotal) + "\nTOTAL: $"
-				+ Double.toString(valorNeto) + "\n";
+		StringBuilder detalle = new StringBuilder();
+
+		detalle.append("FACTURA N°" + id + "\n\n");
+		detalle.append(concepto + "\n");
+		detalle.append("SUBTOTAL: $" + subtotal + "\n");
+		detalle.append("TOTAL: $" + valorNeto + "\n");
+
+		return detalle.toString();
 	}
 }

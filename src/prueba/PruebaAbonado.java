@@ -11,6 +11,7 @@ import negocio.PromocionPlatino;
 import negocio.ServicioAlarma;
 import negocio.SinPromocion;
 import negocio.decorators.PagoEfectivoDecorator;
+import negocio.decorators.PagoTarjetaCreditoDecorator;
 import negocio.excepciones.SinContratosException;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
@@ -171,7 +172,7 @@ public class PruebaAbonado {
 	public void testFacturacion() throws SinContratosException, CloneNotSupportedException {
 		IContrato contratoVivienda = ContratoFactory.getContrato("Vivienda", "Alsina 1234", true, 1, 1);
 		IContrato contratoComercio = ContratoFactory.getContrato("Comercio", "Alsina 12345", false, 2, 3);
-		IAbonado abonado = AbonadoFactory.getAbonado("Fisico", "41352345", "Pepe");
+		IAbonado abonado = new PagoTarjetaCreditoDecorator(AbonadoFactory.getAbonado("Fisico", "Pepe", "41352345"));
 
 		// ---- TEST FACTURACION SIN CONTRATOS
 
