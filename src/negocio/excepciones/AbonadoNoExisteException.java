@@ -1,9 +1,7 @@
 package negocio.excepciones;
 
-import negocio.interfaces.IAbonado;
-
 public class AbonadoNoExisteException extends Exception {
-    public AbonadoNoExisteException(IAbonado abonado) {
-        super("el Abonado " + abonado.toString() + " no existe");
+    public AbonadoNoExisteException(String dni) {
+        super("el Abonado con dni " + dni + " no existe");
     }
 }

@@ -6,7 +6,9 @@ import negocio.decorators.PagoChequeDecorator;
 import negocio.decorators.PagoEfectivoDecorator;
 import negocio.decorators.PagoTarjetaCreditoDecorator;
 import negocio.excepciones.AbonadoDuplicadoException;
+import negocio.excepciones.AbonadoNoExisteException;
 import negocio.excepciones.ContratoDuplicadoException;
+import negocio.excepciones.SinContratosException;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
@@ -53,7 +55,7 @@ public class Sistema {
         return abonados;
     }
 
-    public IFactura generarFactura(String dni, String medioDePago) throws Exception {
+    public IFactura generarFactura(String dni, String medioDePago) throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
         switch (medioDePago) {
             case "cheque":
@@ -69,11 +71,12 @@ public class Sistema {
         return abonado.generarFactura(this.promocionActiva);
     }
 
-    public IAbonado getAbonado(String dni) throws Exception {
+    public IAbonado getAbonado(String dni) throws AbonadoNoExisteException {
         for (IAbonado abonado : abonados)
             if (abonado.getDni().equals(dni))
                 return abonado;
-        throw new Exception("abonado no existe");
+        
+        throw new AbonadoNoExisteException(dni);
     }
 
     private boolean contratoExiste(IContrato contrato) {
@@ -93,7 +96,7 @@ public class Sistema {
      * @throws Exception
      */
     public void agregarContrato(String dni, String tipo, String domicilio, boolean tieneMovil, int cantCamaras,
-            int cantBotones) throws Exception {
+            int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
 
         IContrato nuevoContrato = ContratoFactory.getContrato(tipo, domicilio, tieneMovil, cantBotones, cantCamaras);
         if (this.contratoExiste(nuevoContrato))
