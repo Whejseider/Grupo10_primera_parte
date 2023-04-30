@@ -4,6 +4,9 @@ import negocio.interfaces.IContrato;
 import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
+/**
+ * Clase abstracta que representa un contrato de alarma.
+ */
 public abstract class Contrato implements IContrato {
     private static int numero = 0;
     private int ID;

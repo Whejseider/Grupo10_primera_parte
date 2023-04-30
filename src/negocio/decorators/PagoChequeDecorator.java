@@ -2,6 +2,9 @@ package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 
+/**
+ * Decorador para pagos con cheque.
+ */
 public class PagoChequeDecorator extends PagoDecorator {
 	private final double modificador = 1.1;
 

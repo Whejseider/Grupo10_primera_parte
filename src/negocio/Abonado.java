@@ -9,6 +9,9 @@ import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
 import negocio.interfaces.IPromocion;
 
+/**
+ * Clase abstracta que representa un cliente.
+ */
 public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;

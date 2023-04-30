@@ -3,6 +3,9 @@ package negocio;
 import negocio.interfaces.IPromocion;
 import negocio.interfaces.IServicioAlarma;
 
+/**
+ * Subclase para contratos de comercio.
+ */
 public class ContratoComercio extends Contrato {
     private final double PRECIO_BASE = 10000;
 

@@ -3,6 +3,9 @@ package negocio;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IServicioAlarma;
 
+/**
+ * Factory para contratos.
+ */
 public class ContratoFactory {
 
     /**

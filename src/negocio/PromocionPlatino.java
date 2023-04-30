@@ -1,5 +1,8 @@
 package negocio;
 
+/**
+ * Subclase de Promocion para promos platino.
+ */
 public class PromocionPlatino extends Promocion {
 
     public PromocionPlatino() {

@@ -7,6 +7,11 @@ import negocio.PromocionPlatino;
 import negocio.ServicioAlarma;
 import negocio.SinPromocion;
 
+/**
+ * Clase con pruebas para la clase Contrato.
+ * 
+ * Se encarga de correr test para cálculo de precios e igualdad.
+ */
 public class PruebaContrato {
   private PromocionDorada promoDorada = new PromocionDorada();
   private PromocionPlatino promoPlatino = new PromocionPlatino();

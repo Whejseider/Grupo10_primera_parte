@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import negocio.interfaces.IFactura;
 import negocio.interfaces.IPromocion;
 
+/**
+ * Subclase para abonados de tipo físico.
+ */
 public class AbonadoFisico extends Abonado {
 
     /**

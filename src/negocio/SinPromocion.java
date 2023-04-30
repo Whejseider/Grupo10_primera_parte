@@ -1,5 +1,8 @@
 package negocio;
 
+/**
+ * Subclase de Promocion que no aplica descuentos.
+ */
 public class SinPromocion extends Promocion {
 
     public SinPromocion() {

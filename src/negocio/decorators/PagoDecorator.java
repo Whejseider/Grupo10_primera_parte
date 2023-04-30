@@ -9,8 +9,7 @@ import negocio.interfaces.IFactura;
 import negocio.interfaces.IPromocion;
 
 /**
- * Clase abstracta base para crear decoradores de pago. Este se puede utilizar
- * con cualquier clase que implemente la interfaz IFactura
+ * Clase abstracta base para crear decoradores de pago. 
  */
 public abstract class PagoDecorator implements IAbonado {
     private IAbonado abonado;

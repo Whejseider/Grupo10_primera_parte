@@ -2,6 +2,9 @@ package negocio.decorators;
 
 import negocio.interfaces.IAbonado;
 
+/**
+ * Decorador para pagos con tarjeta de crédito.
+ */
 public class PagoTarjetaCreditoDecorator extends PagoDecorator {
 	private final double modificador = 1.05;
 

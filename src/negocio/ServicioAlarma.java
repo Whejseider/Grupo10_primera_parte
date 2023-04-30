@@ -2,6 +2,9 @@ package negocio;
 
 import negocio.interfaces.IServicioAlarma;
 
+/**
+ * Gestor de los servicios adicionales de un contrato. 
+ */
 public class ServicioAlarma implements IServicioAlarma {
     private boolean tieneMovil;
     private int cantCamaras;

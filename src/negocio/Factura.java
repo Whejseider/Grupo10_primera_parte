@@ -2,6 +2,9 @@ package negocio;
 
 import negocio.interfaces.IFactura;
 
+/**
+ * Representa una factura con un concepto, subtotal y valor neto.
+ */
 public class Factura implements IFactura {
     private final String concepto;
     private final double subtotal;
@@ -10,6 +13,10 @@ public class Factura implements IFactura {
     private static int numero = 1;
 
     public Factura(String concepto, double subtotal, double valorNeto) {
+        assert concepto != null && !concepto.isEmpty();
+        assert subtotal >= 0;
+        assert valorNeto >= 0;
+        
         this.valorNeto = valorNeto;
         this.concepto = concepto;
         this.subtotal = subtotal;
@@ -29,6 +36,7 @@ public class Factura implements IFactura {
     }
 
     public void setValorNeto(double valorNeto) {
+        assert valorNeto >= 0;
         this.valorNeto = valorNeto;
     }
 
