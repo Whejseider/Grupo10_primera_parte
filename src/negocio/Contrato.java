@@ -12,10 +12,12 @@ public abstract class Contrato implements IContrato {
 
     /**
      * Constructor de la clase Contrato.
-     *  
-     * <b>pre: </b>: El domilicio debe estar definido y no ser vacío. El objeto servicio no puede ser nulo.
      * 
-     * @param domicilio El domicilio donde quedará registrado el contrato. Este se usa para verificar igualdad entre contratos.
+     * <b>pre: </b>: El domilicio debe estar definido y no ser vacío. El objeto
+     * servicio no puede ser nulo.
+     * 
+     * @param domicilio      El domicilio donde quedará registrado el contrato. Este
+     *                       se usa para verificar igualdad entre contratos.
      * @param servicioAlarma Los servicios adicionales a adjuntar al contrato.
      */
     public Contrato(String domicilio, IServicioAlarma servicioAlarma) {
@@ -81,21 +83,21 @@ public abstract class Contrato implements IContrato {
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
-    
+
     public String getDetalle(IPromocion promo) {
-    	// TODO: refactorizar y agregar el detalle de los servicios
-    	return "\nContrato N°"+this.ID+ "\nTotal $" + this.getPrecio(promo) + "\n";
+        // TODO: refactorizar y agregar el detalle de los servicios
+        return "\nContrato N°" + this.ID + "\nTotal $" + this.getPrecio(promo) + "\n";
     }
 
     /**
-     * Devuelve verdadero si dos contratos se consideran iguales. Son iguales si coincide su domicilio.<br>
+     * Devuelve verdadero si dos contratos se consideran iguales. Son iguales si
+     * coincide su domicilio.<br>
      * 
      * @param obj El objeto a comparar.
      * @return Verdadero si son iguales.
      */
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if (obj == this) {
             return true;
         }
@@ -106,29 +108,32 @@ public abstract class Contrato implements IContrato {
 
         Contrato contrato = (Contrato) obj;
 
-        //No es necesario fijarse si el ID es igual porque es autoincremental.
+        // No es necesario fijarse si el ID es igual porque es autoincremental.
         return this.domicilio.equals(contrato.getDomicilio());
     }
-    
+
     /**
      * Clona el contrato
      */
     @Override
     public IContrato clone() throws CloneNotSupportedException {
-    	Contrato contratoCloneado = (Contrato) super.clone();
-    	
-    	contratoCloneado.servicioAlarma = (ServicioAlarma) this.servicioAlarma.clone();
-    	
-    	return contratoCloneado;
+        Contrato contratoCloneado = (Contrato) super.clone();
+
+        contratoCloneado.servicioAlarma = (ServicioAlarma) this.servicioAlarma.clone();
+
+        return contratoCloneado;
     }
-   
+
     /**
      * Obtiene el precio con descuento por promoción del contrato.
      * 
-     * <b>pre:</b> La promocion debe estar definida 
+     * <b>pre:</b> La promocion debe estar definida
      * 
      * @param promocionActual La promo a aplicar.
      */
     public abstract double getPrecio(IPromocion promocionActual);
 
+    public String toString() {
+        return "contrato domicilio: " + this.domicilio + this.servicioAlarma.toString();
+    }
 }

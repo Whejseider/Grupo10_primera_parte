@@ -2,7 +2,7 @@ package negocio;
 
 import negocio.interfaces.IFactura;
 
-public class Factura implements IFactura, Cloneable {
+public class Factura implements IFactura {
 	private final String concepto;
 	private final double subtotal;
 	private double valorNeto;
@@ -14,6 +14,10 @@ public class Factura implements IFactura, Cloneable {
 		this.concepto = concepto;
 		this.subtotal = subtotal;
 		this.id = numero++;
+	}
+
+	public boolean equals(Factura factura) {
+		return factura.id == this.id;
 	}
 
 	public String getConcepto() {
