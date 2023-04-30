@@ -51,7 +51,6 @@ public abstract class PagoDecorator implements IAbonado {
     public IFactura generarFactura(IPromocion promo) throws SinContratosException {
         IFactura factura = this.getFacturable().generarFactura(promo);
         factura.setValorNeto(this.getPagoMedioDePago(promo));
-        this.agregarFactura(factura);
         return factura;
     }
 
