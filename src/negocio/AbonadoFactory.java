@@ -2,15 +2,15 @@ package negocio;
 
 import negocio.interfaces.IAbonado;
 
-
 public class AbonadoFactory {
 
     /**
      * Genera un abonado de cierto tipo<br>
      * Ya sea de tipo <b>Fisico</b> o <b>Juridico</b>
-     * @param tipo Tipo de abonado Fisico o Juridico
+     * 
+     * @param tipo   Tipo de abonado Fisico o Juridico
      * @param nombre Nombre del abonado
-     * @param dni DNI del abonado
+     * @param dni    DNI del abonado
      * @return abonado de tipo Fisico o Juridico
      */
     public static IAbonado getAbonado(String tipo, String nombre, String dni) {

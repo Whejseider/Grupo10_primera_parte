@@ -249,4 +249,8 @@ public abstract class Abonado implements IAbonado {
 
         return this.dni.equals(abonado.getDni());
     }
+
+    public String toString() {
+        return "\n dni: " + this.dni + "\n nombre: " + this.nombre;
+    }
 }

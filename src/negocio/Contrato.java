@@ -141,4 +141,7 @@ public abstract class Contrato implements IContrato {
      */
     public abstract double getPrecio(IPromocion promocionActual);
 
+    public String toString() {
+        return "contrato domicilio: " + this.domicilio + this.servicioAlarma.toString();
+    }
 }

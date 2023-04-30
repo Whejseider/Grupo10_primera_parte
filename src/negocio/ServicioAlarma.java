@@ -119,6 +119,12 @@ public class ServicioAlarma implements IServicioAlarma {
         return this.tieneMovil;
     }
 
+    public String toString() {
+        return " tieneMovil=" + tieneMovil +
+                ", cantCamaras=" + cantCamaras +
+                ", cantBotonesAntipanico=" + cantBotonesAntipanico;
+    }
+
     @Override
     public IServicioAlarma clone() throws CloneNotSupportedException {
         return (IServicioAlarma) super.clone();
