@@ -60,11 +60,6 @@ public abstract class PagoDecorator implements IAbonado {
     }
 
     @Override
-    public void facturar(IPromocion promo) throws SinContratosException {
-        this.agregarFactura(this.generarFactura(promo));
-    }
-
-    @Override
     public String getDetalleFacturas() {
         return this.abonado.getDetalleFacturas();
     }
