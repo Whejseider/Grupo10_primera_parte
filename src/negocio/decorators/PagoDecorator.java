@@ -1,5 +1,6 @@
 package negocio.decorators;
 
+import negocio.excepciones.SinContratosException;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
 import negocio.interfaces.IFactura;
@@ -48,7 +49,7 @@ public abstract class PagoDecorator implements IAbonado {
 	 * Delegacion de la obtención de detalle de pago al facturable
 	 */
 	@Override
-	public IFactura generarFactura(IPromocion promo) {
+	public IFactura generarFactura(IPromocion promo) throws SinContratosException {
 		IFactura factura = this.getFacturable().generarFactura(promo);
 		factura.setValorNeto(this.getPagoMedioDePago(promo));
 		return factura;
@@ -60,7 +61,7 @@ public abstract class PagoDecorator implements IAbonado {
 	}
 
 	@Override
-	public void facturar(IPromocion promo) {
+	public void facturar(IPromocion promo) throws SinContratosException {
 		this.agregarFactura(this.generarFactura(promo));
 	}
 
@@ -93,6 +94,11 @@ public abstract class PagoDecorator implements IAbonado {
 	@Override
 	public void agregaContrato(IContrato contrato) {
 		this.abonado.agregaContrato(contrato);
+	}
+	
+	@Override
+	public int cantidadDeFacturas() {
+		return this.abonado.cantidadDeFacturas();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package negocio;
 
 import negocio.interfaces.IFactura;
 
-public class Factura implements IFactura, Cloneable {
+public class Factura implements IFactura {
 	private final String concepto;
 	private final double subtotal;
 	private double valorNeto;
