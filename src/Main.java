@@ -16,7 +16,9 @@ public class Main {
         main.testContratoDuplicado();
         System.out.println("\n-------------------------------------------------------------\n");
         main.testCrearContratoYFacturarConDecorator();
-
+        main.testClonacionAbonadoFisico();
+        main.testClonacionAbonadoJuridico();
+        main.testClonacionFactura();
         main.muestraFacturasEmitidas();
     }
 
