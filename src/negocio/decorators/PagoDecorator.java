@@ -1,5 +1,7 @@
 package negocio.decorators;
 
+import java.util.ArrayList;
+
 import negocio.excepciones.SinContratosException;
 import negocio.interfaces.IAbonado;
 import negocio.interfaces.IContrato;
@@ -52,6 +54,10 @@ public abstract class PagoDecorator implements IAbonado {
         IFactura factura = this.getFacturable().generarFactura(promo);
         factura.setValorNeto(this.getPagoMedioDePago(promo));
         return factura;
+    }
+
+    public ArrayList<IFactura> getFacturasEmitidas() {
+        return this.abonado.getFacturasEmitidas();
     }
 
     @Override
