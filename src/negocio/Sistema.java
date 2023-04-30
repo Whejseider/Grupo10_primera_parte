@@ -3,7 +3,6 @@ package negocio;
 import java.util.ArrayList;
 
 import negocio.decorators.PagoChequeDecorator;
-import negocio.decorators.PagoDecorator;
 import negocio.decorators.PagoEfectivoDecorator;
 import negocio.decorators.PagoTarjetaCreditoDecorator;
 import negocio.excepciones.AbonadoDuplicadoException;

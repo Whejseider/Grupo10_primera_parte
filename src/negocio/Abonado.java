@@ -66,14 +66,16 @@ public abstract class Abonado implements IAbonado {
     }
 
     /**
-     * Devuelve una nueva factura con el estado actual de los contratos
+     * Devuelve una nueva factura con el estado actual de los contratos y la agrega
      */
     public IFactura generarFactura(IPromocion promo) throws SinContratosException {
+        assert promo != null;
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-
-        return new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+        IFactura factura = new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+        this.agregarFactura(factura);
+        return factura;
     }
 
     /**
@@ -82,16 +84,6 @@ public abstract class Abonado implements IAbonado {
     public void agregarFactura(IFactura factura) {
         assert factura != null;
         this.facturas.add(factura);
-    }
-
-    /**
-     * Genera una factura con el estado actual de los contratos del abonado, y se
-     * agrega a la lista de facturas.
-     */
-    public void facturar(IPromocion promo) throws SinContratosException {
-        assert promo != null;
-
-        this.agregarFactura(this.generarFactura(promo));
     }
 
     /**
