@@ -50,7 +50,7 @@ public class Sistema {
      */
     public IAbonado agregarAbonado(String tipo, String nombre, String dni) throws AbonadoDuplicadoException {
         IAbonado abonado = AbonadoFactory.getAbonado(tipo, nombre, dni);
-        if (abonados.contains(abonado))
+        if (!abonados.contains(abonado))
             abonados.add(abonado);
         else
             throw new AbonadoDuplicadoException(abonado);
