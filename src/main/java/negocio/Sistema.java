@@ -50,11 +50,11 @@ public class Sistema {
      */
     public IAbonado agregarAbonado(String tipo, String nombre, String dni) throws AbonadoDuplicadoException {
         IAbonado abonado = AbonadoFactory.getAbonado(tipo, nombre, dni);
-        if (abonados.contains(abonado))
+        if (!abonados.contains(abonado))
             abonados.add(abonado);
         else
             throw new AbonadoDuplicadoException(abonado);
-        
+
         return abonado;
     }
 
@@ -122,7 +122,7 @@ public class Sistema {
         for (IAbonado abonado : abonados)
             if (abonado.getDni().equals(dni))
                 return abonado;
-        
+
         throw new AbonadoNoExisteException(dni);
     }
 
@@ -141,7 +141,7 @@ public class Sistema {
 
     /**
      * Agrega un nuevo contrato a un abonado
-     * 
+     *
      * @param domicilio   El domicilio de contrato
      * @param tieneMovil  Si el contrato tiene movil
      * @param cantCamaras Cantidad de camaras a asignarse al contrato
@@ -150,7 +150,7 @@ public class Sistema {
      * @throws AbonadoNoExisteException Si no se pudo encontrar un abonado con el dni pasado.
      */
     public void agregarContrato(String dni, String tipo, String domicilio, boolean tieneMovil, int cantCamaras,
-            int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
+                                int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
 
         IContrato nuevoContrato = ContratoFactory.getContrato(tipo, domicilio, tieneMovil, cantBotones, cantCamaras);
         if (this.contratoExiste(nuevoContrato))
