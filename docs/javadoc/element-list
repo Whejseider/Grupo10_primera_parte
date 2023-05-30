@@ -1,6 +1,6 @@
 unnamed package
-negocio
-negocio.decorators
-negocio.excepciones
-negocio.interfaces
-prueba
+modelo
+modelo.decorators
+modelo.excepciones
+modelo.interfaces
+modelo.prueba

@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 
-import negocio.PromocionDorada;
-import negocio.Sistema;
-import negocio.excepciones.AbonadoDuplicadoException;
-import negocio.excepciones.ContratoDuplicadoException;
-import negocio.interfaces.IAbonado;
-import negocio.interfaces.IFactura;
+import modelo.PromocionDorada;
+import modelo.Sistema;
+import modelo.excepciones.AbonadoDuplicadoException;
+import modelo.excepciones.ContratoDuplicadoException;
+import modelo.interfaces.IAbonado;
+import modelo.interfaces.IFactura;
 
 public class Main {
     public static void main(String[] args) {
