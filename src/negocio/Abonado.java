@@ -80,7 +80,7 @@ public abstract class Abonado implements IAbonado {
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-        IFactura factura = new Factura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
         this.agregarFactura(factura);
         return factura;
     }

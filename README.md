@@ -16,7 +16,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 ## TODO
 
 ### Correcciones de la parte 1
-- [ ] Factory para facturas
+- [x] ~~Factory para facturas~~
 - [ ] Cambiar decorator a la factura
 - [ ] Agregar más comentarios y precondiciones
 - [ ] Clonación de abonados (BAUTISTA)
