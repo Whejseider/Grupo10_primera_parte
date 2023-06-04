@@ -1,4 +1,4 @@
-package vista;
+package vista.abonados;
 
 public class NuevoAbonadoDTO {
     private String nombre;

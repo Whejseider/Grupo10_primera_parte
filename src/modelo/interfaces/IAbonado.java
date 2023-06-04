@@ -13,6 +13,8 @@ public interface IAbonado extends Cloneable, IDetallable {
     public int cantidadDeFacturas();
 
     public boolean tieneContrato(IContrato contrato);
+    
+    public ArrayList<IContrato> getContratos();
 
     public String getDni();
 

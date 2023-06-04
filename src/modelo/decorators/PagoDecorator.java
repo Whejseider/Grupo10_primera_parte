@@ -94,6 +94,11 @@ public abstract class PagoDecorator implements IAbonado {
     public void agregaContrato(IContrato contrato) {
         this.abonado.agregaContrato(contrato);
     }
+    
+    @Override
+    public ArrayList<IContrato> getContratos() {
+        return this.abonado.getContratos();
+    }
 
     @Override
     public int cantidadDeFacturas() {

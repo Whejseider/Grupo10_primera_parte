@@ -1,4 +1,4 @@
-package vista;
+package vista.abonados;
 
 import java.util.List;
 
