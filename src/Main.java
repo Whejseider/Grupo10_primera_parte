@@ -1,25 +1,27 @@
 import java.util.ArrayList;
 
+import controlador.ControladorAbonados;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testAbonadoDuplicado();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testContratoDuplicado();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testCrearContratoYFacturarConDecorator();
-        main.testClonacionAbonadoFisico();
-        main.testClonacionAbonadoJuridico();
-        main.testClonacionFactura();
-        main.muestraFacturasEmitidas();
+        ControladorAbonados controlador  = new ControladorAbonados(new VentanaPrincipal(), Sistema.getInstance());
+    }
+    
+    public void correrPruebas() {
+        testAbonadoDuplicado();
+        testContratoDuplicado();
+        testCrearContratoYFacturarConDecorator();
+        testClonacionAbonadoFisico();
+        testClonacionAbonadoJuridico();
+        testClonacionFactura();
+        muestraFacturasEmitidas();
     }
 
     public void testAbonadoDuplicado() {
