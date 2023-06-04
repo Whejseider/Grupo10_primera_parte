@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
-import modelo.excepciones.AbonadoNoExisteException;
 import vista.InterfazVista;
 import vista.NuevoAbonadoDTO;
 
@@ -16,6 +15,7 @@ public class ControladorAbonados implements ActionListener {
     public ControladorAbonados(InterfazVista vista, Sistema modelo) {
         this.vista = vista;
         this.vista.setActionListener(this);
+        this.vista.actualizarTablaAbonados(modelo.getAbonados());
         this.modelo = modelo;
     }
     
@@ -30,6 +30,19 @@ public class ControladorAbonados implements ActionListener {
             }
         }
     }
+    
+    private void manejarBorrarAbonado() {
+        String dni = this.vista.obtenerAbonadoSeleccionado();
+        //Si no hay un abonado seleccionado no se hace nada
+        if (dni == null) {
+            return;
+        }
+        
+        if (this.vista.confirmarBorrarAbonado()) {
+            this.modelo.eliminarAbonado(dni);
+            this.vista.actualizarTablaAbonados(this.modelo.getAbonados());
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent evento){
@@ -38,6 +51,9 @@ public class ControladorAbonados implements ActionListener {
         switch(comando) {
             case InterfazVista.NUEVO_ABONADO:
                 manejarNuevoAbonado();
+                break;
+            case InterfazVista.BORRAR_ABONADO:
+                manejarBorrarAbonado();
                 break;
         }
     }
