@@ -98,18 +98,8 @@ public class Sistema {
      */
     public IFactura generarFactura(String dni, String medioDePago) throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
-        switch (medioDePago) {
-            case "cheque":
-                abonado = new PagoChequeDecorator(abonado);
-                break;
-            case "tarjeta":
-                abonado = new PagoTarjetaCreditoDecorator(abonado);
-                break;
-            default:
-                abonado = new PagoEfectivoDecorator(abonado);
-                break;
-        }
-        return abonado.generarFactura(this.promocionActiva);
+
+        return abonado.generarFactura(this.promocionActiva, medioDePago);
     }
 
     /**

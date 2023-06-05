@@ -51,7 +51,7 @@ public class Main {
         try {
             sistema.agregarAbonado("Fisico", "abonadoFiscio1", "dniFisico1");
             sistema.agregarContrato("dniFisico1", "Comercio", "domicilio2", false, 3, 2);
-            IFactura factura = sistema.generarFactura("dniFisico1", "cheque");
+            IFactura factura = sistema.generarFactura("dniFisico1", "EFECTIVO");
             System.out.println(factura.getDetalle());
         } catch (Exception e) {
         }
