@@ -36,8 +36,13 @@ public class ControladorAbonados implements ActionListener {
     
     private void manejarNuevoContrato() {
         NuevoContratoDTO dto = this.vista.pedirNuevoContrato();
-        String dni = this.vista.obtenerAbonadoSeleccionado();
         
+        if (dto == null) {
+            return;
+        }
+        
+        String dni = this.vista.obtenerAbonadoSeleccionado();
+                
         try {
             this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(), dto.getCantCamaras(), dto.getCantBotones());
             this.vista.actualizarDetallesAbonado(this.modelo.getAbonado(dni));

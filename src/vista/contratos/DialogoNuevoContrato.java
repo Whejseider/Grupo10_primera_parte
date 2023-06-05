@@ -5,15 +5,17 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
-
-import vista.abonados.NuevoAbonadoDTO;
+import javax.swing.SpinnerNumberModel;
 
 public class DialogoNuevoContrato {
     private JRadioButton radioVivienda, radioComercio;
-    private JTextField inputDomicilio, inputCamaras, inputBotones;
+    private JTextField inputDomicilio;
+    private JSpinner inputCamaras, inputBotones;
     private JCheckBox inputTieneMovil;
     private JFrame frame;
+    
 
     public DialogoNuevoContrato(JFrame frame) {
         this.frame = frame;
@@ -26,8 +28,12 @@ public class DialogoNuevoContrato {
         buttonGroup.add(radioComercio);
         
         this.inputDomicilio = new JTextField();
-        this.inputCamaras = new JTextField();
-        this.inputBotones = new JTextField();
+        
+        SpinnerNumberModel modeloBotones = new SpinnerNumberModel(0, 0, 99, 1);
+        SpinnerNumberModel modeloCamaras = new SpinnerNumberModel(0, 0, 99, 1);
+        this.inputBotones = new JSpinner(modeloBotones);
+        this.inputCamaras = new JSpinner(modeloCamaras);
+        
         this.inputTieneMovil = new JCheckBox();
     }
     
@@ -67,16 +73,19 @@ public class DialogoNuevoContrato {
         
         if (resultado == JOptionPane.OK_OPTION) {
             String domicilio = inputDomicilio.getText();
-            int camaras = Integer.parseInt(inputCamaras.getText());
-            int botones = Integer.parseInt(inputBotones.getText());
+            int camaras = (int) inputCamaras.getModel().getValue();
+            int botones = (int) inputBotones.getModel().getValue();
             boolean tieneMovil = inputTieneMovil.isSelected();
             String tipo = obtenerTipoContrato();
-
-            boolean condicion = true;
+            
+            
+            boolean condicion = !domicilio.isEmpty() && !tipo.isEmpty() && tipo != null;
+            
             if (!condicion) {
                 JOptionPane.showMessageDialog(frame, "Parametros invalidos!");
                 return this.pedirNuevoContrato();
             }
+            
             return new NuevoContratoDTO(tipo, domicilio, tieneMovil, camaras, botones );
         }
         
