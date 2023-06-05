@@ -15,12 +15,22 @@ public class PagoTarjetaCreditoDecorator extends PagoDecorator {
         super(factura);
     }
 
+
+    /**
+     * Obtiene los detalles de la factura y el valor neto con el aumento aplicado.
+     * Se usa un formato para los numeros flotantes
+     * @return los detalles de la factura y el valor neto con el aumento aplicado
+     */
     @Override
     public String getDetalle() {
         DecimalFormat numberFormat = new DecimalFormat("#.##");
         return this.getFactura().getDetalle() + "\n TOTAL: $" + numberFormat.format(this.getValorNeto()) + "\n";
     }
 
+    /**
+     * Obtiene el valor neto aplicado con el aumento por tarjeta de credito
+     * @return el valor neto con aumento por tarjeta de credito
+     */
     @Override
     public double getValorNeto() {
         return this.getFactura().getValorNeto() * modificador;
