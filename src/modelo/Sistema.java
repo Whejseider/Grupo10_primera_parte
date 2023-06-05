@@ -22,7 +22,7 @@ import modelo.interfaces.IPromocion;
 public class Sistema {
     private static Sistema instance = null;
     private ArrayList<IAbonado> abonados;
-    private IPromocion promocionActiva;
+    private IPromocion promocionActiva = new SinPromocion();
 
     private Sistema() {
         abonados = new ArrayList<IAbonado>();

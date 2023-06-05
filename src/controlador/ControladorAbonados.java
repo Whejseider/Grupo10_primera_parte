@@ -7,6 +7,7 @@ import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
+import modelo.excepciones.SinContratosException;
 import vista.InterfazVista;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
@@ -75,6 +76,31 @@ public class ControladorAbonados implements ActionListener {
             
         }
     }
+    
+    private void manejarPagarFactura(String medioDePago) {
+        String dni = this.vista.obtenerAbonadoSeleccionado();
+
+        try {                
+            this.modelo.generarFactura(dni, medioDePago);
+            this.vista.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
+        } catch (SinContratosException e) {
+            this.vista.mostrarAlertaPagarSinContratos();
+        } catch (AbonadoNoExisteException e) {
+            
+        }
+    }
+    
+    private void manejarPagarFacturaCheque() {
+        this.manejarPagarFactura("cheque");
+    }
+    
+    private void manejarPagarFacturaTarjeta() {
+        this.manejarPagarFactura("tarjeta");
+    }
+    
+    private void manejarPagarFacturaEfectivo() {
+        this.manejarPagarFactura("efectivo");
+    }
 
     @Override
     public void actionPerformed(ActionEvent evento){
@@ -92,6 +118,15 @@ public class ControladorAbonados implements ActionListener {
                 break;
             case InterfazVista.NUEVO_CONTRATO:
                 manejarNuevoContrato();
+                break;
+            case InterfazVista.PAGAR_FACTURA_EFECTIVO:
+                manejarPagarFacturaEfectivo();
+                break;
+            case InterfazVista.PAGAR_FACTURA_TARJETA:
+                manejarPagarFacturaTarjeta();
+                break;
+            case InterfazVista.PAGAR_FACTURA_CHEQUE:
+                manejarPagarFacturaCheque();
                 break;
         }
     }

@@ -2,8 +2,6 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -15,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
@@ -25,12 +24,14 @@ import javax.swing.event.ListSelectionListener;
 import modelo.AbonadoJuridico;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
+import modelo.interfaces.IFactura;
 import vista.abonados.DialogoNuevoAbonado;
 import vista.abonados.ModeloTablaAbonados;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.DialogoNuevoContrato;
 import vista.contratos.ModeloTablaContratos;
 import vista.contratos.NuevoContratoDTO;
+import vista.facturas.ModeloTablaFacturas;
 
 public class VentanaPrincipal implements InterfazVista, ChangeListener {
 
@@ -44,28 +45,36 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     private DialogoNuevoContrato dialogoNuevoContrato;
     
     private JPanel panel;
-    private JPanel panelContratos;
+    private JPanel panelPrincipalAbonado;
+    private JPanel panelAbonado;
     private JLabel lblNewLabel;
     private JButton botonNuevoAbonado;
-    private JPanel panel_1;
+    private JPanel panelAccionesAbonado;
     private JButton botonBorrarAbonado;
-    private JButton btnNewButton;
-    private JPanel panel_2;
+    private JPanel panelDatosAbonado;
     private JLabel labelNombreAbonado;
     private JLabel labelDniAbonado;
-    private JPanel panel_3;
+    private JPanel panelContratos;
     private JScrollPane panelTablaContratos;
     private JTable tablaContratos;
-    private JLabel tituloContratos;
     private JButton botonNuevoContrato;
     private JLabel labelTipoAbonado;
     private JLabel labelEstadoAbonado;
-    private JButton btnNewButton_2;
+    private JButton botonPagarEfectivo;
+    private JTabbedPane tabsAbonado;
+    private JPanel panelFacturas;
+    private JScrollPane panelTablaFacturas;
+    private JTable tablaFacturas;
+    private JButton botonPagarTarjeta;
+    private JButton botonPagarCheque;
     
     public void setActionListener(ActionListener listener) {
         this.botonNuevoAbonado.addActionListener(listener);
         this.botonBorrarAbonado.addActionListener(listener);
         this.botonNuevoContrato.addActionListener(listener);
+        this.botonPagarTarjeta.addActionListener(listener);
+        this.botonPagarCheque.addActionListener(listener);
+        this.botonPagarEfectivo.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -83,9 +92,9 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
      */
     private void initialize() {
         this.frame = new JFrame();
-        this.frame.setBounds(100, 100, 928, 656);
+        this.frame.setBounds(100, 100, 922, 678);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.getContentPane().setLayout(new GridLayout(0, 2, 0, 0));
+        this.frame.getContentPane().setLayout(new BoxLayout(this.frame.getContentPane(), BoxLayout.X_AXIS));
         
         this.panelAbonados = new JPanel();
         this.panelAbonados.setBorder(new EmptyBorder(16, 16, 16, 16));
@@ -120,62 +129,84 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.botonNuevoAbonado.setActionCommand(InterfazVista.NUEVO_ABONADO);
         this.panelAbonados.add(this.botonNuevoAbonado, BorderLayout.SOUTH);
         
-        this.panelContratos = new JPanel();
-        this.panelContratos.setBorder(new EmptyBorder(24, 16, 16, 16));
-        this.frame.getContentPane().add(this.panelContratos);
-        this.panelContratos.setLayout(new BoxLayout(this.panelContratos, BoxLayout.Y_AXIS));
-        this.panelContratos.setVisible(false);
+        this.panelAbonado = new JPanel();
+        this.panelAbonado.setBorder(new EmptyBorder(24, 16, 16, 16));
+        this.frame.getContentPane().add(this.panelAbonado);
+        this.panelAbonado.setVisible(false);
+        this.panelAbonado.setLayout(new BorderLayout(0, 0));
         
-        this.panel_1 = new JPanel();
-        this.panel_1.setBorder(new EmptyBorder(0, 0, 4, 0));
-        this.panelContratos.add(this.panel_1);
-        this.panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        this.panelAccionesAbonado = new JPanel();
+        this.panelAccionesAbonado.setBorder(new EmptyBorder(0, 8, 4, 0));
+        this.panelAbonado.add(this.panelAccionesAbonado, BorderLayout.EAST);
+        this.panelAccionesAbonado.setLayout(new BoxLayout(this.panelAccionesAbonado, BoxLayout.Y_AXIS));
         
         this.botonBorrarAbonado = new JButton("Borrar abonado");
         this.botonBorrarAbonado.setActionCommand(InterfazVista.BORRAR_ABONADO);
-        this.panel_1.add(this.botonBorrarAbonado);
+        this.panelAccionesAbonado.add(this.botonBorrarAbonado);
         
-        this.btnNewButton = new JButton("Ver facturas");
-        this.panel_1.add(this.btnNewButton);
+        this.botonPagarEfectivo = new JButton("Pagar con efectivo");
+        this.botonPagarEfectivo.setActionCommand(InterfazVista.PAGAR_FACTURA_EFECTIVO);
+        this.panelAccionesAbonado.add(this.botonPagarEfectivo);
         
-        this.btnNewButton_2 = new JButton("Pagar");
-        this.panel_1.add(this.btnNewButton_2);
+        this.botonPagarTarjeta = new JButton("Pagar con tarjeta");
+        this.botonPagarTarjeta.setActionCommand(InterfazVista.PAGAR_FACTURA_TARJETA);
+        this.panelAccionesAbonado.add(this.botonPagarTarjeta);
         
-        this.panel_2 = new JPanel();
-        this.panel_2.setAlignmentX(Component.LEFT_ALIGNMENT);
-        this.panel_2.setBorder(new EmptyBorder(8, 8, 8, 8));
-        this.panelContratos.add(this.panel_2);
-        this.panel_2.setLayout(new BoxLayout(this.panel_2, BoxLayout.Y_AXIS));
+        this.botonPagarCheque = new JButton("Pagar con cheque");
+        this.botonPagarCheque.setActionCommand(InterfazVista.PAGAR_FACTURA_CHEQUE);
+        this.panelAccionesAbonado.add(this.botonPagarCheque);
+        
+        this.panelPrincipalAbonado = new JPanel();
+        this.panelPrincipalAbonado.setLayout(new BorderLayout(0, 0));
+        
+        this.panelDatosAbonado = new JPanel();
+        this.panelDatosAbonado.setAlignmentX(Component.LEFT_ALIGNMENT);
+        this.panelDatosAbonado.setBorder(new EmptyBorder(8, 8, 8, 8));
+        this.panelPrincipalAbonado.add(this.panelDatosAbonado, BorderLayout.NORTH);
+        this.panelDatosAbonado.setLayout(new BoxLayout(this.panelDatosAbonado, BoxLayout.Y_AXIS));
         
         this.labelNombreAbonado = new JLabel("Nombre: Bautista");
-        this.panel_2.add(this.labelNombreAbonado);
+        this.panelDatosAbonado.add(this.labelNombreAbonado);
         
         this.labelDniAbonado = new JLabel("DNI: 12412");
-        this.panel_2.add(this.labelDniAbonado);
+        this.panelDatosAbonado.add(this.labelDniAbonado);
         
         this.labelTipoAbonado = new JLabel("Tipo: JURIDICO");
-        this.panel_2.add(this.labelTipoAbonado);
+        this.panelDatosAbonado.add(this.labelTipoAbonado);
         
         this.labelEstadoAbonado = new JLabel("Estado: MOROSO");
-        this.panel_2.add(this.labelEstadoAbonado);
+        this.panelDatosAbonado.add(this.labelEstadoAbonado);
         
-        this.panel_3 = new JPanel();
-        this.panelContratos.add(this.panel_3);
-        this.panel_3.setLayout(new BorderLayout(0, 0));
+        this.panelContratos = new JPanel();
+        this.panelContratos.setLayout(new BorderLayout(0, 0));
         
         this.panelTablaContratos = new JScrollPane();
-        this.panel_3.add(this.panelTablaContratos, BorderLayout.CENTER);
+        this.panelContratos.add(this.panelTablaContratos, BorderLayout.CENTER);
         
         this.tablaContratos = new JTable(new ModeloTablaContratos());
         this.tablaContratos.setFillsViewportHeight(true);
         this.panelTablaContratos.setViewportView(this.tablaContratos);
         
-        this.tituloContratos = new JLabel("CONTRATOS");
-        this.panel_3.add(this.tituloContratos, BorderLayout.NORTH);
-        
         this.botonNuevoContrato = new JButton("Nuevo Contrato");
         this.botonNuevoContrato.setActionCommand(InterfazVista.NUEVO_CONTRATO);
-        this.panel_3.add(this.botonNuevoContrato, BorderLayout.SOUTH);
+        this.panelContratos.add(this.botonNuevoContrato, BorderLayout.SOUTH);
+        
+        this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
+        this.tabsAbonado.addTab("Contratos", this.panelContratos);
+        this.panelPrincipalAbonado.add(this.tabsAbonado);
+        
+        this.panelFacturas = new JPanel();
+        this.panelFacturas.setLayout(new BorderLayout(0, 0));
+        
+        
+        this.panelTablaFacturas = new JScrollPane();
+        this.panelFacturas.add(this.panelTablaFacturas);
+        
+        this.tablaFacturas = new JTable(new ModeloTablaFacturas());
+        this.tablaFacturas.setFillsViewportHeight(true);
+        this.panelTablaFacturas.setViewportView(this.tablaFacturas);
+        this.tabsAbonado.addTab("Facturas",this.panelFacturas);
+        this.panelAbonado.add(this.panelPrincipalAbonado);
         this.frame.setVisible(true);
     }
 
@@ -218,6 +249,10 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         return false;
     }
     
+    private ModeloTablaFacturas getModeloTablaFacturas() {
+        return (ModeloTablaFacturas) this.tablaFacturas.getModel();
+    }
+    
     private ModeloTablaAbonados getModeloTablaAbonados() {
         return (ModeloTablaAbonados) this.tablaAbonados.getModel();
     }
@@ -256,15 +291,17 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     @Override
     public void actualizarDetallesAbonado(IAbonado abonado) {
         if (this.obtenerAbonadoSeleccionado() == null) {
-            this.panelContratos.setVisible(false);
+            this.panelAbonado.setVisible(false);
             return;
         }
         
-        this.panelContratos.setVisible(true);
+        this.panelAbonado.setVisible(true);
         this.actualizarTablaContratos(abonado.getContratos());
+        this.actualizarTablaFacturas(abonado.getFacturasEmitidas());
         this.labelDniAbonado.setText("Dni: " + abonado.getDni());
         this.labelNombreAbonado.setText("Nombre: " + abonado.getNombre());
         //TODO: Implementar funciones de getIsFisico y demas a abonado, esto esta mal
+        
         this.labelTipoAbonado.setText("Tipo: " + (abonado instanceof AbonadoJuridico ? "Juridico" : "Fisico"));
         
     }
@@ -272,6 +309,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     public NuevoContratoDTO pedirNuevoContrato() {
         return this.dialogoNuevoContrato.pedirNuevoContrato();
     }
+    
     /**
      * Actualiza la tabla de contratos con datos nuevos
      * 
@@ -280,5 +318,20 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     @Override
     public void actualizarTablaContratos(List<IContrato> contratos) {
         this.getModeloTablaContratos().actualizar(contratos);
+    }
+    
+    /**
+     * Actualiza la tabla de facturas con datos nuevos
+     * 
+     * @param facturas Los facturas a utilizar
+     */
+    @Override
+    public void actualizarTablaFacturas(List<IFactura> facturas) {
+        this.getModeloTablaFacturas().actualizar(facturas);
+    }
+    
+    @Override
+    public void mostrarAlertaPagarSinContratos() {
+        JOptionPane.showMessageDialog(this.frame, "El abonado necesita al menos 1 contrato para poder abonar");
     }
 }
