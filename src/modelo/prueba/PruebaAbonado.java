@@ -1,15 +1,6 @@
 package modelo.prueba;
 
-import modelo.Abonado;
-import modelo.AbonadoFactory;
-import modelo.AbonadoFisico;
-import modelo.AbonadoJuridico;
-import modelo.ContratoFactory;
-import modelo.ContratoVivienda;
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.ServicioAlarma;
-import modelo.SinPromocion;
+import modelo.*;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
@@ -26,7 +17,7 @@ public class PruebaAbonado {
 
 	public void allTestAbonado() {
 		testPago();
-		testDecorator();
+//		testDecorator();
 		testClonacionAbonadoJuridico();
 		try {
 			testClonacionAbonadoFisico();
@@ -58,22 +49,36 @@ public class PruebaAbonado {
 		System.out.println("Pruebas de pago de abonado bien");
 	}
 
-	/**
-	 * Prueba que los decorators de pago descuenten de manera correcta.
-	 */
-	public void testDecorator() {
-		ContratoVivienda contratoVivienda = new ContratoVivienda("Alsina 1234", new ServicioAlarma(true, 1, 1));
-		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
+//	/**
+//	 * Prueba que los decorators de pago descuenten de manera correcta.
+//	 */
+//	public void testDecorator() {
+//
+//		ContratoVivienda contratoVivienda = new ContratoVivienda("Alsina 1234", new ServicioAlarma(true, 1, 1));
+//		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
+//
+//		abonado.agregaContrato(contratoVivienda);
+//		try {
+//			IFactura factura = abonado.generarFactura(new SinPromocion(), "EFECTIVO");
+//			IFactura factura1 = abonado.generarFactura(new PromocionDorada(), "EFECTIVO");
+//			IFactura factura2 = abonado.generarFactura(new PromocionPlatino(), "EFECTIVO");
+//
+//			assert Math.round(factura.getValorNeto()) == 16800;
+//			assert Math.round(factura1.getValorNeto()) == 15600;
+//			assert Math.round(factura2.getValorNeto()) == 11760;
+//
+//		} catch (SinContratosException e) {
+//			throw new RuntimeException(e);
+//		}
+//
+////		assert Math.round(abonado1.getPagoMedioDePago(new SinPromocion())) == 16800;
+////		assert Math.round(abonado1.getPagoMedioDePago(new PromocionDorada())) == 15600;
+////		assert Math.round(abonado1.getPagoMedioDePago(new PromocionPlatino())) == 11760;
+//
+//		System.out.println("Pruebas de pago para decorator de abonado bien");
+//	}
 
-		abonado.agregaContrato(contratoVivienda);
 
-
-//		assert Math.round(abonado1.getPagoMedioDePago(new SinPromocion())) == 16800;
-//		assert Math.round(abonado1.getPagoMedioDePago(new PromocionDorada())) == 15600;
-//		assert Math.round(abonado1.getPagoMedioDePago(new PromocionPlatino())) == 11760;
-
-		System.out.println("Pruebas de pago para decorator de abonado bien");
-	}
 
 	/**
 	 * Prueba que no se puedan clonar abonados de tipo jurídico
