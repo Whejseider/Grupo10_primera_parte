@@ -33,7 +33,8 @@ public class ConContrataciones implements IEstadoFisico {
         assert (contrato != null);
 
         this.abonado.agregaContrato(contrato);
-        if (this.abonado.cantidadFacturasSinPagarSeguidas() >= 2) {
+        int cantFactSinPagarSeg = this.abonado.cantidadFacturasSinPagarSeguidas();
+        if (cantFactSinPagarSeg >= 2) {
             this.abonado.setEstado(new Moroso(this.abonado));
             System.out.println("Ahora el estado es Moroso"); //Test
         }

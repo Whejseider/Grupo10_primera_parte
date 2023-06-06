@@ -57,23 +57,21 @@ public class Main {
         try {
             sistema.agregarAbonado("Fisico", "abonadoFiscio1", "dniFisico1");
             IAbonado abonado = sistema.getAbonado("dniFisico1");
+
             sistema.agregarContrato("dniFisico1", "Comercio", "domicilio2", false, 3, 2);
             IFactura factura1 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio3", false, 3, 2);
             IFactura factura2 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
-            sistema.agregarContrato("dniFisico1", "Comercio", "domicilio4", false, 3, 2);
-            IFactura factura = sistema.generarFactura("dniFisico1", "EFECTIVO");
-            abonado.pagarFactura(factura);
-            abonado.pagarFactura(factura1);
-
+//            abonado.pagarFactura(factura1);
 
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio5", false, 3, 2);
             IFactura factura3 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
             System.out.println("********************************");
-            System.out.println(factura1.getDetalle());
+            abonado.pagarFactura(factura3);
+            System.out.println(abonado.getFacturasEmitidas().get(2).getDetalle());
             System.out.println("********************************");
 
         } catch (ContratoDuplicadoException e) {
