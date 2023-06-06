@@ -1,12 +1,6 @@
 package modelo.decorators;
 
-import java.util.ArrayList;
-
-import modelo.excepciones.SinContratosException;
-import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
 
 /**
  * Clase abstracta base para crear decoradores de pago.

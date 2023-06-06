@@ -1,10 +1,5 @@
 package modelo;
 
-import java.util.ArrayList;
-
-import modelo.decorators.PagoChequeDecorator;
-import modelo.decorators.PagoEfectivoDecorator;
-import modelo.decorators.PagoTarjetaCreditoDecorator;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
@@ -13,6 +8,8 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+
+import java.util.ArrayList;
 
 /**
  * Singleton del sistema. El sistema se encarga de la creación 

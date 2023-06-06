@@ -1,11 +1,6 @@
 package modelo.prueba;
 
-import modelo.ContratoComercio;
-import modelo.ContratoVivienda;
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.ServicioAlarma;
-import modelo.SinPromocion;
+import modelo.*;
 
 /**
  * Clase con pruebas para la clase Contrato.

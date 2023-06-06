@@ -1,8 +1,8 @@
 package modelo.interfaces;
 
-import java.util.ArrayList;
-
 import modelo.excepciones.SinContratosException;
+
+import java.util.ArrayList;
 
 public interface IAbonado extends Cloneable, IDetallable {
 

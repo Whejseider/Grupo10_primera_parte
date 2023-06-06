@@ -1,6 +1,5 @@
 package modelo.decorators;
 
-import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
 
 import java.text.DecimalFormat;

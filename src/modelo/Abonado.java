@@ -1,13 +1,13 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Clase abstracta que representa un cliente.
