@@ -13,7 +13,7 @@ public class SinContratacion implements IEstadoFisico {
     @Override
     public void pagarFactura(IFactura factura) {
         //TO DO
-        throw new UnsupportedOperationException("Operacion no permitida");
+        throw new UnsupportedOperationException("Operacion no permitida"); //Test
     }
 
     /**
@@ -26,13 +26,13 @@ public class SinContratacion implements IEstadoFisico {
 
         this.abonado.agregaContrato(contrato);
         this.abonado.setEstado(new ConContrataciones(this.abonado));
-        System.out.println("Ahora el estado es ConContrataciones");
+        System.out.println("Ahora el estado es ConContrataciones"); //Test
     }
 
     @Override
     public void bajaDeServicio(IContrato contrato) {
         //TO DO
-        throw new UnsupportedOperationException("Operacion no permitida");
+        throw new UnsupportedOperationException("Operacion no permitida"); //Test
 
     }
 

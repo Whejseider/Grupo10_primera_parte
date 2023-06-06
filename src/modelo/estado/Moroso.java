@@ -24,19 +24,19 @@ public class Moroso implements IEstadoFisico {
         factura.setPagada(true);
         if (this.abonado.cantidadFacturasSinPagarSeguidas()<2) {
             this.abonado.setEstado(new ConContrataciones(this.abonado));
-            System.out.println("Ahora el estado es Con Contrataciones");
+            System.out.println("Ahora el estado es Con Contrataciones"); //Test
         }
     }
 
     @Override
     public void contratarNuevoServicio(IContrato contrato) {
-        throw new UnsupportedOperationException("Operacion no permitida");
+        throw new UnsupportedOperationException("Operacion no permitida"); //Test
 
     }
 
     @Override
     public void bajaDeServicio(IContrato contrato) {
-        throw new UnsupportedOperationException("Operacion no permitida");
+        throw new UnsupportedOperationException("Operacion no permitida"); //Test
 
     }
 

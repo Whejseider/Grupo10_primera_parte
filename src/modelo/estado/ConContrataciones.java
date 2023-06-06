@@ -35,7 +35,7 @@ public class ConContrataciones implements IEstadoFisico {
         this.abonado.agregaContrato(contrato);
         if (this.abonado.cantidadFacturasSinPagarSeguidas() >= 2) {
             this.abonado.setEstado(new Moroso(this.abonado));
-            System.out.println("Ahora el estado es Moroso");
+            System.out.println("Ahora el estado es Moroso"); //Test
         }
     }
 
@@ -51,7 +51,7 @@ public class ConContrataciones implements IEstadoFisico {
         System.out.println("Se ha dado de baja el contrato");
         if (this.abonado.getContratos().size() == 0) {
             this.abonado.setEstado(new SinContratacion(this.abonado));
-            System.out.println("Ahora el estado es Sin Contratacion");
+            System.out.println("Ahora el estado es Sin Contratacion"); //Test
         }
     }
 
