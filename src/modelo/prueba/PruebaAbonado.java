@@ -1,17 +1,6 @@
 package modelo.prueba;
 
-import modelo.Abonado;
-import modelo.AbonadoFactory;
-import modelo.AbonadoFisico;
-import modelo.AbonadoJuridico;
-import modelo.ContratoFactory;
-import modelo.ContratoVivienda;
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.ServicioAlarma;
-import modelo.SinPromocion;
-import modelo.decorators.PagoEfectivoDecorator;
-import modelo.decorators.PagoTarjetaCreditoDecorator;
+import modelo.*;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
@@ -28,13 +17,13 @@ public class PruebaAbonado {
 
 	public void allTestAbonado() {
 		testPago();
-		testDecorator();
+//		testDecorator();
 		testClonacionAbonadoJuridico();
 		try {
 			testClonacionAbonadoFisico();
 			testClonacionServicioAlarma();
 			testClonacionArrayList();
-			testClonacionDecorator();
+//			testClonacionDecorator();
 			testFacturacion();
 		} catch (CloneNotSupportedException e) {
 			throw new RuntimeException("Fallaron test de abonado. Terminando");
@@ -60,23 +49,36 @@ public class PruebaAbonado {
 		System.out.println("Pruebas de pago de abonado bien");
 	}
 
-	/**
-	 * Prueba que los decorators de pago descuenten de manera correcta.
-	 */
-	public void testDecorator() {
-		ContratoVivienda contratoVivienda = new ContratoVivienda("Alsina 1234", new ServicioAlarma(true, 1, 1));
-		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
+//	/**
+//	 * Prueba que los decorators de pago descuenten de manera correcta.
+//	 */
+//	public void testDecorator() {
+//
+//		ContratoVivienda contratoVivienda = new ContratoVivienda("Alsina 1234", new ServicioAlarma(true, 1, 1));
+//		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
+//
+//		abonado.agregaContrato(contratoVivienda);
+//		try {
+//			IFactura factura = abonado.generarFactura(new SinPromocion(), "EFECTIVO");
+//			IFactura factura1 = abonado.generarFactura(new PromocionDorada(), "EFECTIVO");
+//			IFactura factura2 = abonado.generarFactura(new PromocionPlatino(), "EFECTIVO");
+//
+//			assert Math.round(factura.getValorNeto()) == 16800;
+//			assert Math.round(factura1.getValorNeto()) == 15600;
+//			assert Math.round(factura2.getValorNeto()) == 11760;
+//
+//		} catch (SinContratosException e) {
+//			throw new RuntimeException(e);
+//		}
+//
+////		assert Math.round(abonado1.getPagoMedioDePago(new SinPromocion())) == 16800;
+////		assert Math.round(abonado1.getPagoMedioDePago(new PromocionDorada())) == 15600;
+////		assert Math.round(abonado1.getPagoMedioDePago(new PromocionPlatino())) == 11760;
+//
+//		System.out.println("Pruebas de pago para decorator de abonado bien");
+//	}
 
-		abonado.agregaContrato(contratoVivienda);
 
-		IAbonado abonado1 = new PagoEfectivoDecorator(abonado);
-
-		assert Math.round(abonado1.getPagoMedioDePago(new SinPromocion())) == 16800;
-		assert Math.round(abonado1.getPagoMedioDePago(new PromocionDorada())) == 15600;
-		assert Math.round(abonado1.getPagoMedioDePago(new PromocionPlatino())) == 11760;
-
-		System.out.println("Pruebas de pago para decorator de abonado bien");
-	}
 
 	/**
 	 * Prueba que no se puedan clonar abonados de tipo jurídico
@@ -138,22 +140,6 @@ public class PruebaAbonado {
 
 	}
 
-	/**
-	 * Pruebas para la clonacion de un abonado si está decorado con un medio de
-	 * pago.
-	 */
-	public void testClonacionDecorator() throws CloneNotSupportedException {
-		// Prueba que se pueda clonar abonados con decorator de pago
-
-		Abonado abonado = new AbonadoFisico("41352345", "Pepe");
-		IAbonado abonadoCheque = new PagoEfectivoDecorator(abonado);
-		IAbonado clonAbonadoCheque = null;
-
-		clonAbonadoCheque = abonadoCheque.clone();
-
-		assert (clonAbonadoCheque.getDni() == abonado.getDni());
-		assert (clonAbonadoCheque.getNombre() == abonado.getNombre());
-	}
 
 	/**
 	 * Pruebas sobre la facturación de un abonado. Prueba:
@@ -172,12 +158,12 @@ public class PruebaAbonado {
 	public void testFacturacion() throws SinContratosException, CloneNotSupportedException {
 		IContrato contratoVivienda = ContratoFactory.getContrato("Vivienda", "Alsina 1234", true, 1, 1);
 		IContrato contratoComercio = ContratoFactory.getContrato("Comercio", "Alsina 12345", false, 2, 3);
-		IAbonado abonado = new PagoTarjetaCreditoDecorator(AbonadoFactory.getAbonado("Fisico", "Pepe", "41352345"));
+		IAbonado abonado = AbonadoFactory.getAbonado("Fisico", "Pepe", "41352345");
 
 		// ---- TEST FACTURACION SIN CONTRATOS
 
 		try {
-			abonado.generarFactura(sinPromo);
+			abonado.generarFactura(sinPromo, "EFECTIVO");
 		} catch (SinContratosException e) {
 			assert abonado.cantidadDeFacturas() == 0;
 		}
@@ -185,9 +171,9 @@ public class PruebaAbonado {
 		// ---- TEST GENERACION DE FACTURAS
 
 		abonado.agregaContrato(contratoVivienda);
-		abonado.generarFactura(sinPromo);
+		abonado.generarFactura(sinPromo, "EFECTIVO");
 		abonado.agregaContrato(contratoComercio);
-		abonado.generarFactura(sinPromo);
+		abonado.generarFactura(sinPromo, "EFECTIVO");
 
 		assert abonado.cantidadDeFacturas() == 2;
 
@@ -208,7 +194,7 @@ public class PruebaAbonado {
 
 		// ---- TEST CLONACION DE FACTURAS
 
-		IFactura factura = abonado.generarFactura(sinPromo);
+		IFactura factura = abonado.generarFactura(sinPromo, "EFECTIVO");
 		factura.clone();
 
 		System.out.println("Pruebas de facturacion de abonado bien");

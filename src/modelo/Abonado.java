@@ -1,13 +1,13 @@
 package modelo;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Clase abstracta que representa un cliente.
@@ -75,12 +75,12 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve una nueva factura con el estado actual de los contratos y la agrega
      */
-    public IFactura generarFactura(IPromocion promo) throws SinContratosException {
+    public IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException {
         assert promo != null;
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo));
+        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo), medioDePago);
         this.agregarFactura(factura);
         return factura;
     }

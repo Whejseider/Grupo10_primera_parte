@@ -1,117 +1,52 @@
 package modelo.decorators;
 
-import java.util.ArrayList;
-
-import modelo.excepciones.SinContratosException;
-import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
 
 /**
- * Clase abstracta base para crear decoradores de pago. 
+ * Clase abstracta base para crear decoradores de pago.
  */
-public abstract class PagoDecorator implements IAbonado {
-    private IAbonado abonado;
+public abstract class PagoDecorator implements IFactura {
+    private IFactura factura;
 
     /**
      * Crea un nuevo decorator a partir de una clase que implemente IFactura.
-     * 
-     * @param abonado El facturable a decorar
+     *
+     * @param factura El facturable a decorar
      */
-    public PagoDecorator(IAbonado abonado) {
-        assert abonado != null : "El facturable no puede ser nulo";
+    public PagoDecorator(IFactura factura) {
+        assert factura != null : "El facturable no puede ser nulo";
 
-        this.abonado = abonado;
+        this.factura = factura;
     }
 
-    protected IAbonado getFacturable() {
-        return this.abonado;
-    }
-
-    /**
-     * Delegacion del calculo de pago neto al facturable
-     */
-    @Override
-    public double getPagoNeto(IPromocion promo) {
-        return this.getFacturable().getPagoNeto(promo);
-    }
-
-    /**
-     * Obtiene el precio total a pagar multiplicado por el modificador del
-     * decorador.
-     */
-    public double getPagoMedioDePago(IPromocion promo) {
-        return this.getPagoNeto(promo) * this.getModificador();
-    }
-
-    /**
-     * Delegacion de la obtención de detalle de pago al facturable
-     */
-    @Override
-    public IFactura generarFactura(IPromocion promo) throws SinContratosException {
-        IFactura factura = this.getFacturable().generarFactura(promo);
-        factura.setValorNeto(this.getPagoMedioDePago(promo));
+    public IFactura getFactura() {
         return factura;
     }
 
-    public ArrayList<IFactura> getFacturasEmitidas() {
-        return this.abonado.getFacturasEmitidas();
+    public void setFactura(IFactura factura) {
+        this.factura = factura;
     }
 
     @Override
-    public void agregarFactura(IFactura factura) {
-        this.getFacturable().agregarFactura(factura);
+    public String getConcepto() {
+        return this.factura.getConcepto();
     }
 
     @Override
-    public String getDetalleFacturas() {
-        return this.abonado.getDetalleFacturas();
+    public double getSubtotal() {
+        return this.factura.getSubtotal();
     }
 
     @Override
-    public IAbonado clone() throws CloneNotSupportedException {
+    public void setValorNeto(double valorNeto) {
+        this.factura.setValorNeto(valorNeto);
+    }
+
+    @Override
+    public IFactura clone() throws CloneNotSupportedException {
+
         PagoDecorator clonDecorator = (PagoDecorator) super.clone();
-        clonDecorator.abonado = abonado.clone();
+        clonDecorator.factura = factura.clone();
         return clonDecorator;
-    }
-
-    /**
-     * Obtiene el modificador de pago. Este se multiplicará por el precio neto del
-     * facturable.
-     */
-    protected abstract double getModificador();
-
-    public String getNombre() {
-        return this.abonado.getNombre();
-    }
-
-    public String getDni() {
-        return this.abonado.getDni();
-    }
-
-    @Override
-    public void agregaContrato(IContrato contrato) {
-        this.abonado.agregaContrato(contrato);
-    }
-
-    @Override
-    public int cantidadDeFacturas() {
-        return this.abonado.cantidadDeFacturas();
-    }
-
-    @Override
-    public int cantidadDeContratos() {
-        return this.abonado.cantidadDeContratos();
-    }
-
-    @Override
-    public boolean tieneContrato(IContrato contrato) {
-        return this.abonado.tieneContrato(contrato);
-    }
-
-    @Override
-    public String getDetalle(IPromocion promo) {
-        return this.abonado.getDetalle(promo);
     }
 }

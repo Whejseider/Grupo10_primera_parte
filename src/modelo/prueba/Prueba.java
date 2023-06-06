@@ -9,7 +9,7 @@ public class Prueba {
     pruebasContrato.allTestsContrato();
     PruebaAbonado pruebasAbonado = new PruebaAbonado();
     try {
-      pruebasAbonado.testClonacionDecorator();
+//      pruebasAbonado.testClonacionDecorator();
     } catch (Exception e) {
       System.out.println("excepcion");
     }

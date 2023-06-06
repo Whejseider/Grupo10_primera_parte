@@ -1,8 +1,8 @@
 package modelo.interfaces;
 
-import java.util.ArrayList;
-
 import modelo.excepciones.SinContratosException;
+
+import java.util.ArrayList;
 
 public interface IAbonado extends Cloneable, IDetallable {
 
@@ -36,7 +36,7 @@ public interface IAbonado extends Cloneable, IDetallable {
      */
     public double getPagoMedioDePago(IPromocion promo);
 
-    public IFactura generarFactura(IPromocion promo) throws SinContratosException;
+    public IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException;
 
     public void agregarFactura(IFactura factura);
 

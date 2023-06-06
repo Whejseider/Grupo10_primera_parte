@@ -50,7 +50,7 @@ public class Factura implements IFactura {
         detalle.append("FACTURA N°" + id + "\n\n");
         detalle.append(concepto + "\n");
         detalle.append("SUBTOTAL: $" + subtotal + "\n");
-        detalle.append("TOTAL: $" + valorNeto + "\n");
+//        detalle.append("TOTAL: $" + valorNeto + "\n");
 
         return detalle.toString();
     }

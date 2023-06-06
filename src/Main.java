@@ -1,11 +1,11 @@
-import java.util.ArrayList;
-
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class Main {
         try {
             sistema.agregarAbonado("Fisico", "abonadoFiscio1", "dniFisico1");
             sistema.agregarContrato("dniFisico1", "Comercio", "domicilio2", false, 3, 2);
-            IFactura factura = sistema.generarFactura("dniFisico1", "cheque");
+            IFactura factura = sistema.generarFactura("dniFisico1", "EFECTIVO");
             System.out.println(factura.getDetalle());
         } catch (Exception e) {
         }
