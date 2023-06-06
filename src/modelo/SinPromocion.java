@@ -7,6 +7,7 @@ public class SinPromocion extends Promocion {
 
     public SinPromocion() {
         this.nominal = true;
+        this.descuentoVivienda = 0;
         this.descuentoComercio = 0;
     }
 
