@@ -17,7 +17,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 
 ### Correcciones de la parte 1
 - [x] ~~Factory para facturas~~
-- [x] Cambiar decorator a la factura
+- [x] ~~Cambiar decorator a la factura~~
 - [ ] Agregar más comentarios y precondiciones
 - [ ] Clonación de abonados (BAUTISTA)
 
@@ -31,7 +31,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 
 - [ ] **Abonados**
   - [ ] Histórico de facturas
-  - [ ] Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?)
+  - [ ] Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?) **Pull request abierto**
 
 
 - [ ] **Sistema**
