@@ -8,6 +8,7 @@ import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.excepciones.SinContratosException;
+import modelo.interfaces.IFactura;
 import vista.InterfazVista;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
@@ -64,6 +65,7 @@ public class ControladorAbonados implements ActionListener {
         if (this.vista.confirmarBorrarAbonado()) {
             this.modelo.eliminarAbonado(dni);
             this.vista.actualizarTablaAbonados(this.modelo.getAbonados());
+            this.vista.actualizarDetallesAbonado(null);
         }
     }
     
@@ -101,6 +103,14 @@ public class ControladorAbonados implements ActionListener {
     private void manejarPagarFacturaEfectivo() {
         this.manejarPagarFactura("efectivo");
     }
+    
+    private void manejarMostrarFactura(int idFactura) {
+        for (IFactura factura : this.modelo.getFacturasEmitidas()) {
+            if (factura.getId() == idFactura) {
+                this.vista.mostrarDialogoFactura(factura);
+            }
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent evento){
@@ -127,6 +137,9 @@ public class ControladorAbonados implements ActionListener {
                 break;
             case InterfazVista.PAGAR_FACTURA_CHEQUE:
                 manejarPagarFacturaCheque();
+                break;
+            case InterfazVista.MOSTRAR_FACTURA:
+                manejarMostrarFactura((int) evento.getSource());
                 break;
         }
     }

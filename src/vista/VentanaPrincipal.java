@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -15,11 +16,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.event.MouseInputAdapter;
 
 import modelo.AbonadoJuridico;
 import modelo.interfaces.IAbonado;
@@ -204,6 +207,20 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         
         this.tablaFacturas = new JTable(new ModeloTablaFacturas());
         this.tablaFacturas.setFillsViewportHeight(true);
+        this.tablaFacturas.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    int selectedRow = tablaFacturas.getSelectedRow();
+                    if (selectedRow != -1) {
+                        int id = (int) tablaFacturas.getValueAt(selectedRow, 0);
+                        ActionEvent event = new ActionEvent(id, 0, "MOSTRAR_FACTURA");
+                        actionListener.actionPerformed(event);
+                    }
+                }
+            }
+        });
+
         this.panelTablaFacturas.setViewportView(this.tablaFacturas);
         this.tabsAbonado.addTab("Facturas",this.panelFacturas);
         this.panelAbonado.add(this.panelPrincipalAbonado);
@@ -333,5 +350,12 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     @Override
     public void mostrarAlertaPagarSinContratos() {
         JOptionPane.showMessageDialog(this.frame, "El abonado necesita al menos 1 contrato para poder abonar");
+    }
+    
+    @Override
+    public void mostrarDialogoFactura(IFactura factura) {
+        JTextArea textarea = new JTextArea();
+        textarea.setText(factura.getConcepto());
+        JOptionPane.showMessageDialog(this.frame, textarea);
     }
 }

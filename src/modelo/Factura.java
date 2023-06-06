@@ -34,6 +34,10 @@ public class Factura implements IFactura {
     public double getValorNeto() {
         return valorNeto;
     }
+    
+    public int getId() {
+        return id;
+    }
 
     public void setValorNeto(double valorNeto) {
         assert valorNeto >= 0;

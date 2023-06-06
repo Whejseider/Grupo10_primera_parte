@@ -10,7 +10,7 @@ import modelo.interfaces.IFactura;
 
 public class ModeloTablaFacturas extends DefaultTableModel {
     private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"Fecha", "Subtotal", "Total"};
+    private String[] columnNames = {"ID", "Fecha", "Subtotal", "Total"};
     
     @Override
     public boolean isCellEditable(int row, int column){  
@@ -33,7 +33,7 @@ public class ModeloTablaFacturas extends DefaultTableModel {
             double subtotal = factura.getSubtotal();
             double total = factura.getValorNeto();
             
-            Object[] row = {fecha, "$" + subtotal, "$" + BigDecimal.valueOf(total)
+            Object[] row = {factura.getId(), fecha, "$" + subtotal, "$" + BigDecimal.valueOf(total)
             .setScale(3, RoundingMode.HALF_UP)
             .doubleValue()};
             this.addRow(row);

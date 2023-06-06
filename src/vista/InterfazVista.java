@@ -19,6 +19,8 @@ public interface InterfazVista {
     static final String PAGAR_FACTURA_TARJETA = "PAGAR_FACTURA_TARJETA";
     static final String PAGAR_FACTURA_EFECTIVO = "PAGAR_FACTURA_EFECTIVO";
     
+    static final String MOSTRAR_FACTURA = "MOSTRAR_FACTURA";
+    
     public void setActionListener(ActionListener actionListener);
     
     public void mostrarAlertaAbonadoYaExiste();
@@ -34,4 +36,5 @@ public interface InterfazVista {
     
     public void actualizarTablaFacturas(List<IFactura> facturas);
     public void mostrarAlertaPagarSinContratos();
+    public void mostrarDialogoFactura(IFactura factura);
 }

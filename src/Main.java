@@ -4,13 +4,19 @@ import controlador.ControladorAbonados;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
+import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
+import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
 import vista.VentanaPrincipal;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ContratoDuplicadoException, AbonadoNoExisteException, AbonadoDuplicadoException, SinContratosException {
+        Sistema sistema = Sistema.getInstance();
+        sistema.agregarAbonado("juridico", "Bautista", "234234455");
+        sistema.agregarContrato("234234455", "vivienda", "alsina 1234", false, 0, 0);
+        sistema.generarFactura("234234455", "cheque");
         ControladorAbonados controlador  = new ControladorAbonados(new VentanaPrincipal(), Sistema.getInstance());
     }
     
