@@ -10,7 +10,7 @@ import modelo.interfaces.IFactura;
  */
 public class FacturaFactory {
     /**
-     * Genera una nueva factura
+     * Genera una nueva factura y aplica patrón decorator al total
      *
      * @param concepto  El concepto de la factura
      * @param subtotal  El subtotal de la factura, sin descuentos aplicados

@@ -6,19 +6,21 @@ import java.util.ArrayList;
 
 public interface IAbonado extends Cloneable, IDetallable {
 
-    public void agregaContrato(IContrato contrato);
+    void agregaContrato(IContrato contrato);
 
-    public int cantidadDeContratos();
+    void eliminaContrato(IContrato contrato);
 
-    public int cantidadDeFacturas();
+    int cantidadDeContratos();
 
-    public boolean tieneContrato(IContrato contrato);
+    int cantidadDeFacturas();
 
-    public String getDni();
+    boolean tieneContrato(IContrato contrato);
 
-    public String getNombre();
+    String getDni();
 
-    public IAbonado clone() throws CloneNotSupportedException;
+    String getNombre();
+
+    IAbonado clone() throws CloneNotSupportedException;
 
     /**
      * Obtiene el pago neto previo a cualquier descuento sobre el total.
@@ -26,7 +28,7 @@ public interface IAbonado extends Cloneable, IDetallable {
      * @param promo La promoción a aplicar
      * @return El precio total.
      */
-    public double getPagoNeto(IPromocion promo);
+    double getPagoNeto(IPromocion promo);
 
     /**
      * Obtiene el pago total calculado con el medio de pago
@@ -34,14 +36,23 @@ public interface IAbonado extends Cloneable, IDetallable {
      * @param promo La promoción a aplicar
      * @return El precio total descontado.
      */
-    public double getPagoMedioDePago(IPromocion promo);
+    double getPagoMedioDePago(IPromocion promo);
 
-    public IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException;
+    IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException;
 
-    public void agregarFactura(IFactura factura);
+    void agregarFactura(IFactura factura);
 
-    public String getDetalleFacturas();
+    String getDetalleFacturas();
 
-    public ArrayList<IFactura> getFacturasEmitidas();
+    ArrayList<IFactura> getFacturasEmitidas();
+
+    ArrayList<IContrato> getContratos();
+
+    void pagarFactura(IFactura factura) ;
+
+    void contratarNuevoServicio(IContrato contrato);
+
+
+    void bajaDeServicio(IContrato contrato) ;
 
 }

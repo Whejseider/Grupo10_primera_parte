@@ -1,8 +1,14 @@
+import modelo.AbonadoFisico;
+import modelo.ContratoFactory;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
+import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
+import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
+import modelo.interfaces.IContrato;
+import modelo.interfaces.IEstadoFisico;
 import modelo.interfaces.IFactura;
 
 import java.util.ArrayList;
@@ -50,10 +56,34 @@ public class Main {
         sistema.setPromocion(new PromocionDorada());
         try {
             sistema.agregarAbonado("Fisico", "abonadoFiscio1", "dniFisico1");
+            IAbonado abonado = sistema.getAbonado("dniFisico1");
             sistema.agregarContrato("dniFisico1", "Comercio", "domicilio2", false, 3, 2);
+            IFactura factura1 = sistema.generarFactura("dniFisico1", "EFECTIVO");
+
+            sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio3", false, 3, 2);
+            IFactura factura2 = sistema.generarFactura("dniFisico1", "EFECTIVO");
+
+            sistema.agregarContrato("dniFisico1", "Comercio", "domicilio4", false, 3, 2);
             IFactura factura = sistema.generarFactura("dniFisico1", "EFECTIVO");
-            System.out.println(factura.getDetalle());
-        } catch (Exception e) {
+            abonado.pagarFactura(factura);
+            abonado.pagarFactura(factura1);
+
+
+            sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio5", false, 3, 2);
+            IFactura factura3 = sistema.generarFactura("dniFisico1", "EFECTIVO");
+
+            System.out.println("********************************");
+            System.out.println(factura1.getDetalle());
+            System.out.println("********************************");
+
+        } catch (ContratoDuplicadoException e) {
+            throw new RuntimeException(e);
+        } catch (AbonadoDuplicadoException e) {
+            throw new RuntimeException(e);
+        } catch (SinContratosException e) {
+            throw new RuntimeException(e);
+        } catch (AbonadoNoExisteException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -64,8 +94,10 @@ public class Main {
             IAbonado abonado = sistema.getAbonado("dniFisico");
             IAbonado abonadoClon = abonado.clone();
             assert (abonadoClon.equals(abonado));
-        } catch (Exception e) {
-
+        } catch (AbonadoNoExisteException e) {
+            throw new RuntimeException(e);
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
 
     }
@@ -84,11 +116,15 @@ public class Main {
     public void testClonacionFactura() {
         Sistema sistema = Sistema.getInstance();
         try {
-            IFactura factura = sistema.generarFactura("dniJuridico", "efectivo");
+            IFactura factura = sistema.generarFactura("dniFisico1", "efectivo");
             IFactura facturaClon = factura.clone();
             assert (facturaClon.equals(factura));
-        } catch (Exception e) {
-
+        } catch (SinContratosException e) {
+            throw new RuntimeException(e);
+        } catch (AbonadoNoExisteException e) {
+            throw new RuntimeException(e);
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
         }
 
     }

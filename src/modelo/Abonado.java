@@ -1,11 +1,9 @@
 package modelo;
 
 import modelo.excepciones.SinContratosException;
-import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
-import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
+import modelo.interfaces.*;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -47,6 +45,7 @@ public abstract class Abonado implements IAbonado {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
+
 
     /**
      * Genera un detalle de los contratos actuales del abonado.
@@ -121,6 +120,7 @@ public abstract class Abonado implements IAbonado {
      * 
      * @return La lista de contratos.
      */
+    @Override
     public ArrayList<IContrato> getContratos() {
         return contratos;
     }
@@ -178,6 +178,23 @@ public abstract class Abonado implements IAbonado {
     @Override
     public int cantidadDeContratos() {
         return this.contratos.size();
+    }
+
+    /**
+     * Obtiene la cantidad de facturas seguidas sin parar hasta un maximo de 2
+     * @return La cantidad de facturas seguidas sin parar hasta un maximo de 2
+     */
+    public int cantidadFacturasSinPagarSeguidas(){
+        int i = 0;
+        Iterator<IFactura> it = this.getFacturas().iterator();
+        while(i<2 && it.hasNext()){
+            if (!it.next().isPagada())
+                i++;
+            else
+                i = 0;
+        }
+
+        return i;
     }
 
     /**
@@ -251,5 +268,9 @@ public abstract class Abonado implements IAbonado {
 
     public String toString() {
         return "\n dni: " + this.dni + "\n nombre: " + this.nombre;
+    }
+
+    public void eliminaContrato(IContrato contrato){
+        this.contratos.remove(contrato);
     }
 }

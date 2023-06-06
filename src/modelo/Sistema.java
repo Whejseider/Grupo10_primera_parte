@@ -127,8 +127,8 @@ public class Sistema {
     }
 
     /**
-     * Agrega un nuevo contrato a un abonado
-     * 
+     * Agrega un nuevo contrato a un abonado<br>
+     * Si es abonado fisico hace uso del patron State
      * @param domicilio   El domicilio de contrato
      * @param tieneMovil  Si el contrato tiene movil
      * @param cantCamaras Cantidad de camaras a asignarse al contrato
@@ -143,7 +143,7 @@ public class Sistema {
         if (this.contratoExiste(nuevoContrato))
             throw new ContratoDuplicadoException(nuevoContrato);
 
-        getAbonado(dni).agregaContrato(nuevoContrato);
+        getAbonado(dni).contratarNuevoServicio(nuevoContrato);
 
     }
 

@@ -19,6 +19,16 @@ public abstract class PagoDecorator implements IFactura {
         this.factura = factura;
     }
 
+    @Override
+    public boolean isPagada() {
+        return this.factura.isPagada();
+    }
+
+    @Override
+    public void setPagada(boolean pagada) {
+        this.factura.setPagada(pagada);
+    }
+
     public IFactura getFactura() {
         return factura;
     }
