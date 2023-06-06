@@ -8,7 +8,6 @@ public class SinPromocion extends Promocion {
     public SinPromocion() {
         this.nominal = true;
         this.descuentoComercio = 0;
-        this.descuentoComercio = 0;
     }
 
     @Override
