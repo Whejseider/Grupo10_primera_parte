@@ -1,16 +1,20 @@
 package modelo.interfaces;
 
 public interface IFactura extends Cloneable {
-	public String getDetalle();
+    boolean isPagada();
 
-	public String getConcepto();
+    void setPagada(boolean pagada);
 
-	public double getSubtotal();
+    String getDetalle();
 
-	public double getValorNeto();
+    String getConcepto();
 
-	public void setValorNeto(double valorNeto);
+    double getSubtotal();
 
-	public IFactura clone() throws CloneNotSupportedException;
+    double getValorNeto();
+
+    void setValorNeto(double valorNeto);
+
+    IFactura clone() throws CloneNotSupportedException;
 
 }
