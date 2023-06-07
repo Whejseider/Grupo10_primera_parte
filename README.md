@@ -31,7 +31,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 
 - [ ] **Abonados**
   - [ ] Histórico de facturas
-  - [ ] Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?) **Pull request abierto**
+  - [x] ~~Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?)~~
 
 
 - [ ] **Sistema**
