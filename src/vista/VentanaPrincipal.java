@@ -320,8 +320,8 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         //TODO: Implementar funciones de getIsFisico y demas a abonado, esto esta mal
         
         this.labelTipoAbonado.setText("Tipo: " + (abonado instanceof AbonadoJuridico ? "Juridico" : "Fisico"));
-        
     }
+    
     @Override
     public NuevoContratoDTO pedirNuevoContrato() {
         return this.dialogoNuevoContrato.pedirNuevoContrato();

@@ -41,6 +41,11 @@ public abstract class PagoDecorator implements IFactura {
     public String getConcepto() {
         return this.factura.getConcepto();
     }
+    
+    @Override
+    public int getId() {
+        return this.factura.getId();
+    }
 
     @Override
     public double getSubtotal() {

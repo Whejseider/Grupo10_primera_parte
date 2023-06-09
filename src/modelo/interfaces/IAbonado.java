@@ -16,8 +16,6 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     public boolean tieneContrato(IContrato contrato);
 
-    public ArrayList<IContrato> getContratos();
-
     String getDni();
 
     String getNombre();
