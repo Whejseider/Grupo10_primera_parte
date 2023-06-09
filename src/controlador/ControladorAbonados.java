@@ -3,6 +3,9 @@ package controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import modelo.PromocionDorada;
+import modelo.PromocionPlatino;
+import modelo.SinPromocion;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
@@ -21,6 +24,7 @@ public class ControladorAbonados implements ActionListener {
         this.vista = vista;
         this.vista.setActionListener(this);
         this.vista.actualizarTablaAbonados(modelo.getAbonados());
+        this.vista.actualizarBotonesPromocion(modelo.getPromocion());
         this.modelo = modelo;
     }
     
@@ -111,6 +115,22 @@ public class ControladorAbonados implements ActionListener {
             }
         }
     }
+    
+    private void manejarQuitarPromocion() {
+        //TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
+        this.modelo.setPromocion(new SinPromocion());
+        this.vista.actualizarBotonesPromocion(this.modelo.getPromocion());
+    }
+    
+    private void manejarPromocionDorada() {
+        this.modelo.setPromocion(new PromocionDorada());
+        this.vista.actualizarBotonesPromocion(this.modelo.getPromocion());
+    }
+    
+    private void manejarPromocionPlatino() {
+        this.modelo.setPromocion(new PromocionPlatino());
+        this.vista.actualizarBotonesPromocion(this.modelo.getPromocion());
+    }
 
     @Override
     public void actionPerformed(ActionEvent evento){
@@ -140,6 +160,15 @@ public class ControladorAbonados implements ActionListener {
                 break;
             case InterfazVista.MOSTRAR_FACTURA:
                 manejarMostrarFactura((int) evento.getSource());
+                break;
+            case InterfazVista.PROMOCION_NINGUNA:
+                manejarQuitarPromocion();
+                break;
+            case InterfazVista.PROMOCION_DORADA:
+                manejarPromocionDorada();
+                break;
+            case InterfazVista.PROMOCION_PLATINO:
+                manejarPromocionPlatino();
                 break;
         }
     }

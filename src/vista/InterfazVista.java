@@ -6,6 +6,7 @@ import java.util.List;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
+import modelo.interfaces.IPromocion;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
 
@@ -20,6 +21,10 @@ public interface InterfazVista {
     static final String PAGAR_FACTURA_EFECTIVO = "PAGAR_FACTURA_EFECTIVO";
     
     static final String MOSTRAR_FACTURA = "MOSTRAR_FACTURA";
+    
+    static final String PROMOCION_NINGUNA = "PROMOCION_NINGUNA";
+    static final String PROMOCION_PLATINO = "PROMOCION_PLATINO";
+    static final String PROMOCION_DORADA = "PROMOCION_DORADA";
     
     public void setActionListener(ActionListener actionListener);
     
@@ -37,4 +42,6 @@ public interface InterfazVista {
     public void actualizarTablaFacturas(List<IFactura> facturas);
     public void mostrarAlertaPagarSinContratos();
     public void mostrarDialogoFactura(IFactura factura);
+    
+    public void actualizarBotonesPromocion(IPromocion promo);
 }

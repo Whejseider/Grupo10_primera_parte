@@ -1,7 +1,9 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,16 +20,19 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.MouseInputAdapter;
 
-import modelo.AbonadoJuridico;
+import modelo.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
+import modelo.interfaces.IPromocion;
 import vista.abonados.DialogoNuevoAbonado;
 import vista.abonados.ModeloTablaAbonados;
 import vista.abonados.NuevoAbonadoDTO;
@@ -70,6 +75,13 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
     private JTable tablaFacturas;
     private JButton botonPagarTarjeta;
     private JButton botonPagarCheque;
+    private JPanel panelAccionesSistema;
+    private JPanel panelPromociones;
+    private JButton botonSinPromocion;
+    private JButton botonPromocionDorada;
+    private JButton botonPromocionPlatino;
+    private JPanel panelTecnicos;
+    private JButton botonGestionarTecnicos;
     
     public void setActionListener(ActionListener listener) {
         this.botonNuevoAbonado.addActionListener(listener);
@@ -78,6 +90,10 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.botonPagarTarjeta.addActionListener(listener);
         this.botonPagarCheque.addActionListener(listener);
         this.botonPagarEfectivo.addActionListener(listener);
+        this.botonSinPromocion.addActionListener(listener);
+        this.botonPromocionPlatino.addActionListener(listener);
+        this.botonPromocionDorada.addActionListener(listener);
+        this.botonGestionarTecnicos.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -97,11 +113,11 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.frame = new JFrame();
         this.frame.setBounds(100, 100, 922, 678);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.getContentPane().setLayout(new BoxLayout(this.frame.getContentPane(), BoxLayout.X_AXIS));
+        this.frame.getContentPane().setLayout(new BorderLayout(0, 0));
         
         this.panelAbonados = new JPanel();
         this.panelAbonados.setBorder(new EmptyBorder(16, 16, 16, 16));
-        this.frame.getContentPane().add(this.panelAbonados);
+        this.frame.getContentPane().add(this.panelAbonados, BorderLayout.WEST);
         
         this.tablaAbonados = new JTable(new ModeloTablaAbonados());
         this.tablaAbonados.setFillsViewportHeight(true);
@@ -134,7 +150,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         
         this.panelAbonado = new JPanel();
         this.panelAbonado.setBorder(new EmptyBorder(24, 16, 16, 16));
-        this.frame.getContentPane().add(this.panelAbonado);
+        this.frame.getContentPane().add(this.panelAbonado, BorderLayout.CENTER);
         this.panelAbonado.setVisible(false);
         this.panelAbonado.setLayout(new BorderLayout(0, 0));
         
@@ -224,6 +240,35 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelTablaFacturas.setViewportView(this.tablaFacturas);
         this.tabsAbonado.addTab("Facturas",this.panelFacturas);
         this.panelAbonado.add(this.panelPrincipalAbonado);
+        
+        this.panelAccionesSistema = new JPanel();
+        this.panelAccionesSistema.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
+        this.frame.getContentPane().add(this.panelAccionesSistema, BorderLayout.NORTH);
+        
+        this.panelPromociones = new JPanel();
+        FlowLayout flowLayout = (FlowLayout) this.panelPromociones.getLayout();
+        flowLayout.setAlignment(FlowLayout.LEFT);
+        this.panelPromociones.setBorder(new TitledBorder(null, "Promociones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelAccionesSistema.add(this.panelPromociones);
+        
+        this.botonSinPromocion = new JButton("Sin Promocion");
+        this.botonSinPromocion.setActionCommand(InterfazVista.PROMOCION_NINGUNA);
+        this.panelPromociones.add(this.botonSinPromocion);
+        
+        this.botonPromocionDorada = new JButton("Promocion Dorada");
+        this.botonPromocionDorada.setActionCommand(InterfazVista.PROMOCION_DORADA);;
+        this.panelPromociones.add(this.botonPromocionDorada);
+        
+        this.botonPromocionPlatino = new JButton("Promocion Platino");
+        this.botonPromocionPlatino.setActionCommand(InterfazVista.PROMOCION_PLATINO);
+        this.panelPromociones.add(this.botonPromocionPlatino);
+        
+        this.panelTecnicos = new JPanel();
+        this.panelTecnicos.setBorder(new TitledBorder(null, "Tecnicos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelAccionesSistema.add(this.panelTecnicos);
+        
+        this.botonGestionarTecnicos = new JButton("Gestionar Tecnicos");
+        this.panelTecnicos.add(this.botonGestionarTecnicos);
         this.frame.setVisible(true);
     }
 
@@ -357,5 +402,26 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         JTextArea textarea = new JTextArea();
         textarea.setText(factura.getConcepto());
         JOptionPane.showMessageDialog(this.frame, textarea);
+    }
+    
+    @Override
+    public void actualizarBotonesPromocion(IPromocion promo) {
+        //TODO refactorizar, se pueden hacer subclases de jbutton que implementen
+        //su propia logica de enable
+        if (promo instanceof SinPromocion) {
+            this.botonSinPromocion.setEnabled(false);
+            this.botonPromocionDorada.setEnabled(true);
+            this.botonPromocionPlatino.setEnabled(true);
+        }
+        if (promo instanceof PromocionDorada) {
+            this.botonSinPromocion.setEnabled(true);
+            this.botonPromocionDorada.setEnabled(false);
+            this.botonPromocionPlatino.setEnabled(true);
+        }
+        if (promo instanceof PromocionPlatino) {
+            this.botonSinPromocion.setEnabled(true);
+            this.botonPromocionDorada.setEnabled(true);
+            this.botonPromocionPlatino.setEnabled(false);
+        }
     }
 }

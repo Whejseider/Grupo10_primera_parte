@@ -76,6 +76,10 @@ public class Sistema {
     public void setPromocion(IPromocion promocion) {
         this.promocionActiva = promocion;
     }
+    
+    public IPromocion getPromocion() {
+        return this.promocionActiva;
+    }
 
     /**
      * Obtiene una lista con todos los abonados activos del sistema.
