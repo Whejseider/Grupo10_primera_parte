@@ -1,17 +1,15 @@
-import modelo.AbonadoFisico;
-import modelo.ContratoFactory;
+import java.util.ArrayList;
+
+import modelo.AbonadoFactory;
 import modelo.PromocionDorada;
 import modelo.Sistema;
+import modelo.Tecnico;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
-import modelo.interfaces.IEstadoFisico;
 import modelo.interfaces.IFactura;
-
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -26,6 +24,7 @@ public class Main {
         main.testClonacionAbonadoJuridico();
         main.testClonacionFactura();
         main.muestraFacturasEmitidas();
+        main.testHilos();
     }
 
     public void testAbonadoDuplicado() {
@@ -134,6 +133,32 @@ public class Main {
             System.out.println(factura.getDetalle());
         }
 
+    }
+    
+    public void testHilos() {
+    	Sistema sistema = Sistema.getInstance();
+    	Tecnico t1=sistema.agregarTecnico("tec1");
+    	Tecnico t2=sistema.agregarTecnico("tec2");
+    	Tecnico t3=sistema.agregarTecnico("tec3");
+    	  
+    	t1.start();
+    	t2.start();
+    	t3.start(); 
+    	
+    	
+    	IAbonado a1=AbonadoFactory.getAbonado("Juridico", "nom1", "dni1");
+    	sistema.solicitarVisita(a1);
+    	IAbonado a2=AbonadoFactory.getAbonado("Juridico", "nom2", "dni2");
+    	sistema.solicitarVisita(a2);
+    	IAbonado a3=AbonadoFactory.getAbonado("Juridico", "nom3", "dni3");
+    	sistema.solicitarVisita(a3);
+    	IAbonado a4=AbonadoFactory.getAbonado("Juridico", "nom4", "dni4");
+    	sistema.solicitarVisita(a4);
+    	IAbonado a5=AbonadoFactory.getAbonado("Juridico", "nom5", "dni5");
+    	sistema.solicitarVisita(a5);
+    	IAbonado a6=AbonadoFactory.getAbonado("Juridico", "nom6", "dni6");
+    	sistema.solicitarVisita(a6);
+    	
     }
 
 }

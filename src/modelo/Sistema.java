@@ -20,9 +20,11 @@ public class Sistema {
     private static Sistema instance = null;
     private ArrayList<IAbonado> abonados;
     private IPromocion promocionActiva;
-
+    ArrayList<IAbonado> listaDeEspera;
+    
     private Sistema() {
         abonados = new ArrayList<IAbonado>();
+        listaDeEspera = new ArrayList<IAbonado>();
     }
 
     /**
@@ -158,4 +160,41 @@ public class Sistema {
                 facturas.addAll(abonado.getFacturasEmitidas());
         return facturas;
     }
+    /**
+     * da de alta a los tecnicos de la empresa
+     * @param nombre
+     * @return tecnico
+     */
+    public Tecnico agregarTecnico(String nombre) {
+    	Tecnico tecnico=new Tecnico(nombre);
+    	return tecnico;
+    }
+    
+    /**
+     * agrega a un abonado a la lista de espera de una visita de un tecnico
+     * @param abonado
+     */
+    public synchronized void solicitarVisita(IAbonado abonado) {
+    	listaDeEspera.add(abonado);
+    	notifyAll();
+    	
+    }
+    
+    /**
+     * asigna un abonado a un tecnico
+     * @param tecnico
+     * @return un abonado
+     */
+    public synchronized IAbonado asignarAbonado(Tecnico tecnico) {
+        while (listaDeEspera.isEmpty()) {
+            try {
+                wait(); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        IAbonado abonado = listaDeEspera.remove(0);
+        return abonado;
+    }
+   
 }
