@@ -32,9 +32,22 @@ public class Tecnico extends Thread {
     	Sistema sistema= Sistema.getInstance();
         while (true) {
             abonado=sistema.asignarAbonado(this);
-            sistema.visitarAbonado(this, abonado);
+            this.visitarAbonado( abonado);
         }
     }
     
-    
+    /**
+     * visita un tecnico a un abonado
+     * @param abonado
+     */
+    public void visitarAbonado(IAbonado abonado) {
+        System.out.println("Técnico " + this.getNombre() + " visitando a " + abonado.getNombre());
+        try {
+            this.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("Técnico " + this.getNombre() + " ha terminado la visita a " + abonado.getNombre());
+    }
 }

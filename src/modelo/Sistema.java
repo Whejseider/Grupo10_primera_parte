@@ -196,19 +196,5 @@ public class Sistema {
         IAbonado abonado = listaDeEspera.remove(0);
         return abonado;
     }
-    /**
-     * visita un tecnico a un abonado
-     * @param tecnico
-     * @param abonado
-     */
-    public void visitarAbonado(Tecnico tecnico,IAbonado abonado) {
-        System.out.println("Técnico " + tecnico.getNombre() + " visitando a " + abonado.getNombre());
-        try {
-            tecnico.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Técnico " + tecnico.getNombre() + " ha terminado la visita a " + abonado.getNombre());
-    }
+   
 }
