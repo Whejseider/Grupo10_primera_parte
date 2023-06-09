@@ -86,6 +86,10 @@ public abstract class Contrato implements IContrato {
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
+    
+    public int getIdentificador() {
+        return this.ID;
+    }
 
     /**
      * Genera una string con el detalle del contrato, con su total y contrataciones.
@@ -133,6 +137,21 @@ public abstract class Contrato implements IContrato {
         contratoCloneado.servicioAlarma = (ServicioAlarma) this.servicioAlarma.clone();
 
         return contratoCloneado;
+    }
+    
+    @Override
+    public boolean getTieneMovil() {
+        return this.servicioAlarma.getTieneMovil();
+    }
+    
+    @Override
+    public int getCantCamaras() {
+        return this.servicioAlarma.getCantCamaras();
+    }
+    
+    @Override
+    public int getCantBotones() {
+        return this.servicioAlarma.getCantBotonesAntipanico();
     }
 
     /**

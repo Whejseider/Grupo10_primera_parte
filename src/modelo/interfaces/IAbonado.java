@@ -14,7 +14,9 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     int cantidadDeFacturas();
 
-    boolean tieneContrato(IContrato contrato);
+    public boolean tieneContrato(IContrato contrato);
+
+    public ArrayList<IContrato> getContratos();
 
     String getDni();
 
@@ -48,11 +50,10 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     ArrayList<IContrato> getContratos();
 
-    void pagarFactura(IFactura factura) ;
+    void pagarFactura(IFactura factura);
 
     void contratarNuevoServicio(IContrato contrato);
 
-
-    void bajaDeServicio(IContrato contrato) ;
+    void bajaDeServicio(IContrato contrato);
 
 }

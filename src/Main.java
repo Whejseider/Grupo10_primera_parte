@@ -1,31 +1,40 @@
 import modelo.AbonadoFisico;
 import modelo.ContratoFactory;
+import controlador.ControladorAbonados;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
+import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
+import modelo.excepciones.SinContratosException;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IEstadoFisico;
 import modelo.interfaces.IFactura;
+import vista.VentanaPrincipal;
 
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String[] args) {
-        Main main = new Main();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testAbonadoDuplicado();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testContratoDuplicado();
-        System.out.println("\n-------------------------------------------------------------\n");
-        main.testCrearContratoYFacturarConDecorator();
-        main.testClonacionAbonadoFisico();
-        main.testClonacionAbonadoJuridico();
-        main.testClonacionFactura();
-        main.muestraFacturasEmitidas();
+    public static void main(String[] args) throws ContratoDuplicadoException, AbonadoNoExisteException,
+            AbonadoDuplicadoException, SinContratosException {
+        Sistema sistema = Sistema.getInstance();
+        sistema.agregarAbonado("juridico", "Bautista", "234234455");
+        sistema.agregarContrato("234234455", "vivienda", "alsina 1234", false, 0, 0);
+        sistema.generarFactura("234234455", "cheque");
+        ControladorAbonados controlador = new ControladorAbonados(new VentanaPrincipal(), Sistema.getInstance());
+    }
+
+    public void correrPruebas() {
+        testAbonadoDuplicado();
+        testContratoDuplicado();
+        testCrearContratoYFacturarConDecorator();
+        testClonacionAbonadoFisico();
+        testClonacionAbonadoJuridico();
+        testClonacionFactura();
+        muestraFacturasEmitidas();
     }
 
     public void testAbonadoDuplicado() {
@@ -64,7 +73,7 @@ public class Main {
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio3", false, 3, 2);
             IFactura factura2 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
-//            abonado.pagarFactura(factura1);
+            // abonado.pagarFactura(factura1);
 
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio5", false, 3, 2);
             IFactura factura3 = sistema.generarFactura("dniFisico1", "EFECTIVO");

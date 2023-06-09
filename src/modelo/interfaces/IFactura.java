@@ -7,7 +7,9 @@ public interface IFactura extends Cloneable {
 
     String getDetalle();
 
-    String getConcepto();
+    public String getConcepto();
+
+    public int getId();
 
     double getSubtotal();
 
