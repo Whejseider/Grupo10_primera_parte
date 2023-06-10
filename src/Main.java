@@ -75,16 +75,15 @@ public class Main {
         abonadoOutput.escribir(abonados);
         abonadoOutput.cerrar();
 
-        /*
-         * AbonadoInput abonadoInput = new AbonadoInput();
-         * 
-         * ArrayList<IAbonado> abonadosLectura = new ArrayList<>();
-         * abonadoInput.abrir();
-         * abonadosLectura = abonadoInput.leer();
-         * for (IAbonado abonado : abonadosLectura)
-         * System.out.println(abonado.toString());
-         * abonadoInput.cerrar();
-         */
+        AbonadoInput abonadoInput = new AbonadoInput();
+
+        ArrayList<IAbonado> abonadosLectura = new ArrayList<>();
+        abonadoInput.abrir();
+        abonadosLectura = abonadoInput.leer();
+        for (IAbonado abonado : abonadosLectura)
+            System.out.println(abonado.toString());
+        abonadoInput.cerrar();
+
     }
 
     public void testAbonadoDuplicado() throws IOException {
