@@ -116,7 +116,7 @@ public class Controlador implements ActionListener {
             IAbonado abonado = this.modelo.getAbonado(dni);
             //abonado.pagarFactura(this.modelo.generarFactura(dni, medioDePago, this.vistaPrincipal.getFecha())); asi cambia el estado
             //se podria crear otro boton o algo
-            this.modelo.generarFactura(dni, medioDePago, this.vistaPrincipal.getFecha());
+            this.modelo.generarFactura(dni, medioDePago);
             this.vistaPrincipal.actualizarDetallesAbonado(abonado);
         } catch (SinContratosException e) {
             this.vistaPrincipal.mostrarAlertaPagarSinContratos();
@@ -178,8 +178,10 @@ public class Controlador implements ActionListener {
 
         if (deberiaAvanzar) {
             //TODO completar
-            LocalDate fecha = this.vistaPrincipal.getFecha();
-            this.vistaPrincipal.actualizarFecha(fecha.plusMonths(1));
+            LocalDate fecha = this.modelo.getFecha();
+            LocalDate nuevaFecha = fecha.plusMonths(1);
+            this.modelo.setFecha(nuevaFecha);
+            this.vistaPrincipal.actualizarFecha(this.modelo.getFecha());
         }
 
     }

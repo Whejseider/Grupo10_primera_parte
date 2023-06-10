@@ -62,15 +62,15 @@ public class Main {
             IAbonado abonado = sistema.getAbonado("dniFisico1");
 
             sistema.agregarContrato("dniFisico1", "Comercio", "domicilio2", false, 3, 2);
-            IFactura factura1 = sistema.generarFactura("dniFisico1", "EFECTIVO", LocalDate.now());
+            IFactura factura1 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio3", false, 3, 2);
-            IFactura factura2 = sistema.generarFactura("dniFisico1", "EFECTIVO", LocalDate.now());
+            IFactura factura2 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
             // abonado.pagarFactura(factura1);
 
             sistema.agregarContrato("dniFisico1", "Vivienda", "domicilio5", false, 3, 2);
-            IFactura factura3 = sistema.generarFactura("dniFisico1", "EFECTIVO", LocalDate.now());
+            IFactura factura3 = sistema.generarFactura("dniFisico1", "EFECTIVO");
 
             System.out.println("********************************");
             abonado.pagarFactura(factura3);
@@ -117,7 +117,7 @@ public class Main {
     public void testClonacionFactura() {
         Sistema sistema = Sistema.getInstance();
         try {
-            IFactura factura = sistema.generarFactura("dniFisico1", "efectivo", LocalDate.now());
+            IFactura factura = sistema.generarFactura("dniFisico1", "efectivo");
             IFactura facturaClon = factura.clone();
             assert (facturaClon.equals(factura));
         } catch (SinContratosException e) {

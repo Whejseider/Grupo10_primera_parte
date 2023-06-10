@@ -501,11 +501,4 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     public JFrame getFrame() {
         return frame;
     }
-
-    @Override
-    public LocalDate getFecha() {
-        String fechaTexto = this.labelFecha.getText();
-
-        return LocalDate.parse(fechaTexto);
-    }
 }

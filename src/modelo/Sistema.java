@@ -20,9 +20,11 @@ public class Sistema {
     private static Sistema instance = null;
     private ArrayList<IAbonado> abonados;
     private IPromocion promocionActiva = new SinPromocion();
+    private LocalDate fecha;
 
     private Sistema() {
         abonados = new ArrayList<IAbonado>();
+        this.fecha = LocalDate.now();
     }
 
     /**
@@ -34,6 +36,14 @@ public class Sistema {
             instance = new Sistema();
         }
         return instance;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
     /**
@@ -97,10 +107,10 @@ public class Sistema {
      * @throws SinContratosException Si el abonado no tiene contratos
      * @throws AbonadoNoExisteException Si no se pudo encontrar el abonado.
      */
-    public IFactura generarFactura(String dni, String medioDePago, LocalDate fecha) throws SinContratosException, AbonadoNoExisteException {
+    public IFactura generarFactura(String dni, String medioDePago) throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
 
-        return abonado.generarFactura(this.promocionActiva, medioDePago, fecha);
+        return abonado.generarFactura(this.promocionActiva, medioDePago, this.fecha);
     }
 
     /**

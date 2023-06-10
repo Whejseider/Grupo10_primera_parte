@@ -73,6 +73,4 @@ public interface InterfazVistaPrincipal {
     boolean confirmarAvanzarMes();
 
     void actualizarFecha(LocalDate fecha);
-
-    LocalDate getFecha();
 }
