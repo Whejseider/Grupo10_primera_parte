@@ -82,6 +82,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JButton botonPromocionPlatino;
     private JPanel panelTecnicos;
     private JButton botonGestionarTecnicos;
+    private JButton botonBorrarContrato;
     
     public void setActionListener(ActionListener listener) {
         this.botonNuevoAbonado.addActionListener(listener);
@@ -94,6 +95,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.botonPromocionPlatino.addActionListener(listener);
         this.botonPromocionDorada.addActionListener(listener);
         this.botonGestionarTecnicos.addActionListener(listener);
+        this.botonBorrarContrato.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -111,7 +113,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     private void initialize() {
         this.frame = new JFrame();
-        this.frame.setBounds(100, 100, 922, 678);
+        this.frame.setBounds(100, 100, 927, 697);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.getContentPane().setLayout(new BorderLayout(0, 0));
         
@@ -204,6 +206,15 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         
         this.tablaContratos = new JTable(new ModeloTablaContratos());
         this.tablaContratos.setFillsViewportHeight(true);
+        this.tablaContratos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    botonBorrarContrato.setEnabled(tablaContratos.getSelectedRow() > -1);
+                    actionListener.actionPerformed(new ActionEvent(tablaContratos, 0, InterfazVistaPrincipal.SELECCION_CONTRATO));
+                }
+            }
+        });
         this.panelTablaContratos.setViewportView(this.tablaContratos);
         
         this.botonNuevoContrato = new JButton("Nuevo Contrato");
@@ -212,6 +223,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         
         this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
         this.tabsAbonado.addTab("Contratos", this.panelContratos);
+        
+        this.botonBorrarContrato = new JButton("Borrar contrato");
+        this.botonBorrarContrato.setActionCommand(InterfazVistaPrincipal.BORRAR_CONTRATO);
+        this.botonBorrarContrato.setEnabled(false);
+        this.panelContratos.add(this.botonBorrarContrato, BorderLayout.NORTH);
         this.panelPrincipalAbonado.add(this.tabsAbonado);
         
         this.panelFacturas = new JPanel();
@@ -334,6 +350,18 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         if (fila == -1) return null;
         
         return (String) this.tablaAbonados.getValueAt(fila, 1);
+    }
+
+    /**
+     *
+     * @return El domicilio del contrato seleccionado, o null si no hay selección.
+     */
+    @Override
+    public String obtenerContratoSeleccionado() {
+        int fila = this.tablaContratos.getSelectedRow();
+        if (fila == -1) return null;
+
+        return (String) this.tablaContratos.getValueAt(fila, 1);
     }
     
     /**

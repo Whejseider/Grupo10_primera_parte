@@ -1,15 +1,14 @@
 package modelo;
 
-import modelo.excepciones.AbonadoDuplicadoException;
-import modelo.excepciones.AbonadoNoExisteException;
-import modelo.excepciones.ContratoDuplicadoException;
-import modelo.excepciones.SinContratosException;
+import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Singleton del sistema. El sistema se encarga de la creación 
@@ -149,6 +148,19 @@ public class Sistema {
 
         getAbonado(dni).contratarNuevoServicio(nuevoContrato);
 
+    }
+
+    public void eliminarContrato(String domicilio)  {
+        for (IAbonado abonado : abonados) {
+            List<IContrato> contratos = abonado.getContratos();
+            Iterator<IContrato> it = contratos.iterator();
+            while (it.hasNext()) {
+                IContrato contrato = it.next();
+                if (contrato.getDomicilio().equals(domicilio)) {
+                    it.remove();
+                }
+            }
+        }
     }
 
     /**

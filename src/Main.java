@@ -12,9 +12,11 @@ import modelo.interfaces.IFactura;
 import vista.VentanaPrincipal;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AbonadoDuplicadoException, ContratoDuplicadoException, AbonadoNoExisteException {
         Sistema modelo = Sistema.getInstance();
         VentanaPrincipal vista = new VentanaPrincipal();
+        modelo.agregarAbonado("fisico", "bautista", "234273");
+        modelo.agregarContrato("234273", "vivienda", "alsina 1234", true, 3, 3);
         Controlador controlador = new Controlador(vista, modelo);
     }
 

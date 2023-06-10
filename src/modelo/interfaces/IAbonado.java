@@ -1,5 +1,6 @@
 package modelo.interfaces;
 
+import modelo.excepciones.ContratoNoExisteException;
 import modelo.excepciones.SinContratosException;
 
 import java.util.ArrayList;
@@ -14,7 +15,9 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     int cantidadDeFacturas();
 
-    public boolean tieneContrato(IContrato contrato);
+    boolean tieneContrato(IContrato contrato);
+
+    boolean tieneContrato(String domicilio);
 
     String getDni();
 

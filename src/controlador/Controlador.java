@@ -88,6 +88,24 @@ public class Controlador implements ActionListener {
             
         }
     }
+
+    private void manejarSeleccionContrato() {
+        //
+    }
+
+    private void manejarBorrarContrato() {
+        String domicilio = this.vistaPrincipal.obtenerContratoSeleccionado();
+
+        if (domicilio != null) {
+            this.modelo.eliminarContrato(domicilio);
+            String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
+            try {
+                this.vistaPrincipal.actualizarTablaContratos(this.modelo.getAbonado(dni).getContratos());
+            } catch (AbonadoNoExisteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
     
     private void manejarPagarFactura(String medioDePago) {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
@@ -163,15 +181,21 @@ public class Controlador implements ActionListener {
             case InterfazVistaPrincipal.NUEVO_ABONADO -> manejarNuevoAbonado();
             case InterfazVistaPrincipal.BORRAR_ABONADO -> manejarBorrarAbonado();
             case InterfazVistaPrincipal.SELECCION_ABONADO -> manejarSeleccionAbonado();
-            case InterfazVistaPrincipal.NUEVO_CONTRATO -> manejarNuevoContrato();
+
             case InterfazVistaPrincipal.PAGAR_FACTURA_EFECTIVO -> manejarPagarFacturaEfectivo();
             case InterfazVistaPrincipal.PAGAR_FACTURA_TARJETA -> manejarPagarFacturaTarjeta();
             case InterfazVistaPrincipal.PAGAR_FACTURA_CHEQUE -> manejarPagarFacturaCheque();
             case InterfazVistaPrincipal.MOSTRAR_FACTURA -> manejarMostrarFactura((int) evento.getSource());
+
             case InterfazVistaPrincipal.PROMOCION_NINGUNA -> manejarQuitarPromocion();
             case InterfazVistaPrincipal.PROMOCION_DORADA -> manejarPromocionDorada();
             case InterfazVistaPrincipal.PROMOCION_PLATINO -> manejarPromocionPlatino();
+
             case InterfazVistaPrincipal.MOSTRAR_TECNICOS -> manejarMostrarTecnicos();
+
+            case InterfazVistaPrincipal.SELECCION_CONTRATO -> manejarSeleccionContrato();
+            case InterfazVistaPrincipal.NUEVO_CONTRATO -> manejarNuevoContrato();
+            case InterfazVistaPrincipal.BORRAR_CONTRATO -> manejarBorrarContrato();
 
             case InterfazVentanaTecnicos.NUEVO_TECNICO -> manejarNuevoTecnico();
             case InterfazVentanaTecnicos.BORRAR_TECNICO -> manejarBorrarTecnico();
