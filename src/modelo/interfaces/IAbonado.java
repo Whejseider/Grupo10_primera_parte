@@ -4,9 +4,10 @@ import modelo.excepciones.ContratoNoExisteException;
 import modelo.excepciones.SinContratosException;
 
 import java.time.LocalDate;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface IAbonado extends Cloneable, IDetallable {
+public interface IAbonado extends Cloneable, IDetallable, Serializable {
 
     void agregaContrato(IContrato contrato);
 
@@ -57,9 +58,5 @@ public interface IAbonado extends Cloneable, IDetallable {
     void contratarNuevoServicio(IContrato contrato);
 
     void bajaDeServicio(IContrato contrato);
-
-//    ArrayList<IFactura> getFacturasHistorico();
-//
-//    int cantidadDeFacturasHistorico();
 
 }

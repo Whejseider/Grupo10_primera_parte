@@ -4,6 +4,9 @@ import modelo.excepciones.SinContratosException;
 import modelo.interfaces.*;
 
 import java.time.LocalDate;
+import javax.swing.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -15,7 +18,9 @@ public abstract class Abonado implements IAbonado {
     private String dni;
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
-//    private ArrayList<IFactura> facturasHistorico;
+
+    public Abonado() {
+    }
 
     /**
      * Constructor de la clase Abonado.
@@ -25,6 +30,7 @@ public abstract class Abonado implements IAbonado {
      * @param nombre El nombre del abonado a crear
      * @param dni    El DNI del abonado a crear
      */
+
     public Abonado(String nombre, String dni) {
         assert nombre != null && !nombre.isEmpty();
         assert dni != null && !dni.isEmpty();
@@ -32,7 +38,7 @@ public abstract class Abonado implements IAbonado {
         this.dni = dni;
         this.contratos = new ArrayList<IContrato>();
         this.facturas = new ArrayList<IFactura>();
-//        this.facturasHistorico = new ArrayList<IFactura>();
+        assert (contratos != null);
     }
 
     /**
@@ -46,7 +52,6 @@ public abstract class Abonado implements IAbonado {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
-
 
     /**
      * Genera un detalle de los contratos actuales del abonado.
@@ -80,7 +85,8 @@ public abstract class Abonado implements IAbonado {
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo), medioDePago, fecha);
+        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo),
+                this.getPagoMedioDePago(promo), medioDePago, fecha);
         this.agregarFactura(factura);
         return factura;
     }
@@ -91,7 +97,6 @@ public abstract class Abonado implements IAbonado {
     public void agregarFactura(IFactura factura) {
         assert factura != null;
         this.facturas.add(factura);
-//        this.facturasHistorico.add(factura);
     }
 
     /**
@@ -197,12 +202,13 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la cantidad de facturas seguidas sin parar hasta un maximo de 2
+     *
      * @return La cantidad de facturas seguidas sin parar hasta un maximo de 2
      */
-    public int cantidadFacturasSinPagarSeguidas(){
+    public int cantidadFacturasSinPagarSeguidas() {
         int i = 0;
         Iterator<IFactura> it = this.getFacturas().iterator();
-        while(i<2 && it.hasNext()){
+        while (i < 2 && it.hasNext()) {
             if (!it.next().isPagada())
                 i++;
             else
@@ -223,11 +229,9 @@ public abstract class Abonado implements IAbonado {
         Abonado abonadoClonado = (Abonado) super.clone();
         abonadoClonado.contratos = new ArrayList<IContrato>();
         abonadoClonado.facturas = new ArrayList<IFactura>();
-//        abonadoClonado.facturasHistorico = new ArrayList<IFactura>();
 
         Iterator<IContrato> iteratorContratos = this.getIteratorContratos();
         Iterator<IFactura> iteratorFacturas = this.getIteratorFacturas();
-//        Iterator<IFactura> iteratorFacturasHistorico = this.getIteratorFacturasHistorico();
 
         while (iteratorContratos.hasNext()) {
             IContrato contrato = (IContrato) iteratorContratos.next().clone();
@@ -239,17 +243,8 @@ public abstract class Abonado implements IAbonado {
             abonadoClonado.facturas.add(factura);
         }
 
-//        while (iteratorFacturasHistorico.hasNext()) {
-//            IFactura facturaHistorico = (IFactura) iteratorFacturasHistorico.next().clone();
-//            abonadoClonado.facturasHistorico.add(facturaHistorico);
-//        }
-
         return abonadoClonado;
     }
-
-//    private Iterator<IFactura> getIteratorFacturasHistorico() {
-//        return this.facturasHistorico.iterator();
-//    }
 
     /**
      * Obtiene el DNI del abonado
@@ -292,20 +287,27 @@ public abstract class Abonado implements IAbonado {
         return this.dni.equals(abonado.getDni());
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setContratos(ArrayList<IContrato> contratos) {
+        this.contratos = contratos;
+    }
+
+    public void setFacturas(ArrayList<IFactura> facturas) {
+        this.facturas = facturas;
+    }
+
     public String toString() {
         return "\n dni: " + this.dni + "\n nombre: " + this.nombre;
     }
 
-    public void eliminaContrato(IContrato contrato){
+    public void eliminaContrato(IContrato contrato) {
         this.contratos.remove(contrato);
     }
-
-//    @Override
-//    public ArrayList<IFactura> getFacturasHistorico() {
-//        return facturasHistorico;
-//    }
-//
-//    public int cantidadDeFacturasHistorico() {
-//        return this.facturasHistorico.size();
-//    }
 }

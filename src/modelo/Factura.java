@@ -21,7 +21,7 @@ public class Factura implements IFactura {
         assert subtotal >= 0;
         assert valorNeto >= 0;
         assert fecha != null;
-        
+
         this.valorNeto = valorNeto;
         this.concepto = concepto;
         this.subtotal = subtotal;
@@ -77,5 +77,13 @@ public class Factura implements IFactura {
 //        detalle.append("TOTAL: $" + valorNeto + "\n");
 
         return detalle.toString();
+    }
+
+    public static int getNumero() {
+        return numero;
+    }
+
+    public static void setNumero(int numero) {
+        Factura.numero = numero;
     }
 }

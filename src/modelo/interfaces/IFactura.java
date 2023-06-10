@@ -1,8 +1,11 @@
 package modelo.interfaces;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public interface IFactura extends Cloneable {
+public interface IFactura extends Cloneable, Serializable {
+
+
     LocalDate getFecha();
 
     boolean isPagada();

@@ -1,6 +1,8 @@
 package modelo.interfaces;
 
-public interface IContrato extends Cloneable, IDetallable {
+import java.io.Serializable;
+
+public interface IContrato extends Cloneable, IDetallable, Serializable {
     public void agregarCamaras(int cantidad);
 
     public void agregarBtnesAntipanico(int cantidad);
@@ -12,13 +14,13 @@ public interface IContrato extends Cloneable, IDetallable {
     public double getPrecio();
 
     public String getDomicilio();
-    
+
     public int getIdentificador();
-    
+
     public int getCantCamaras();
-    
+
     public int getCantBotones();
-    
+
     public boolean getTieneMovil();
 
     public IContrato clone() throws CloneNotSupportedException;

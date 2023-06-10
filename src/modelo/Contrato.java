@@ -23,6 +23,39 @@ public abstract class Contrato implements IContrato {
      *                       se usa para verificar igualdad entre contratos.
      * @param servicioAlarma Los servicios adicionales a adjuntar al contrato.
      */
+
+    public Contrato() {
+
+    }
+
+    public static void setNumero(int numero) {
+        Contrato.numero = numero;
+    }
+
+    public void setID(int iD) {
+        ID = iD;
+    }
+
+    public void setDomicilio(String domicilio) {
+        this.domicilio = domicilio;
+    }
+
+    public void setServicioAlarma(IServicioAlarma servicioAlarma) {
+        this.servicioAlarma = servicioAlarma;
+    }
+
+    public static int getNumero() {
+        return numero;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public IServicioAlarma getServicioAlarma() {
+        return servicioAlarma;
+    }
+
     public Contrato(String domicilio, IServicioAlarma servicioAlarma) {
         assert (domicilio != null);
         assert (servicioAlarma != null);
@@ -86,7 +119,7 @@ public abstract class Contrato implements IContrato {
     public double getPrecio() {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
-    
+
     public int getIdentificador() {
         return this.ID;
     }
@@ -138,17 +171,17 @@ public abstract class Contrato implements IContrato {
 
         return contratoCloneado;
     }
-    
+
     @Override
     public boolean getTieneMovil() {
         return this.servicioAlarma.getTieneMovil();
     }
-    
+
     @Override
     public int getCantCamaras() {
         return this.servicioAlarma.getCantCamaras();
     }
-    
+
     @Override
     public int getCantBotones() {
         return this.servicioAlarma.getCantBotonesAntipanico();

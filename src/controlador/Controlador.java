@@ -58,7 +58,8 @@ public class Controlador implements ActionListener {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
         try {
-            this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(), dto.getCantCamaras(), dto.getCantBotones());
+            this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(),
+                    dto.getCantCamaras(), dto.getCantBotones());
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
 
@@ -69,7 +70,7 @@ public class Controlador implements ActionListener {
 
     private void manejarBorrarAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
-        //Si no hay un abonado seleccionado no se hace nada
+        // Si no hay un abonado seleccionado no se hace nada
         if (dni == null) {
             return;
         }
@@ -80,7 +81,7 @@ public class Controlador implements ActionListener {
             this.vistaPrincipal.actualizarDetallesAbonado(null);
         }
     }
-
+    
     private void manejarSeleccionAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
@@ -128,15 +129,15 @@ public class Controlador implements ActionListener {
     private void manejarPagarFacturaCheque() {
         this.manejarPagarFactura("cheque");
     }
-
+    
     private void manejarPagarFacturaTarjeta() {
         this.manejarPagarFactura("tarjeta");
     }
-
+    
     private void manejarPagarFacturaEfectivo() {
         this.manejarPagarFactura("efectivo");
     }
-
+    
     private void manejarMostrarFactura(int idFactura) {
         for (IFactura factura : this.modelo.getFacturasEmitidas()) {
             if (factura.getId() == idFactura) {
@@ -144,18 +145,18 @@ public class Controlador implements ActionListener {
             }
         }
     }
-
+    
     private void manejarQuitarPromocion() {
         //TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
         this.modelo.setPromocion(new SinPromocion());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-
+    
     private void manejarPromocionDorada() {
         this.modelo.setPromocion(new PromocionDorada());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-
+    
     private void manejarPromocionPlatino() {
         this.modelo.setPromocion(new PromocionPlatino());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
@@ -192,7 +193,7 @@ public class Controlador implements ActionListener {
 
 
     @Override
-    public void actionPerformed(ActionEvent evento) {
+    public void actionPerformed(ActionEvent evento){
         String comando = evento.getActionCommand();
         System.out.println("ACTION: " + comando);
 
