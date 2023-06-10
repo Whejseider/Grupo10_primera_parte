@@ -12,7 +12,7 @@ import java.util.Iterator;
 /**
  * Clase abstracta que representa un cliente.
  */
-public abstract class Abonado implements IAbonado, Serializable {
+public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
     private ArrayList<IContrato> contratos;
