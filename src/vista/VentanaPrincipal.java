@@ -41,7 +41,7 @@ import vista.contratos.ModeloTablaContratos;
 import vista.contratos.NuevoContratoDTO;
 import vista.facturas.ModeloTablaFacturas;
 
-public class VentanaPrincipal implements InterfazVista, ChangeListener {
+public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener {
 
     private JFrame frame;
     private JPanel panelAbonados;
@@ -127,7 +127,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.tablaAbonados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                actionListener.actionPerformed(new ActionEvent(tablaAbonados, 0, InterfazVista.SELECCION_ABONADO));
+                actionListener.actionPerformed(new ActionEvent(tablaAbonados, 0, InterfazVistaPrincipal.SELECCION_ABONADO));
             }
         });
 
@@ -145,7 +145,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelAbonados.add(this.lblNewLabel, BorderLayout.NORTH);
         
         this.botonNuevoAbonado = new JButton("Nuevo Abonado");
-        this.botonNuevoAbonado.setActionCommand(InterfazVista.NUEVO_ABONADO);
+        this.botonNuevoAbonado.setActionCommand(InterfazVistaPrincipal.NUEVO_ABONADO);
         this.panelAbonados.add(this.botonNuevoAbonado, BorderLayout.SOUTH);
         
         this.panelAbonado = new JPanel();
@@ -160,19 +160,19 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelAccionesAbonado.setLayout(new BoxLayout(this.panelAccionesAbonado, BoxLayout.Y_AXIS));
         
         this.botonBorrarAbonado = new JButton("Borrar abonado");
-        this.botonBorrarAbonado.setActionCommand(InterfazVista.BORRAR_ABONADO);
+        this.botonBorrarAbonado.setActionCommand(InterfazVistaPrincipal.BORRAR_ABONADO);
         this.panelAccionesAbonado.add(this.botonBorrarAbonado);
         
         this.botonPagarEfectivo = new JButton("Pagar con efectivo");
-        this.botonPagarEfectivo.setActionCommand(InterfazVista.PAGAR_FACTURA_EFECTIVO);
+        this.botonPagarEfectivo.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_EFECTIVO);
         this.panelAccionesAbonado.add(this.botonPagarEfectivo);
         
         this.botonPagarTarjeta = new JButton("Pagar con tarjeta");
-        this.botonPagarTarjeta.setActionCommand(InterfazVista.PAGAR_FACTURA_TARJETA);
+        this.botonPagarTarjeta.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_TARJETA);
         this.panelAccionesAbonado.add(this.botonPagarTarjeta);
         
         this.botonPagarCheque = new JButton("Pagar con cheque");
-        this.botonPagarCheque.setActionCommand(InterfazVista.PAGAR_FACTURA_CHEQUE);
+        this.botonPagarCheque.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_CHEQUE);
         this.panelAccionesAbonado.add(this.botonPagarCheque);
         
         this.panelPrincipalAbonado = new JPanel();
@@ -207,7 +207,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelTablaContratos.setViewportView(this.tablaContratos);
         
         this.botonNuevoContrato = new JButton("Nuevo Contrato");
-        this.botonNuevoContrato.setActionCommand(InterfazVista.NUEVO_CONTRATO);
+        this.botonNuevoContrato.setActionCommand(InterfazVistaPrincipal.NUEVO_CONTRATO);
         this.panelContratos.add(this.botonNuevoContrato, BorderLayout.SOUTH);
         
         this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
@@ -252,15 +252,15 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelAccionesSistema.add(this.panelPromociones);
         
         this.botonSinPromocion = new JButton("Sin Promocion");
-        this.botonSinPromocion.setActionCommand(InterfazVista.PROMOCION_NINGUNA);
+        this.botonSinPromocion.setActionCommand(InterfazVistaPrincipal.PROMOCION_NINGUNA);
         this.panelPromociones.add(this.botonSinPromocion);
         
         this.botonPromocionDorada = new JButton("Promocion Dorada");
-        this.botonPromocionDorada.setActionCommand(InterfazVista.PROMOCION_DORADA);;
+        this.botonPromocionDorada.setActionCommand(InterfazVistaPrincipal.PROMOCION_DORADA);;
         this.panelPromociones.add(this.botonPromocionDorada);
         
         this.botonPromocionPlatino = new JButton("Promocion Platino");
-        this.botonPromocionPlatino.setActionCommand(InterfazVista.PROMOCION_PLATINO);
+        this.botonPromocionPlatino.setActionCommand(InterfazVistaPrincipal.PROMOCION_PLATINO);
         this.panelPromociones.add(this.botonPromocionPlatino);
         
         this.panelTecnicos = new JPanel();
@@ -268,6 +268,7 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
         this.panelAccionesSistema.add(this.panelTecnicos);
         
         this.botonGestionarTecnicos = new JButton("Gestionar Tecnicos");
+        this.botonGestionarTecnicos.setActionCommand(InterfazVistaPrincipal.MOSTRAR_TECNICOS);
         this.panelTecnicos.add(this.botonGestionarTecnicos);
         this.frame.setVisible(true);
     }
@@ -423,5 +424,10 @@ public class VentanaPrincipal implements InterfazVista, ChangeListener {
             this.botonPromocionDorada.setEnabled(true);
             this.botonPromocionPlatino.setEnabled(false);
         }
+    }
+
+    @Override
+    public JFrame getFrame() {
+        return frame;
     }
 }

@@ -79,7 +79,7 @@ public class DialogoNuevoContrato {
             String tipo = obtenerTipoContrato();
             
             
-            boolean condicion = !domicilio.isEmpty() && !tipo.isEmpty() && tipo != null;
+            boolean condicion = tipo != null && !domicilio.isEmpty() && !tipo.isEmpty();
             
             if (!condicion) {
                 JOptionPane.showMessageDialog(frame, "Parametros invalidos!");

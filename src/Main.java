@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-import controlador.ControladorAbonados;
+import controlador.Controlador;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
@@ -15,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         Sistema modelo = Sistema.getInstance();
         VentanaPrincipal vista = new VentanaPrincipal();
-        ControladorAbonados controlador = new ControladorAbonados(vista, modelo);
+        Controlador controlador = new Controlador(vista, modelo);
     }
 
     public void correrPruebas() {

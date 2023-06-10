@@ -10,7 +10,9 @@ import modelo.interfaces.IPromocion;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
 
-public interface InterfazVista {
+import javax.swing.*;
+
+public interface InterfazVistaPrincipal {
     static final String NUEVO_ABONADO = "NUEVO_ABONADO";
     static final String BORRAR_ABONADO = "BORRAR_ABONADO";
     static final String SELECCION_ABONADO = "SELECCION_ABONADO"; 
@@ -25,6 +27,8 @@ public interface InterfazVista {
     static final String PROMOCION_NINGUNA = "PROMOCION_NINGUNA";
     static final String PROMOCION_PLATINO = "PROMOCION_PLATINO";
     static final String PROMOCION_DORADA = "PROMOCION_DORADA";
+
+    static final String MOSTRAR_TECNICOS = "MOSTRAR_TECNICOS";
     
     public void setActionListener(ActionListener actionListener);
     
@@ -44,4 +48,5 @@ public interface InterfazVista {
     public void mostrarDialogoFactura(IFactura factura);
     
     public void actualizarBotonesPromocion(IPromocion promo);
+    public JFrame getFrame();
 }
