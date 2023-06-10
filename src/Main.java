@@ -5,6 +5,7 @@ import controlador.Controlador;
 import modelo.Abonado;
 import modelo.AbonadoFisico;
 import modelo.AbonadoJuridico;
+import modelo.ContratoFactory;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
@@ -13,6 +14,7 @@ import modelo.excepciones.ContratoDuplicadoException;
 import modelo.excepciones.SinContratosException;
 import modelo.input.AbonadoInput;
 import modelo.interfaces.IAbonado;
+import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 import modelo.output.AbonadoOutput;
@@ -45,6 +47,16 @@ public class Main {
         IAbonado abonado2 = new AbonadoJuridico("nombreEmpresa2", "idEmpresa2");
         IAbonado abonado3 = new AbonadoFisico("nombre3", "dni3");
         IAbonado abonado4 = new AbonadoJuridico("nombreEmpresa4", "idEmpresa4");
+
+        IContrato contrato1 = ContratoFactory.getContrato("Comercio", "domicilio1", false, 1, 2);
+        abonado1.agregaContrato(contrato1);
+
+        try {
+            abonado1.generarFactura(new PromocionDorada(), "EFECTIVO");
+        } catch (SinContratosException e) {
+            e.printStackTrace();
+        }
+
         abonados.add(abonado1);
         abonados.add(abonado2);
         abonados.add(abonado3);
@@ -61,6 +73,7 @@ public class Main {
         for (IAbonado abonado : abonadosLectura)
             System.out.println(abonado.toString());
         abonadoInput.cerrar();
+
     }
 
     public void testAbonadoDuplicado() throws IOException {

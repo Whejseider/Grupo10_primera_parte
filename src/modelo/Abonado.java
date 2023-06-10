@@ -306,7 +306,12 @@ public abstract class Abonado implements IAbonado {
     }
 
     public String toString() {
-        return "\n dni: " + this.dni + "\n nombre: " + this.nombre;
+        String contratosString = "";
+        for (IContrato contrato : contratos) {
+            contratosString = contratosString + "\n" + contrato.toString() + "\n";
+        }
+        return contratosString + "\n facturas: " + this.getDetalleFacturas() + " \n dni: " + this.dni + "\n nombre: "
+                + this.nombre;
     }
 
     public void eliminaContrato(IContrato contrato) {
