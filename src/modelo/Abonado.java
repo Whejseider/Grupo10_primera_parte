@@ -1,11 +1,9 @@
 package modelo;
 
 import modelo.excepciones.SinContratosException;
-import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
-import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
+import modelo.interfaces.*;
 
+import java.time.LocalDate;
 import javax.swing.*;
 
 import java.io.Serializable;
@@ -21,6 +19,9 @@ public abstract class Abonado implements IAbonado {
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
 
+    public Abonado() {
+    }
+
     /**
      * Constructor de la clase Abonado.
      * 
@@ -29,9 +30,6 @@ public abstract class Abonado implements IAbonado {
      * @param nombre El nombre del abonado a crear
      * @param dni    El DNI del abonado a crear
      */
-
-    public Abonado() {
-    }
 
     public Abonado(String nombre, String dni) {
         assert nombre != null && !nombre.isEmpty();
@@ -82,13 +80,13 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve una nueva factura con el estado actual de los contratos y la agrega
      */
-    public IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException {
+    public IFactura generarFactura(IPromocion promo, String medioDePago, LocalDate fecha) throws SinContratosException {
         assert promo != null;
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
         IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo),
-                this.getPagoMedioDePago(promo), medioDePago);
+                this.getPagoMedioDePago(promo), medioDePago, fecha);
         this.agregarFactura(factura);
         return factura;
     }
@@ -204,7 +202,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la cantidad de facturas seguidas sin parar hasta un maximo de 2
-     * 
+     *
      * @return La cantidad de facturas seguidas sin parar hasta un maximo de 2
      */
     public int cantidadFacturasSinPagarSeguidas() {

@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -52,7 +53,7 @@ public class Main {
         abonado1.agregaContrato(contrato1);
 
         try {
-            abonado1.generarFactura(new PromocionDorada(), "EFECTIVO");
+            abonado1.generarFactura(new PromocionDorada(), "EFECTIVO", LocalDate.now());
         } catch (SinContratosException e) {
             e.printStackTrace();
         }

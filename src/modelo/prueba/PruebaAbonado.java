@@ -7,6 +7,8 @@ import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 
+import java.time.LocalDate;
+
 /**
  * Clase con pruebas para la clase Abonado.
  * 
@@ -163,7 +165,7 @@ public class PruebaAbonado {
 		// ---- TEST FACTURACION SIN CONTRATOS
 
 		try {
-			abonado.generarFactura(sinPromo, "EFECTIVO");
+			abonado.generarFactura(sinPromo, "EFECTIVO", LocalDate.now());
 		} catch (SinContratosException e) {
 			assert abonado.cantidadDeFacturas() == 0;
 		}
@@ -171,9 +173,9 @@ public class PruebaAbonado {
 		// ---- TEST GENERACION DE FACTURAS
 
 		abonado.agregaContrato(contratoVivienda);
-		abonado.generarFactura(sinPromo, "EFECTIVO");
+		abonado.generarFactura(sinPromo, "EFECTIVO", LocalDate.now());
 		abonado.agregaContrato(contratoComercio);
-		abonado.generarFactura(sinPromo, "EFECTIVO");
+		abonado.generarFactura(sinPromo, "EFECTIVO", LocalDate.now());
 
 		assert abonado.cantidadDeFacturas() == 2;
 
@@ -194,7 +196,7 @@ public class PruebaAbonado {
 
 		// ---- TEST CLONACION DE FACTURAS
 
-		IFactura factura = abonado.generarFactura(sinPromo, "EFECTIVO");
+		IFactura factura = abonado.generarFactura(sinPromo, "EFECTIVO", LocalDate.now());
 		factura.clone();
 
 		System.out.println("Pruebas de facturacion de abonado bien");

@@ -5,6 +5,8 @@ import modelo.decorators.PagoEfectivoDecorator;
 import modelo.decorators.PagoTarjetaCreditoDecorator;
 import modelo.interfaces.IFactura;
 
+import java.time.LocalDate;
+
 /**
  * Factory para la clase factura
  */
@@ -18,9 +20,9 @@ public class FacturaFactory {
      * @param medioDePago El medio de pago (EFECTIVO, CHEQUE, TARJETA)
      * @return La factura generada
      */
-    public static IFactura getFactura(String concepto, double subtotal, double valorNeto, String medioDePago) {
+    public static IFactura getFactura(String concepto, double subtotal, double valorNeto, String medioDePago, LocalDate fecha) {
         IFactura respuesta = null;
-        IFactura encapsulado = new Factura(concepto, subtotal, valorNeto);
+        IFactura encapsulado = new Factura(concepto, subtotal, valorNeto, fecha);
 
         if (medioDePago.equalsIgnoreCase("EFECTIVO"))
             respuesta = new PagoEfectivoDecorator(encapsulado);

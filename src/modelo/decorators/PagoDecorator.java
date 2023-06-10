@@ -2,6 +2,8 @@ package modelo.decorators;
 
 import modelo.interfaces.IFactura;
 
+import java.time.LocalDate;
+
 /**
  * Clase abstracta base para crear decoradores de pago.
  */
@@ -55,6 +57,11 @@ public abstract class PagoDecorator implements IFactura {
     @Override
     public void setValorNeto(double valorNeto) {
         this.factura.setValorNeto(valorNeto);
+    }
+
+    @Override
+    public LocalDate getFecha() {
+        return this.factura.getFecha();
     }
 
     @Override

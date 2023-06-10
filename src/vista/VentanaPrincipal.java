@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -294,8 +296,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.panelFecha = new JPanel();
         this.panelFecha.setBorder(new TitledBorder(null, "Sistema", TitledBorder.LEADING, TitledBorder.TOP, null, null));
         this.panelAccionesSistema.add(this.panelFecha);
-        
-        this.labelFecha = new JLabel("Junio de 2023");
+
+        this.labelFecha = new JLabel(LocalDate.now().toString());
         this.panelFecha.add(this.labelFecha);
         
         this.botonAvanzarMes = new JButton("Avanzar mes");
@@ -470,8 +472,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     @Override
-    public void actualizarFecha(String mes, String anio) {
-        this.labelFecha.setText(mes + " de " + anio);
+    public void actualizarFecha(LocalDate fecha) {
+        this.labelFecha.setText(fecha.toString());
     }
 
     @Override
