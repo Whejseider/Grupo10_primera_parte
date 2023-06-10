@@ -2,6 +2,8 @@ package modelo;
 
 import modelo.interfaces.IFactura;
 
+import java.time.LocalDate;
+
 /**
  * Representa una factura con un concepto, subtotal y valor neto.
  */
@@ -12,16 +14,23 @@ public class Factura implements IFactura {
     private final int id;
     private static int numero = 1;
     private boolean pagada = false;
+    private LocalDate fecha;
 
-    public Factura(String concepto, double subtotal, double valorNeto) {
+    public Factura(String concepto, double subtotal, double valorNeto, LocalDate fecha) {
         assert concepto != null && !concepto.isEmpty();
         assert subtotal >= 0;
         assert valorNeto >= 0;
+        assert fecha != null;
         
         this.valorNeto = valorNeto;
         this.concepto = concepto;
         this.subtotal = subtotal;
         this.id = numero++;
+        this.fecha = fecha;
+    }
+
+    public LocalDate getFecha() {
+        return fecha;
     }
 
     public boolean isPagada() {

@@ -6,6 +6,7 @@ import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -76,12 +77,12 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve una nueva factura con el estado actual de los contratos y la agrega
      */
-    public IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException {
+    public IFactura generarFactura(IPromocion promo, String medioDePago, LocalDate fecha) throws SinContratosException {
         assert promo != null;
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo), medioDePago);
+        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo), medioDePago, fecha);
         this.agregarFactura(factura);
         return factura;
     }
