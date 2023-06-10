@@ -17,7 +17,9 @@ import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-
+        Sistema modelo = Sistema.getInstance();
+        VentanaPrincipal vista = new VentanaPrincipal();
+        Controlador controlador = new Controlador(vista, modelo);
     }
 
     public void testGuardarAbonado() {
