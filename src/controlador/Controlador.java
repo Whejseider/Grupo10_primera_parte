@@ -168,6 +168,16 @@ public class Controlador implements ActionListener {
         }
     }
 
+    private void manejarAvanzarMes() {
+        boolean deberiaAvanzar = this.vistaPrincipal.confirmarAvanzarMes();
+
+        if (deberiaAvanzar) {
+            //TODO completar
+            this.vistaPrincipal.actualizarFecha("Julio", "2023");
+        }
+
+    }
+
     private void manejarBorrarTecnico() {
         //TODO: completar
     }
@@ -191,12 +201,13 @@ public class Controlador implements ActionListener {
             case InterfazVistaPrincipal.PROMOCION_DORADA -> manejarPromocionDorada();
             case InterfazVistaPrincipal.PROMOCION_PLATINO -> manejarPromocionPlatino();
 
-            case InterfazVistaPrincipal.MOSTRAR_TECNICOS -> manejarMostrarTecnicos();
-
             case InterfazVistaPrincipal.SELECCION_CONTRATO -> manejarSeleccionContrato();
             case InterfazVistaPrincipal.NUEVO_CONTRATO -> manejarNuevoContrato();
             case InterfazVistaPrincipal.BORRAR_CONTRATO -> manejarBorrarContrato();
 
+            case InterfazVistaPrincipal.AVANZAR_MES -> manejarAvanzarMes();
+
+            case InterfazVistaPrincipal.MOSTRAR_TECNICOS -> manejarMostrarTecnicos();
             case InterfazVentanaTecnicos.NUEVO_TECNICO -> manejarNuevoTecnico();
             case InterfazVentanaTecnicos.BORRAR_TECNICO -> manejarBorrarTecnico();
         }

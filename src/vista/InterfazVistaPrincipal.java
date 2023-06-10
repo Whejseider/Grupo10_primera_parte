@@ -33,6 +33,8 @@ public interface InterfazVistaPrincipal {
     static final String MOSTRAR_TECNICOS = "MOSTRAR_TECNICOS";
     static final String BORRAR_CONTRATO = "BORRAR_CONTRATO";
 
+    static final String AVANZAR_MES = "AVANZAR_MES";
+
     public void setActionListener(ActionListener actionListener);
     
     public void mostrarAlertaAbonadoYaExiste();
@@ -44,6 +46,7 @@ public interface InterfazVistaPrincipal {
     
     public void mostrarAlertaDomicilioDuplicado();
     public NuevoContratoDTO pedirNuevoContrato();
+    public boolean confirmarBorrarContrato();
     public String obtenerContratoSeleccionado();
     public void actualizarTablaContratos(List<IContrato> contratos);
     
@@ -53,4 +56,7 @@ public interface InterfazVistaPrincipal {
     
     public void actualizarBotonesPromocion(IPromocion promo);
     public JFrame getFrame();
+
+    boolean confirmarAvanzarMes();
+    void actualizarFecha(String mes, String anio);
 }
