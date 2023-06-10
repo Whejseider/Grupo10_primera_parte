@@ -11,6 +11,7 @@ public class ModeloTablaAbonados extends ModeloTablaBase {
     public ModeloTablaAbonados() {
         super(new String[]{"Nombre", "DNI"});
     }
+
     /**
      * Actualiza la tabla de abonados con datos nuevos
      * 

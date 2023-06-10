@@ -1,10 +1,7 @@
 package modelo;
 
 import modelo.excepciones.SinContratosException;
-import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
-import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
+import modelo.interfaces.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ public abstract class Abonado implements IAbonado {
     private String dni;
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
+//    private ArrayList<IFactura> facturasHistorico;
 
     /**
      * Constructor de la clase Abonado.
@@ -34,7 +32,7 @@ public abstract class Abonado implements IAbonado {
         this.dni = dni;
         this.contratos = new ArrayList<IContrato>();
         this.facturas = new ArrayList<IFactura>();
-        assert (contratos != null);
+//        this.facturasHistorico = new ArrayList<IFactura>();
     }
 
     /**
@@ -93,6 +91,7 @@ public abstract class Abonado implements IAbonado {
     public void agregarFactura(IFactura factura) {
         assert factura != null;
         this.facturas.add(factura);
+//        this.facturasHistorico.add(factura);
     }
 
     /**
@@ -224,9 +223,11 @@ public abstract class Abonado implements IAbonado {
         Abonado abonadoClonado = (Abonado) super.clone();
         abonadoClonado.contratos = new ArrayList<IContrato>();
         abonadoClonado.facturas = new ArrayList<IFactura>();
+//        abonadoClonado.facturasHistorico = new ArrayList<IFactura>();
 
         Iterator<IContrato> iteratorContratos = this.getIteratorContratos();
         Iterator<IFactura> iteratorFacturas = this.getIteratorFacturas();
+//        Iterator<IFactura> iteratorFacturasHistorico = this.getIteratorFacturasHistorico();
 
         while (iteratorContratos.hasNext()) {
             IContrato contrato = (IContrato) iteratorContratos.next().clone();
@@ -238,8 +239,17 @@ public abstract class Abonado implements IAbonado {
             abonadoClonado.facturas.add(factura);
         }
 
+//        while (iteratorFacturasHistorico.hasNext()) {
+//            IFactura facturaHistorico = (IFactura) iteratorFacturasHistorico.next().clone();
+//            abonadoClonado.facturasHistorico.add(facturaHistorico);
+//        }
+
         return abonadoClonado;
     }
+
+//    private Iterator<IFactura> getIteratorFacturasHistorico() {
+//        return this.facturasHistorico.iterator();
+//    }
 
     /**
      * Obtiene el DNI del abonado
@@ -289,4 +299,13 @@ public abstract class Abonado implements IAbonado {
     public void eliminaContrato(IContrato contrato){
         this.contratos.remove(contrato);
     }
+
+//    @Override
+//    public ArrayList<IFactura> getFacturasHistorico() {
+//        return facturasHistorico;
+//    }
+//
+//    public int cantidadDeFacturasHistorico() {
+//        return this.facturasHistorico.size();
+//    }
 }

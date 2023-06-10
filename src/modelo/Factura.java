@@ -70,6 +70,7 @@ public class Factura implements IFactura {
         StringBuilder detalle = new StringBuilder();
 
         detalle.append("FACTURA N°" + id + "\n\n");
+        detalle.append("FECHA (YYYY/MM/DD): " + fecha.toString() + "\n");
         detalle.append("PAGADA: " + (isPagada()?"Si":"No") + "\n");
         detalle.append(concepto + "\n");
         detalle.append("SUBTOTAL: $" + subtotal + "\n");

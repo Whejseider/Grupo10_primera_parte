@@ -3,6 +3,7 @@ package modelo.interfaces;
 import modelo.excepciones.ContratoNoExisteException;
 import modelo.excepciones.SinContratosException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IAbonado extends Cloneable, IDetallable {
@@ -41,7 +42,7 @@ public interface IAbonado extends Cloneable, IDetallable {
      */
     double getPagoMedioDePago(IPromocion promo);
 
-    IFactura generarFactura(IPromocion promo, String medioDePago) throws SinContratosException;
+    IFactura generarFactura(IPromocion promo, String medioDePago, LocalDate fecha) throws SinContratosException;
 
     void agregarFactura(IFactura factura);
 
@@ -56,5 +57,9 @@ public interface IAbonado extends Cloneable, IDetallable {
     void contratarNuevoServicio(IContrato contrato);
 
     void bajaDeServicio(IContrato contrato);
+
+//    ArrayList<IFactura> getFacturasHistorico();
+//
+//    int cantidadDeFacturasHistorico();
 
 }

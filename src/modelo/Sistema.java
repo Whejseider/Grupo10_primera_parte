@@ -6,6 +6,7 @@ import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -96,10 +97,10 @@ public class Sistema {
      * @throws SinContratosException Si el abonado no tiene contratos
      * @throws AbonadoNoExisteException Si no se pudo encontrar el abonado.
      */
-    public IFactura generarFactura(String dni, String medioDePago) throws SinContratosException, AbonadoNoExisteException {
+    public IFactura generarFactura(String dni, String medioDePago, LocalDate fecha) throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
 
-        return abonado.generarFactura(this.promocionActiva, medioDePago);
+        return abonado.generarFactura(this.promocionActiva, medioDePago, fecha);
     }
 
     /**
