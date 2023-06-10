@@ -22,20 +22,12 @@ import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        Main main = new Main();
         try {
-            main.testPersistencia();
+            Sistema modelo = Sistema.getInstance();
+            VentanaPrincipal vista = new VentanaPrincipal();
+            Controlador controlador = new Controlador(vista, modelo);
         } catch (Exception e) {
-            System.out.println(e);
         }
-        /*
-         * try {
-         * Sistema modelo = Sistema.getInstance();
-         * VentanaPrincipal vista = new VentanaPrincipal();
-         * Controlador controlador = new Controlador(vista, modelo);
-         * } catch (Exception e) {
-         * }
-         */
     }
 
     public void correrPruebas() throws IOException {
@@ -61,16 +53,14 @@ public class Main {
 
         try {
             abonado1.generarFactura(new PromocionDorada(), "EFECTIVO");
-            // System.out.println(abonado1.toString());
-
         } catch (SinContratosException e) {
             e.printStackTrace();
         }
 
         abonados.add(abonado1);
-        // abonados.add(abonado2);
-        // abonados.add(abonado3);
-        // abonados.add(abonado4);
+        abonados.add(abonado2);
+        abonados.add(abonado3);
+        abonados.add(abonado4);
         abonadoOutput.abrir();
         abonadoOutput.escribir(abonados);
         abonadoOutput.cerrar();
