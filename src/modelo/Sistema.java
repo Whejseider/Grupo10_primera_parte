@@ -5,6 +5,8 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,6 +20,8 @@ import java.util.List;
 public class Sistema {
     private static Sistema instance = null;
     private ArrayList<IAbonado> abonados;
+    private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+
     private IPromocion promocionActiva = new SinPromocion();
 
     private Sistema() {
@@ -173,5 +177,47 @@ public class Sistema {
             if (abonado.cantidadDeFacturas() > 0)
                 facturas.addAll(abonado.getFacturasEmitidas());
         return facturas;
+    }
+
+    public void agregarTecnico(String nombre) throws TecnicoYaExisteException{
+        if (this.getTecnico(nombre) != null) {
+            throw new TecnicoYaExisteException();
+        }
+        this.tecnicos.add(new Tecnico(nombre));
+    }
+
+    public void eliminarTecnico(String nombre) throws TecnicoTrabajandoException, TecnicoNoExisteException {
+        Tecnico tecnico = this.getTecnico(nombre);
+
+        if (tecnico == null) {
+            throw new TecnicoNoExisteException();
+        }
+
+        if (!tecnico.isDisponible()) {
+            throw new TecnicoTrabajandoException();
+        }
+
+        this.tecnicos.remove(this.getTecnico(nombre));
+    }
+
+    public Tecnico getTecnico(String nombre) {
+        for (Tecnico tecnico : tecnicos) {
+            if (tecnico.getNombre().equals(nombre)) {
+                return tecnico;
+            }
+        }
+
+        return null;
+    }
+
+    public ServicioTecnico pedirService(String dniAbonado, String nombreTecnico) throws AbonadoNoExisteException, ServicioEnCursoException {
+        IAbonado abonado = this.getAbonado(dniAbonado);
+        Tecnico tecnico = this.getTecnico(nombreTecnico);
+
+        return abonado.iniciarService(tecnico);
+    }
+
+    public List<Tecnico> getTecnicos() {
+        return tecnicos;
     }
 }

@@ -1,7 +1,10 @@
 package modelo.interfaces;
 
 import modelo.excepciones.ContratoNoExisteException;
+import modelo.excepciones.ServicioEnCursoException;
 import modelo.excepciones.SinContratosException;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 
 import java.util.ArrayList;
 
@@ -18,6 +21,12 @@ public interface IAbonado extends Cloneable, IDetallable {
     boolean tieneContrato(IContrato contrato);
 
     boolean tieneContrato(String domicilio);
+
+    ServicioTecnico iniciarService(Tecnico tecnico) throws ServicioEnCursoException;
+
+    ServicioTecnico getServicioTecnico();
+
+    boolean tieneService();
 
     String getDni();
 

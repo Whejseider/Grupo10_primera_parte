@@ -1,10 +1,13 @@
 package modelo;
 
+import modelo.excepciones.ServicioEnCursoException;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,6 +18,10 @@ import java.util.Iterator;
 public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
+
+    private Thread threadServicio = null;
+    private ServicioTecnico service = null;
+
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
 
@@ -34,6 +41,27 @@ public abstract class Abonado implements IAbonado {
         this.contratos = new ArrayList<IContrato>();
         this.facturas = new ArrayList<IFactura>();
         assert (contratos != null);
+    }
+
+    @Override
+    public ServicioTecnico iniciarService(Tecnico tecnico) throws ServicioEnCursoException {
+        if (!this.tieneService()) {
+            this.service = new ServicioTecnico(this, tecnico);
+            this.threadServicio = new Thread(this.service);
+            this.threadServicio.start();
+            return service;
+        }
+
+        throw new ServicioEnCursoException(this.dni);
+    }
+
+    public ServicioTecnico getServicioTecnico() {
+        return this.service;
+    }
+
+    @Override
+    public boolean tieneService() {
+        return this.threadServicio != null && this.threadServicio.isAlive();
     }
 
     /**

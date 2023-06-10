@@ -1,23 +1,31 @@
-import java.util.ArrayList;
-
 import controlador.Controlador;
 import modelo.PromocionDorada;
 import modelo.Sistema;
-import modelo.excepciones.AbonadoDuplicadoException;
-import modelo.excepciones.AbonadoNoExisteException;
-import modelo.excepciones.ContratoDuplicadoException;
-import modelo.excepciones.SinContratosException;
+import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+import modelo.prueba.PruebaTecnicos;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 import vista.VentanaPrincipal;
 
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
 public class Main {
-    public static void main(String[] args) throws AbonadoDuplicadoException, ContratoDuplicadoException, AbonadoNoExisteException {
+    public static void main(String[] args) {
         Sistema modelo = Sistema.getInstance();
         VentanaPrincipal vista = new VentanaPrincipal();
-        modelo.agregarAbonado("fisico", "bautista", "234273");
-        modelo.agregarContrato("234273", "vivienda", "alsina 1234", true, 3, 3);
         Controlador controlador = new Controlador(vista, modelo);
+    }
+
+    private void inicializarDatosTest() throws AbonadoDuplicadoException, ContratoDuplicadoException, AbonadoNoExisteException, TecnicoYaExisteException {
+        Sistema modelo = Sistema.getInstance();
+        modelo.agregarAbonado("fisico", "bautista", "234273");
+        modelo.agregarAbonado("juridico", "juan", "2342735");
+        modelo.agregarContrato("234273", "vivienda", "alsina 1234", true, 3, 3);
+        modelo.agregarTecnico("pepito");
     }
 
     public void correrPruebas() {
@@ -137,5 +145,4 @@ public class Main {
         }
 
     }
-
 }
