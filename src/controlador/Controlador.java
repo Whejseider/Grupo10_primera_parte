@@ -33,7 +33,7 @@ public class Controlador implements ActionListener {
         this.dialogoTecnicos.setActionListener(this);
         this.modelo = modelo;
     }
-    
+
     private void manejarNuevoAbonado() {
         NuevoAbonadoDTO dto = this.vistaPrincipal.pedirNuevoAbonado();
         if (dto != null) {
@@ -45,47 +45,48 @@ public class Controlador implements ActionListener {
             }
         }
     }
-    
+
     private void manejarNuevoContrato() {
         NuevoContratoDTO dto = this.vistaPrincipal.pedirNuevoContrato();
-        
+
         if (dto == null) {
             return;
         }
-        
+
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
-                
+
         try {
-            this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(), dto.getCantCamaras(), dto.getCantBotones());
+            this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(),
+                    dto.getCantCamaras(), dto.getCantBotones());
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
-            
+
         } catch (ContratoDuplicadoException e) {
             this.vistaPrincipal.mostrarAlertaDomicilioDuplicado();
         }
     }
-    
+
     private void manejarBorrarAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
-        //Si no hay un abonado seleccionado no se hace nada
+        // Si no hay un abonado seleccionado no se hace nada
         if (dni == null) {
             return;
         }
-        
+
         if (this.vistaPrincipal.confirmarBorrarAbonado()) {
             this.modelo.eliminarAbonado(dni);
             this.vistaPrincipal.actualizarTablaAbonados(this.modelo.getAbonados());
             this.vistaPrincipal.actualizarDetallesAbonado(null);
         }
     }
-    
+
     private void manejarSeleccionAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
-        try {                
+        try {
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
-            
+
         }
     }
 
@@ -106,32 +107,32 @@ public class Controlador implements ActionListener {
             }
         }
     }
-    
+
     private void manejarPagarFactura(String medioDePago) {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
-        try {                
+        try {
             this.modelo.generarFactura(dni, medioDePago);
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (SinContratosException e) {
             this.vistaPrincipal.mostrarAlertaPagarSinContratos();
         } catch (AbonadoNoExisteException e) {
-            
+
         }
     }
-    
+
     private void manejarPagarFacturaCheque() {
         this.manejarPagarFactura("cheque");
     }
-    
+
     private void manejarPagarFacturaTarjeta() {
         this.manejarPagarFactura("tarjeta");
     }
-    
+
     private void manejarPagarFacturaEfectivo() {
         this.manejarPagarFactura("efectivo");
     }
-    
+
     private void manejarMostrarFactura(int idFactura) {
         for (IFactura factura : this.modelo.getFacturasEmitidas()) {
             if (factura.getId() == idFactura) {
@@ -139,18 +140,18 @@ public class Controlador implements ActionListener {
             }
         }
     }
-    
+
     private void manejarQuitarPromocion() {
-        //TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
+        // TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
         this.modelo.setPromocion(new SinPromocion());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-    
+
     private void manejarPromocionDorada() {
         this.modelo.setPromocion(new PromocionDorada());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-    
+
     private void manejarPromocionPlatino() {
         this.modelo.setPromocion(new PromocionPlatino());
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
@@ -172,18 +173,18 @@ public class Controlador implements ActionListener {
         boolean deberiaAvanzar = this.vistaPrincipal.confirmarAvanzarMes();
 
         if (deberiaAvanzar) {
-            //TODO completar
+            // TODO completar
             this.vistaPrincipal.actualizarFecha("Julio", "2023");
         }
 
     }
 
     private void manejarBorrarTecnico() {
-        //TODO: completar
+        // TODO: completar
     }
 
     @Override
-    public void actionPerformed(ActionEvent evento){
+    public void actionPerformed(ActionEvent evento) {
         String comando = evento.getActionCommand();
         System.out.println("ACTION: " + comando);
 

@@ -6,6 +6,9 @@ import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 
+import javax.swing.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -26,6 +29,10 @@ public abstract class Abonado implements IAbonado {
      * @param nombre El nombre del abonado a crear
      * @param dni    El DNI del abonado a crear
      */
+
+    public Abonado() {
+    }
+
     public Abonado(String nombre, String dni) {
         assert nombre != null && !nombre.isEmpty();
         assert dni != null && !dni.isEmpty();
@@ -47,7 +54,6 @@ public abstract class Abonado implements IAbonado {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
-
 
     /**
      * Genera un detalle de los contratos actuales del abonado.
@@ -81,7 +87,8 @@ public abstract class Abonado implements IAbonado {
         if (this.cantidadDeContratos() == 0) {
             throw new SinContratosException();
         }
-        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo), this.getPagoMedioDePago(promo), medioDePago);
+        IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo),
+                this.getPagoMedioDePago(promo), medioDePago);
         this.agregarFactura(factura);
         return factura;
     }
@@ -197,12 +204,13 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la cantidad de facturas seguidas sin parar hasta un maximo de 2
+     * 
      * @return La cantidad de facturas seguidas sin parar hasta un maximo de 2
      */
-    public int cantidadFacturasSinPagarSeguidas(){
+    public int cantidadFacturasSinPagarSeguidas() {
         int i = 0;
         Iterator<IFactura> it = this.getFacturas().iterator();
-        while(i<2 && it.hasNext()){
+        while (i < 2 && it.hasNext()) {
             if (!it.next().isPagada())
                 i++;
             else
@@ -281,11 +289,27 @@ public abstract class Abonado implements IAbonado {
         return this.dni.equals(abonado.getDni());
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setContratos(ArrayList<IContrato> contratos) {
+        this.contratos = contratos;
+    }
+
+    public void setFacturas(ArrayList<IFactura> facturas) {
+        this.facturas = facturas;
+    }
+
     public String toString() {
         return "\n dni: " + this.dni + "\n nombre: " + this.nombre;
     }
 
-    public void eliminaContrato(IContrato contrato){
+    public void eliminaContrato(IContrato contrato) {
         this.contratos.remove(contrato);
     }
 }

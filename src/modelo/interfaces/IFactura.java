@@ -1,6 +1,8 @@
 package modelo.interfaces;
 
-public interface IFactura extends Cloneable {
+import java.io.Serializable;
+
+public interface IFactura extends Cloneable, Serializable {
     boolean isPagada();
 
     void setPagada(boolean pagada);
