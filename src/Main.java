@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import controlador.Controlador;
 import modelo.Abonado;
 import modelo.AbonadoFisico;
+import modelo.AbonadoJuridico;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
@@ -13,14 +14,18 @@ import modelo.excepciones.SinContratosException;
 import modelo.input.AbonadoInput;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+import modelo.interfaces.IPromocion;
 import modelo.output.AbonadoOutput;
 import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        // Sistema modelo = Sistema.getInstance();
-        // VentanaPrincipal vista = new VentanaPrincipal();
-        // Controlador controlador = new Controlador(vista, modelo);
+        try {
+            Sistema modelo = Sistema.getInstance();
+            VentanaPrincipal vista = new VentanaPrincipal();
+            Controlador controlador = new Controlador(vista, modelo);
+        } catch (Exception e) {
+        }
     }
 
     public void correrPruebas() throws IOException {
@@ -31,6 +36,31 @@ public class Main {
         testClonacionAbonadoJuridico();
         testClonacionFactura();
         muestraFacturasEmitidas();
+    }
+
+    public void testPersistencia() throws IOException {
+        AbonadoOutput abonadoOutput = new AbonadoOutput();
+        ArrayList<IAbonado> abonados = new ArrayList<>();
+        IAbonado abonado1 = new AbonadoFisico("nombre1", "dni1");
+        IAbonado abonado2 = new AbonadoJuridico("nombreEmpresa2", "idEmpresa2");
+        IAbonado abonado3 = new AbonadoFisico("nombre3", "dni3");
+        IAbonado abonado4 = new AbonadoJuridico("nombreEmpresa4", "idEmpresa4");
+        abonados.add(abonado1);
+        abonados.add(abonado2);
+        abonados.add(abonado3);
+        abonados.add(abonado4);
+        abonadoOutput.abrir();
+        abonadoOutput.escribir(abonados);
+        abonadoOutput.cerrar();
+
+        AbonadoInput abonadoInput = new AbonadoInput();
+
+        ArrayList<IAbonado> abonadosLectura = new ArrayList<>();
+        abonadoInput.abrir();
+        abonadosLectura = abonadoInput.leer();
+        for (IAbonado abonado : abonadosLectura)
+            System.out.println(abonado.toString());
+        abonadoInput.cerrar();
     }
 
     public void testAbonadoDuplicado() throws IOException {
