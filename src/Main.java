@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 import controlador.Controlador;
@@ -17,39 +18,12 @@ import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        Sistema modelo = Sistema.getInstance();
-        VentanaPrincipal vista = new VentanaPrincipal();
-        Controlador controlador = new Controlador(vista, modelo);
+        // Sistema modelo = Sistema.getInstance();
+        // VentanaPrincipal vista = new VentanaPrincipal();
+        // Controlador controlador = new Controlador(vista, modelo);
     }
 
-    public void testGuardarAbonado() {
-        Abonado abonado = new AbonadoFisico("prueba1", "dni1");
-        AbonadoOutput abonadoOutput = new AbonadoOutput();
-        try {
-            abonadoOutput.abrir();
-            abonadoOutput.escribir(abonado);
-            abonadoOutput.cerrar();
-        } catch (Exception e) {
-            System.out.println(e);
-            System.out.print("error " + e.getMessage());
-        }
-
-    }
-
-    public void testLeerAbonado() {
-        Abonado abonado;
-        AbonadoInput abonadoInput = new AbonadoInput();
-        try {
-            abonadoInput.abrir();
-            abonado = abonadoInput.leer();
-            System.out.println(abonado.toString());
-            abonadoInput.cerrar();
-        } catch (Exception e) {
-            System.out.println();
-        }
-    }
-
-    public void correrPruebas() {
+    public void correrPruebas() throws IOException {
         testAbonadoDuplicado();
         testContratoDuplicado();
         testCrearContratoYFacturarConDecorator();
@@ -59,7 +33,7 @@ public class Main {
         muestraFacturasEmitidas();
     }
 
-    public void testAbonadoDuplicado() {
+    public void testAbonadoDuplicado() throws IOException {
         Sistema sistema = Sistema.getInstance();
         try {
             sistema.agregarAbonado("Fisico", "abonadoFiscio", "dniFisico");
@@ -70,7 +44,7 @@ public class Main {
 
     }
 
-    public void testContratoDuplicado() {
+    public void testContratoDuplicado() throws IOException {
         Sistema sistema = Sistema.getInstance();
         try {
             sistema.agregarContrato("dniFisico", "Comercio", "domicilio1", false, 3, 2);
@@ -81,7 +55,7 @@ public class Main {
 
     }
 
-    public void testCrearContratoYFacturarConDecorator() {
+    public void testCrearContratoYFacturarConDecorator() throws IOException {
 
         Sistema sistema = Sistema.getInstance();
         sistema.setPromocion(new PromocionDorada());
@@ -117,7 +91,7 @@ public class Main {
 
     }
 
-    public void testClonacionAbonadoFisico() {
+    public void testClonacionAbonadoFisico() throws IOException {
         Sistema sistema = Sistema.getInstance();
         try {
             IAbonado abonado = sistema.getAbonado("dniFisico");
@@ -131,7 +105,7 @@ public class Main {
 
     }
 
-    public void testClonacionAbonadoJuridico() {
+    public void testClonacionAbonadoJuridico() throws IOException {
         Sistema sistema = Sistema.getInstance();
         try {
             sistema.agregarAbonado("Juridico", "abonadoFiscio", "dniJuridico");
@@ -142,7 +116,7 @@ public class Main {
 
     }
 
-    public void testClonacionFactura() {
+    public void testClonacionFactura() throws IOException {
         Sistema sistema = Sistema.getInstance();
         try {
             IFactura factura = sistema.generarFactura("dniFisico1", "efectivo");
@@ -158,7 +132,7 @@ public class Main {
 
     }
 
-    public void muestraFacturasEmitidas() {
+    public void muestraFacturasEmitidas() throws IOException {
         Sistema sistema = Sistema.getInstance();
         ArrayList<IFactura> facturas = sistema.getFacturasEmitidas();
         for (IFactura factura : facturas) {

@@ -3,17 +3,15 @@ package modelo.output;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 
-import modelo.Abonado;
-import modelo.interfaces.IAbonado;
+import modelo.interfaces.IPromocion;
 
-public class AbonadoOutput {
+public class PromocionOutput {
     private FileOutputStream file;
     private ObjectOutputStream output;
 
     public void abrir() throws IOException {
-        file = new FileOutputStream("abonados.dat");
+        file = new FileOutputStream("promocion.dat");
         output = new ObjectOutputStream(file);
     }
 
@@ -22,9 +20,9 @@ public class AbonadoOutput {
             output.close();
     }
 
-    public void escribir(ArrayList<IAbonado> abonados) throws IOException {
+    public void escribir(IPromocion promocion) throws IOException {
         if (output != null)
-            output.writeObject(abonados);
+            output.writeObject(promocion);
     }
 
 }
