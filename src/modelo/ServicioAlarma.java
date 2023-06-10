@@ -3,7 +3,7 @@ package modelo;
 import modelo.interfaces.IServicioAlarma;
 
 /**
- * Gestor de los servicios adicionales de un contrato. 
+ * Gestor de los servicios adicionales de un contrato.
  */
 public class ServicioAlarma implements IServicioAlarma {
     private boolean tieneMovil;
@@ -14,6 +14,10 @@ public class ServicioAlarma implements IServicioAlarma {
     private final double precioMovil = 7500;
     private final double precioBotonAntipanico = 2000;
 
+    public ServicioAlarma() {
+        this(false, 0, 0);
+    };
+
     /**
      * Constructor para ServicioAlarma.
      *
@@ -21,6 +25,7 @@ public class ServicioAlarma implements IServicioAlarma {
      * @param cantCamaras           Cantidad de camaras de videovigilancia.
      * @param cantBotonesAntipanico Cantidad de botones antipánico.
      */
+
     public ServicioAlarma(boolean tieneMovil, int cantCamaras, int cantBotonesAntipanico) {
         assert cantCamaras >= 0 : "La cantidad de camaras no puede ser negativa";
         assert cantBotonesAntipanico >= 0 : "La cantidad de botones antipanico no puede ser negativa";
@@ -30,13 +35,22 @@ public class ServicioAlarma implements IServicioAlarma {
         this.cantBotonesAntipanico = cantBotonesAntipanico;
     }
 
+    public void setTieneMovil(boolean tieneMovil) {
+        this.tieneMovil = tieneMovil;
+    }
+
+    public void setCantCamaras(int cantCamaras) {
+        this.cantCamaras = cantCamaras;
+    }
+
+    public void setCantBotonesAntipanico(int cantBotonesAntipanico) {
+        this.cantBotonesAntipanico = cantBotonesAntipanico;
+    }
+
     /**
      * Constructor para ServicioAlarma donde no se incluye ningún servicio
      * adicional.
      */
-    public ServicioAlarma() {
-        this(false, 0, 0);
-    };
 
     public double getPrecioCamara() {
         return precioCamara;

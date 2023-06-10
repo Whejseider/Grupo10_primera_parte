@@ -2,7 +2,7 @@ package modelo.interfaces;
 
 import java.io.Serializable;
 
-public interface IContrato extends Cloneable, IDetallable, Serializable {
+public interface IContrato extends Cloneable, IDetallable {
     public void agregarCamaras(int cantidad);
 
     public void agregarBtnesAntipanico(int cantidad);

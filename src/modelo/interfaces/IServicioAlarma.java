@@ -1,6 +1,8 @@
 package modelo.interfaces;
 
-public interface IServicioAlarma extends Cloneable {
+import java.io.Serializable;
+
+public interface IServicioAlarma extends Cloneable, Serializable {
     public void agregarCamaras(int cantidad);
 
     public void setCamaras(int cantidad);
