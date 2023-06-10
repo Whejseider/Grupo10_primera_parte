@@ -15,6 +15,8 @@ import modelo.output.PromocionOutput;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Singleton del sistema. El sistema se encarga de la creación
@@ -199,6 +201,19 @@ public class Sistema {
 
         getAbonado(dni).contratarNuevoServicio(nuevoContrato);
 
+    }
+
+    public void eliminarContrato(String domicilio) {
+        for (IAbonado abonado : abonados) {
+            List<IContrato> contratos = abonado.getContratos();
+            Iterator<IContrato> it = contratos.iterator();
+            while (it.hasNext()) {
+                IContrato contrato = it.next();
+                if (contrato.getDomicilio().equals(domicilio)) {
+                    it.remove();
+                }
+            }
+        }
     }
 
     /**

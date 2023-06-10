@@ -1,5 +1,6 @@
 package modelo.interfaces;
 
+import modelo.excepciones.ContratoNoExisteException;
 import modelo.excepciones.SinContratosException;
 
 import java.io.Serializable;
@@ -15,7 +16,9 @@ public interface IAbonado extends Cloneable, IDetallable, Serializable {
 
     int cantidadDeFacturas();
 
-    public boolean tieneContrato(IContrato contrato);
+    boolean tieneContrato(IContrato contrato);
+
+    boolean tieneContrato(String domicilio);
 
     String getDni();
 

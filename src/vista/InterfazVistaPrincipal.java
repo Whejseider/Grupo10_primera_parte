@@ -15,9 +15,11 @@ import javax.swing.*;
 public interface InterfazVistaPrincipal {
     static final String NUEVO_ABONADO = "NUEVO_ABONADO";
     static final String BORRAR_ABONADO = "BORRAR_ABONADO";
-    static final String SELECCION_ABONADO = "SELECCION_ABONADO"; 
+    static final String SELECCION_ABONADO = "SELECCION_ABONADO";
+
     static final String NUEVO_CONTRATO = "NUEVO_CONTRATO";
-    
+    static final String SELECCION_CONTRATO = "SELECCION_CONTRATO";
+
     static final String PAGAR_FACTURA_CHEQUE = "PAGAR_FACTURA_CHEQUE";
     static final String PAGAR_FACTURA_TARJETA = "PAGAR_FACTURA_TARJETA";
     static final String PAGAR_FACTURA_EFECTIVO = "PAGAR_FACTURA_EFECTIVO";
@@ -29,7 +31,10 @@ public interface InterfazVistaPrincipal {
     static final String PROMOCION_DORADA = "PROMOCION_DORADA";
 
     static final String MOSTRAR_TECNICOS = "MOSTRAR_TECNICOS";
-    
+    static final String BORRAR_CONTRATO = "BORRAR_CONTRATO";
+
+    static final String AVANZAR_MES = "AVANZAR_MES";
+
     public void setActionListener(ActionListener actionListener);
     
     public void mostrarAlertaAbonadoYaExiste();
@@ -41,6 +46,8 @@ public interface InterfazVistaPrincipal {
     
     public void mostrarAlertaDomicilioDuplicado();
     public NuevoContratoDTO pedirNuevoContrato();
+    public boolean confirmarBorrarContrato();
+    public String obtenerContratoSeleccionado();
     public void actualizarTablaContratos(List<IContrato> contratos);
     
     public void actualizarTablaFacturas(List<IFactura> facturas);
@@ -49,4 +56,7 @@ public interface InterfazVistaPrincipal {
     
     public void actualizarBotonesPromocion(IPromocion promo);
     public JFrame getFrame();
+
+    boolean confirmarAvanzarMes();
+    void actualizarFecha(String mes, String anio);
 }

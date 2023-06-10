@@ -1,7 +1,10 @@
 package modelo;
 
 import modelo.excepciones.SinContratosException;
-import modelo.interfaces.*;
+import modelo.interfaces.IAbonado;
+import modelo.interfaces.IContrato;
+import modelo.interfaces.IFactura;
+import modelo.interfaces.IPromocion;
 
 import javax.swing.*;
 
@@ -168,6 +171,19 @@ public abstract class Abonado implements IAbonado {
         assert contrato != null;
         assert this.contratos != null;
         return this.contratos.contains(contrato);
+    }
+
+    public boolean tieneContrato(String domicilio) {
+        assert domicilio != null && !domicilio.isEmpty();
+        assert this.contratos != null;
+
+        for (IContrato contrato : contratos) {
+            if (contrato.getDomicilio().equals(domicilio)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
