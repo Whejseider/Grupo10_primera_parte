@@ -24,7 +24,6 @@ public class VentanaTecnicos implements InterfazVentanaTecnicos {
 
     @Override
     public void setActionListener(ActionListener listener) {
-        System.out.println("SEGTTING ACTIONLISTENER");
         this.botonBorrarTecnico.addActionListener(listener);
         this.botonNuevoTecnico.addActionListener(listener);
         this.actionListener = listener;

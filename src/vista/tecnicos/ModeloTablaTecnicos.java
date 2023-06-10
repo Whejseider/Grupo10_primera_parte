@@ -1,20 +1,13 @@
 package vista.tecnicos;
 
-import java.util.List;
+import vista.ModeloTablaBase;
 
-import javax.swing.table.DefaultTableModel;
+public class ModeloTablaTecnicos extends ModeloTablaBase {
 
-import modelo.interfaces.IContrato;
-
-public class ModeloTablaTecnicos extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-    private final String[] columnNames = {"ID", "Nombre", "Ocupado"};
-    
-    @Override
-    public boolean isCellEditable(int row, int column){  
-        return false;  
+    public ModeloTablaTecnicos() {
+        super(new String[]{"ID", "Nombre", "Ocupado"});
     }
-    
+
     /**
      * Actualiza la tabla de tecnicos con datos nuevos
      * 
@@ -22,15 +15,5 @@ public class ModeloTablaTecnicos extends DefaultTableModel {
      */
     public void actualizar(String tecnicos) {
         //TODO implementar
-    }
-    
-    @Override
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return columnNames.length;
     }
 }

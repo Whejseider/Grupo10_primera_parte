@@ -1,20 +1,16 @@
 package vista.contratos;
 
+import modelo.interfaces.IContrato;
+import vista.ModeloTablaBase;
+
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
-
-import modelo.interfaces.IContrato;
-
-public class ModeloTablaContratos extends DefaultTableModel {
+public class ModeloTablaContratos extends ModeloTablaBase {
     private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"ID", "Domicilio", "Camaras", "Botones", "Tiene movil"};
-    
-    @Override
-    public boolean isCellEditable(int row, int column){  
-        return false;  
+
+    public ModeloTablaContratos() {
+        super(new String[]{"ID", "Domicilio", "Camaras", "Botones", "Tiene movil"});
     }
-    
     /**
      * Actualiza la tabla de contratos con datos nuevos
      * 
@@ -36,15 +32,5 @@ public class ModeloTablaContratos extends DefaultTableModel {
             Object[] row = {identificador, domicilio, camaras, botones, movil ? "Si" : "No"};
             this.addRow(row);
         }
-    }
-    
-    @Override
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return columnNames.length;
     }
 }

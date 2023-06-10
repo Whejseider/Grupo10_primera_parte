@@ -1,20 +1,16 @@
 package vista.abonados;
 
+import modelo.interfaces.IAbonado;
+import vista.ModeloTablaBase;
+
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
-
-import modelo.interfaces.IAbonado;
-
-public class ModeloTablaAbonados extends DefaultTableModel {
+public class ModeloTablaAbonados extends ModeloTablaBase {
     private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"Nombre", "DNI"};
-    
-    @Override
-    public boolean isCellEditable(int row, int column){  
-        return false;  
+
+    public ModeloTablaAbonados() {
+        super(new String[]{"Nombre", "DNI"});
     }
-    
     /**
      * Actualiza la tabla de abonados con datos nuevos
      * 
@@ -24,21 +20,9 @@ public class ModeloTablaAbonados extends DefaultTableModel {
         assert abonados != null;
                 
         this.setRowCount(0);
-        for (int i = 0; i < abonados.size(); i++) {
-            IAbonado abonado = abonados.get(i);
-            
+        for (IAbonado abonado : abonados) {
             String[] row = {abonado.getNombre(), abonado.getDni()};
             this.addRow(row);
         }
-    }
-    
-    @Override
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return columnNames.length;
     }
 }

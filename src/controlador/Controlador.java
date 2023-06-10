@@ -143,7 +143,6 @@ public class Controlador implements ActionListener {
     }
 
     private void manejarNuevoTecnico() {
-        System.out.println("NUEVO TECNICO FIRED");
         NuevoTecnicoDTO nuevoTecnico = this.dialogoTecnicos.pedirNuevoTecnico();
 
         if (nuevoTecnico != null) {
