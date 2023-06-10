@@ -35,7 +35,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 
 
 - [ ] **Sistema**
-  - [ ] Paso del tiempo
+  - [x] Paso del tiempo
   - [ ] ABM de técnicos
   - [ ] Asignación de técnicos a abonados
 
@@ -45,7 +45,7 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
   - [ ] Gestión de contratos
   - [ ] Gestión de técnicos
   - [ ] Sección para feedback a acciones (errores, carga etc)
-  - [ ] Cambio de mes
+  - [x] Cambio de mes
 
 
-- [ ] **Persistencia**
+- [x] **Persistencia**
