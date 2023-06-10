@@ -2,9 +2,10 @@ package modelo.interfaces;
 
 import modelo.excepciones.SinContratosException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface IAbonado extends Cloneable, IDetallable {
+public interface IAbonado extends Cloneable, IDetallable, Serializable {
 
     void agregaContrato(IContrato contrato);
 

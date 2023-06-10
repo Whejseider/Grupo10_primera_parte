@@ -17,7 +17,7 @@ public class Factura implements IFactura {
         assert concepto != null && !concepto.isEmpty();
         assert subtotal >= 0;
         assert valorNeto >= 0;
-        
+
         this.valorNeto = valorNeto;
         this.concepto = concepto;
         this.subtotal = subtotal;
@@ -43,7 +43,7 @@ public class Factura implements IFactura {
     public double getValorNeto() {
         return valorNeto;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -61,11 +61,19 @@ public class Factura implements IFactura {
         StringBuilder detalle = new StringBuilder();
 
         detalle.append("FACTURA N°" + id + "\n\n");
-        detalle.append("PAGADA: " + (isPagada()?"Si":"No") + "\n");
+        detalle.append("PAGADA: " + (isPagada() ? "Si" : "No") + "\n");
         detalle.append(concepto + "\n");
         detalle.append("SUBTOTAL: $" + subtotal + "\n");
-//        detalle.append("TOTAL: $" + valorNeto + "\n");
+        // detalle.append("TOTAL: $" + valorNeto + "\n");
 
         return detalle.toString();
+    }
+
+    public static int getNumero() {
+        return numero;
+    }
+
+    public static void setNumero(int numero) {
+        Factura.numero = numero;
     }
 }

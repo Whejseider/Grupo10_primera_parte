@@ -1,21 +1,56 @@
 import java.util.ArrayList;
 
 import controlador.Controlador;
+import modelo.Abonado;
+import modelo.AbonadoFisico;
 import modelo.PromocionDorada;
 import modelo.Sistema;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.excepciones.SinContratosException;
+import modelo.input.AbonadoInput;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+import modelo.output.AbonadoOutput;
 import vista.VentanaPrincipal;
 
 public class Main {
     public static void main(String[] args) {
-        Sistema modelo = Sistema.getInstance();
-        VentanaPrincipal vista = new VentanaPrincipal();
-        Controlador controlador = new Controlador(vista, modelo);
+
+        Main main = new Main();
+        main.testGuardarAbonado();
+        // main.testLeerAbonado();
+        // Sistema modelo = Sistema.getInstance();
+        // VentanaPrincipal vista = new VentanaPrincipal();
+        // Controlador controlador = new Controlador(vista, modelo);
+    }
+
+    public void testGuardarAbonado() {
+        Abonado abonado = new AbonadoFisico("prueba1", "dni1");
+        AbonadoOutput abonadoOutput = new AbonadoOutput();
+        try {
+            abonadoOutput.abrir();
+            abonadoOutput.escribir(abonado);
+            abonadoOutput.cerrar();
+        } catch (Exception e) {
+            System.out.println(e);
+            System.out.print("error " + e.getMessage());
+        }
+
+    }
+
+    public void testLeerAbonado() {
+        Abonado abonado;
+        AbonadoInput abonadoInput = new AbonadoInput();
+        try {
+            abonadoInput.abrir();
+            abonado = abonadoInput.leer();
+            System.out.println(abonado.toString());
+            abonadoInput.cerrar();
+        } catch (Exception e) {
+            System.out.println();
+        }
     }
 
     public void correrPruebas() {
