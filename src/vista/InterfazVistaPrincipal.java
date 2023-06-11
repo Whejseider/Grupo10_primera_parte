@@ -40,6 +40,9 @@ public interface InterfazVistaPrincipal extends Observer {
 
     static final String AVANZAR_MES = "AVANZAR_MES";
 
+
+    static final String CIERRE_VENTANA_PRINCIPAL = "CIERRE_VENTANA_PRINCIPAL";
+
     public void setActionListener(ActionListener actionListener);
 
     public void mostrarAlertaAbonadoYaExiste();

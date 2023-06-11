@@ -1,4 +1,4 @@
-package modelo.output;
+package persistencia;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

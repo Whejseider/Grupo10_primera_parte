@@ -5,10 +5,11 @@ import modelo.excepciones.SinContratosException;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public interface IAbonado extends Cloneable, IDetallable {
+public interface IAbonado extends Cloneable, IDetallable, Serializable {
 
     void agregaContrato(IContrato contrato);
 

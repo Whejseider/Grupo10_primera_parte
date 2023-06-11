@@ -2,10 +2,9 @@ package modelo.tecnicos;
 
 import modelo.interfaces.IAbonado;
 
-import java.io.Serializable;
 import java.util.Observable;
 
-public class ServicioTecnico extends Observable implements Runnable, Serializable {
+public class ServicioTecnico extends Observable implements Runnable {
     private final IAbonado abonado;
     private final Tecnico tecnico;
     private int progreso = 0;

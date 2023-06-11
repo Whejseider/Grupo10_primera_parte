@@ -8,12 +8,8 @@ import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
-import modelo.interfaces.*;
 
 import java.time.LocalDate;
-import javax.swing.*;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,8 +20,8 @@ public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
 
-    private Thread threadServicio = null;
-    private ServicioTecnico service = null;
+    private transient Thread threadServicio = null;
+    private transient ServicioTecnico service = null;
 
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;

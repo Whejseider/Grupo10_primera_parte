@@ -21,7 +21,7 @@ public class ModeloTablaTecnicos extends ModeloTablaBase {
 
         this.setRowCount(0);
         for (Tecnico tecnico : tecnicos) {
-            this.addRow(new Object[]{tecnico.getId(), tecnico.getNombre(), tecnico.isDisponible()});
+            this.addRow(new Object[]{tecnico.getId(), tecnico.getNombre(), tecnico.isDisponible() ? "No" : "Si"});
         }
     }
 }

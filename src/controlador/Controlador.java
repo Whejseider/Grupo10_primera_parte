@@ -9,6 +9,7 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
+import persistencia.PersistenciaSistema;
 import vista.InterfazVistaPrincipal;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
@@ -18,6 +19,7 @@ import vista.tecnicos.VentanaTecnicos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class Controlador implements ActionListener {
         this.vistaPrincipal.setActionListener(this);
         this.vistaPrincipal.actualizarTablaAbonados(modelo.getAbonados());
         this.vistaPrincipal.actualizarBotonesPromocion(modelo.getPromocion());
+        this.vistaPrincipal.actualizarFecha(modelo.getFecha());
+        this.vistaPrincipal.actualizarComboboxTecnicos(modelo.getTecnicos());
         this.dialogoTecnicos = new VentanaTecnicos(this.vistaPrincipal.getFrame());
         this.dialogoTecnicos.setActionListener(this);
         this.dialogoTecnicos.actualizar(modelo.getTecnicos());
@@ -228,6 +232,10 @@ public class Controlador implements ActionListener {
         }
     }
 
+    private void manejarCierre() {
+        PersistenciaSistema.persistir();
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent evento){
@@ -258,6 +266,8 @@ public class Controlador implements ActionListener {
             case InterfazVentanaTecnicos.NUEVO_TECNICO -> manejarNuevoTecnico();
             case InterfazVentanaTecnicos.BORRAR_TECNICO -> manejarBorrarTecnico();
             case InterfazVistaPrincipal.ENVIAR_TECNICO -> manejarEnviarTecnico();
+
+            case InterfazVistaPrincipal.CIERRE_VENTANA_PRINCIPAL -> manejarCierre();
         }
     }
 }
