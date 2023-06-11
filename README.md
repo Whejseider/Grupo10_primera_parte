@@ -24,28 +24,28 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 ### Parte dos
 
 - [ ] **Técnicos**
-  - [ ] Clase Tecnico
-  - [ ] Ciclo de vida de los servicios (usar threads)
-  - [ ] Observer para cambios de estado en los servicios (podríamos usar el patrón state también)
+  - [x] ~~Clase Tecnico~~
+  - [x] ~~Ciclo de vida de los servicios (usar threads)~~
+  - [x] ~~Observer para cambios de estado en los servicios (podríamos usar el patrón state también)~~
 
 
 - [ ] **Abonados**
-  - [ ] Histórico de facturas
+  - [x] ~~Histórico de facturas~~
   - [x] ~~Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?)~~
 
 
 - [ ] **Sistema**
-  - [x] Paso del tiempo
-  - [ ] ABM de técnicos
-  - [ ] Asignación de técnicos a abonados
+  - [x] ~~Paso del tiempo~~
+  - [x] ~~ABM de técnicos~~
+  - [x] ~~Asignación de técnicos a abonados~~
 
 
 - [ ] **Interfaz gráfica**
-  - [ ] Gestión de abonados
-  - [ ] Gestión de contratos
-  - [ ] Gestión de técnicos
+  - [x] ~~Gestión de abonados~~
+  - [x] ~~Gestión de contratos~~
+  - [x] ~~Gestión de técnicos~~
   - [ ] Sección para feedback a acciones (errores, carga etc)
-  - [x] Cambio de mes
+  - [x] ~~Cambio de mes~~
 
 
-- [x] **Persistencia**
+- [x] ~~**Persistencia**~~
