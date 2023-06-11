@@ -8,6 +8,7 @@ public class ServicioTecnico extends Observable implements Runnable {
     private final IAbonado abonado;
     private final Tecnico tecnico;
     private int progreso = 0;
+    private final int intervaloProgreso = 10;
     private Estado estado = Estado.ESPERANDO_TECNICO;
 
     public enum Estado {
@@ -22,15 +23,16 @@ public class ServicioTecnico extends Observable implements Runnable {
     }
 
     private void avanzar() {
-        for (int i = 1; i < 10; i++) {
+
+        while (progreso < 100) {
+            setChanged();
+            notifyObservers(progreso);
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            this.progreso = i * 10;
-            setChanged();
-            notifyObservers(progreso);
+            this.progreso += intervaloProgreso;
         }
 
         this.estado = Estado.FINALIZADO;
