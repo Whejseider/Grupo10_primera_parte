@@ -9,6 +9,7 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.output.AbonadoOutput;
+import modelo.output.PromocionOutput;
 import vista.VentanaPrincipal;
 
 import java.io.IOException;
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         try {
-            Sistema modelo = Sistema.getInstance();
-            VentanaPrincipal vista = new VentanaPrincipal();
-            Controlador controlador = new Controlador(vista, modelo);
+            Main main = new Main();
+            main.testPersistencia();
+            // Sistema modelo = Sistema.getInstance();
+            // VentanaPrincipal vista = new VentanaPrincipal();
+            // Controlador controlador = new Controlador(vista, modelo);
         } catch (Exception e) {
+            System.out.println(e);
         }
     }
 
@@ -36,6 +40,10 @@ public class Main {
     }
 
     public void testPersistencia() throws IOException {
+        PromocionOutput promocionOutput = new PromocionOutput();
+        promocionOutput.abrir();
+        promocionOutput.escribir(new PromocionDorada());
+        promocionOutput.cerrar();
         AbonadoOutput abonadoOutput = new AbonadoOutput();
         ArrayList<IAbonado> abonados = new ArrayList<>();
         IAbonado abonado1 = new AbonadoFisico("nombre1", "dni1");

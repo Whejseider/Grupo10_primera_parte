@@ -1,9 +1,11 @@
 package modelo.tecnicos;
 
 import modelo.interfaces.IAbonado;
+
+import java.io.Serializable;
 import java.util.Observable;
 
-public class ServicioTecnico extends Observable implements Runnable {
+public class ServicioTecnico extends Observable implements Runnable, Serializable {
     private final IAbonado abonado;
     private final Tecnico tecnico;
     private int progreso = 0;
@@ -56,7 +58,7 @@ public class ServicioTecnico extends Observable implements Runnable {
     }
 
     public String getTextoEstado() {
-        switch(this.estado) {
+        switch (this.estado) {
             case EN_CURSO:
                 return tecnico.getNombre() + " está trabajando";
             case ESPERANDO_TECNICO:

@@ -14,6 +14,30 @@ public abstract class Promocion implements IPromocion {
     public Promocion() {
     }
 
+    public double getDescuentoComercio() {
+        return descuentoComercio;
+    }
+
+    public void setDescuentoComercio(double descuentoComercio) {
+        this.descuentoComercio = descuentoComercio;
+    }
+
+    public double getDescuentoVivienda() {
+        return descuentoVivienda;
+    }
+
+    public void setDescuentoVivienda(double descuentoVivienda) {
+        this.descuentoVivienda = descuentoVivienda;
+    }
+
+    public boolean isNominal() {
+        return nominal;
+    }
+
+    public void setNominal(boolean nominal) {
+        this.nominal = nominal;
+    }
+
     /**
      * @return Verdadero si el tipo de descuento de la promoción es nominal.
      */
