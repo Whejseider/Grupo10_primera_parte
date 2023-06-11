@@ -90,10 +90,10 @@ public class Sistema {
      * @param tipo   El tipo de abonado. "Fisico" o "Juridico"
      * @param nombre El nombre del abonado
      * @param dni    El dni del abonado
+     * @return El abonado creado
      * @throws AbonadoDuplicadoException Si el DNI ya coincide con el de un abonado
      *                                   en
      *                                   el sistema
-     * @return El abonado creado
      */
     public IAbonado agregarAbonado(String tipo, String nombre, String dni) throws AbonadoDuplicadoException {
         IAbonado abonado = AbonadoFactory.getAbonado(tipo, nombre, dni);
@@ -136,7 +136,7 @@ public class Sistema {
 
     /**
      * Obtiene una lista con todos los abonados activos del sistema.
-     * 
+     *
      * @return
      */
     public ArrayList<IAbonado> getAbonados() {
@@ -205,7 +205,7 @@ public class Sistema {
      *                                    dni pasado.
      */
     public void agregarContrato(String dni, String tipo, String domicilio, boolean tieneMovil, int cantCamaras,
-            int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
+                                int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
 
         IContrato nuevoContrato = ContratoFactory.getContrato(tipo, domicilio, tieneMovil, cantBotones, cantCamaras);
         if (this.contratoExiste(nuevoContrato))
@@ -283,7 +283,6 @@ public class Sistema {
     public List<Tecnico> getTecnicos() {
         return tecnicos;
     }
-
 
 
 }

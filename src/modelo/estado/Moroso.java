@@ -15,6 +15,9 @@ public class Moroso implements IEstadoFisico {
         this.abonado = abonado;
     }
 
+    public Moroso() {
+    }
+
     /**
      * Paga una factura y setea en true la variable Pagada<br>
      * Reemplaza la factura original por la misma pero aplicado un patron decorator para el recargo adicional<br>
@@ -56,6 +59,10 @@ public class Moroso implements IEstadoFisico {
 
     public AbonadoFisico getAbonado() {
         return abonado;
+    }
+
+    public void setAbonado(AbonadoFisico abonado) {
+        this.abonado = abonado;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package modelo;
 
+import modelo.estado.ConContrataciones;
+import modelo.estado.Moroso;
+import modelo.estado.SinContratacion;
 import modelo.excepciones.ServicioEnCursoException;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
@@ -351,5 +354,16 @@ public abstract class Abonado implements IAbonado {
         return false;
     }
 
-
+    @Override
+    public void actualizadorEstado(){
+        if (this.isFisico()){
+            AbonadoFisico abonadoFisico = (AbonadoFisico) this;
+            if(abonadoFisico.cantidadFacturasSinPagarSeguidas()>=2)
+                abonadoFisico.setEstado(new Moroso(abonadoFisico));
+            else if(abonadoFisico.cantidadDeContratos()>0)
+                abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
+            else
+                abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
+        }
+    }
 }

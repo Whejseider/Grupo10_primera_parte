@@ -12,6 +12,8 @@ public class ConContrataciones implements IEstadoFisico {
         this.abonado = abonado;
     }
 
+    public ConContrataciones() {
+    }
 
     /**
      * Paga una factura y setea la variable Pagada a true
@@ -58,6 +60,10 @@ public class ConContrataciones implements IEstadoFisico {
 
     public AbonadoFisico getAbonado() {
         return abonado;
+    }
+
+    public void setAbonado(AbonadoFisico abonado) {
+        this.abonado = abonado;
     }
 
     @Override

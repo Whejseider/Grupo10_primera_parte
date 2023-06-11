@@ -68,4 +68,5 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     boolean isFisico();
 
+    void actualizadorEstado();
 }
