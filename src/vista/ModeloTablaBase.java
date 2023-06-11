@@ -14,6 +14,11 @@ public abstract class ModeloTablaBase extends DefaultTableModel {
     }
 
     @Override
+    public boolean isCellEditable(int row, int col) {
+        return false;
+    }
+
+    @Override
     public String getColumnName(int col) {
         return columnas[col];
     }

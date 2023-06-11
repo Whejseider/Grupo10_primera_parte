@@ -1,19 +1,14 @@
 package controlador;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.time.LocalDate;
-
 import modelo.PromocionDorada;
 import modelo.PromocionPlatino;
 import modelo.SinPromocion;
 import modelo.Sistema;
-import modelo.excepciones.AbonadoDuplicadoException;
-import modelo.excepciones.AbonadoNoExisteException;
-import modelo.excepciones.ContratoDuplicadoException;
-import modelo.excepciones.SinContratosException;
+import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 import vista.InterfazVistaPrincipal;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
@@ -21,10 +16,15 @@ import vista.tecnicos.InterfazVentanaTecnicos;
 import vista.tecnicos.NuevoTecnicoDTO;
 import vista.tecnicos.VentanaTecnicos;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.List;
+
 public class Controlador implements ActionListener {
     private final Sistema modelo;
     private final InterfazVistaPrincipal vistaPrincipal;
-    private InterfazVentanaTecnicos dialogoTecnicos;
+    private final InterfazVentanaTecnicos dialogoTecnicos;
 
     public Controlador(InterfazVistaPrincipal vistaPrincipal, Sistema modelo) {
         this.vistaPrincipal = vistaPrincipal;
@@ -33,6 +33,7 @@ public class Controlador implements ActionListener {
         this.vistaPrincipal.actualizarBotonesPromocion(modelo.getPromocion());
         this.dialogoTecnicos = new VentanaTecnicos(this.vistaPrincipal.getFrame());
         this.dialogoTecnicos.setActionListener(this);
+        this.dialogoTecnicos.actualizar(modelo.getTecnicos());
         this.modelo = modelo;
     }
 
@@ -84,11 +85,13 @@ public class Controlador implements ActionListener {
     
     private void manejarSeleccionAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
+        this.vistaPrincipal.actualizarComboboxTecnicos(this.modelo.getTecnicos());
 
         try {
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
 
+            this.vistaPrincipal.actualizarDetallesAbonado(null);
         }
     }
 
@@ -170,7 +173,14 @@ public class Controlador implements ActionListener {
         NuevoTecnicoDTO nuevoTecnico = this.dialogoTecnicos.pedirNuevoTecnico();
 
         if (nuevoTecnico != null) {
-
+            try {
+                this.modelo.agregarTecnico(nuevoTecnico.getNombre());
+                List<Tecnico> tecnicos = this.modelo.getTecnicos();
+                this.vistaPrincipal.actualizarComboboxTecnicos(tecnicos);
+                this.dialogoTecnicos.actualizar(tecnicos);
+            } catch(TecnicoYaExisteException e) {
+                this.dialogoTecnicos.mostrarAlertaTecnicoYaExiste();
+            }
         }
     }
 
@@ -188,7 +198,34 @@ public class Controlador implements ActionListener {
     }
 
     private void manejarBorrarTecnico() {
-        //TODO: completar
+        String nombreTecnico = this.dialogoTecnicos.obtenerTecnicoSeleccionado();
+
+        if (nombreTecnico != null) {
+            try {
+                this.modelo.eliminarTecnico(nombreTecnico);
+                this.dialogoTecnicos.actualizar(this.modelo.getTecnicos());
+                this.vistaPrincipal.actualizarComboboxTecnicos(this.modelo.getTecnicos());
+            } catch (TecnicoTrabajandoException e) {
+                this.dialogoTecnicos.mostrarAlertaTecnicoNoSePuedeBorrar();
+            } catch (TecnicoNoExisteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private void manejarEnviarTecnico() {
+        String nombreTecnico = this.vistaPrincipal.obtenerTecnicoSeleccionado();
+        String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
+
+        try {
+            ServicioTecnico service = this.modelo.pedirService(dni, nombreTecnico);
+            service.addObserver(this.vistaPrincipal);
+            this.vistaPrincipal.actualizarProgresoServicio(service);
+        } catch (ServicioEnCursoException e) {
+            throw new RuntimeException(e);
+        } catch (AbonadoNoExisteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -220,6 +257,7 @@ public class Controlador implements ActionListener {
             case InterfazVistaPrincipal.MOSTRAR_TECNICOS -> manejarMostrarTecnicos();
             case InterfazVentanaTecnicos.NUEVO_TECNICO -> manejarNuevoTecnico();
             case InterfazVentanaTecnicos.BORRAR_TECNICO -> manejarBorrarTecnico();
+            case InterfazVistaPrincipal.ENVIAR_TECNICO -> manejarEnviarTecnico();
         }
     }
 }

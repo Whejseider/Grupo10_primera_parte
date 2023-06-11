@@ -1,14 +1,5 @@
-import java.time.LocalDate;
-import java.io.IOException;
-import java.util.ArrayList;
-
 import controlador.Controlador;
-import modelo.Abonado;
-import modelo.AbonadoFisico;
-import modelo.AbonadoJuridico;
-import modelo.ContratoFactory;
-import modelo.PromocionDorada;
-import modelo.Sistema;
+import modelo.*;
 import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
@@ -17,9 +8,12 @@ import modelo.input.AbonadoInput;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
-import modelo.interfaces.IPromocion;
 import modelo.output.AbonadoOutput;
 import vista.VentanaPrincipal;
+
+import java.io.IOException;
+import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -184,5 +178,4 @@ public class Main {
         }
 
     }
-
 }

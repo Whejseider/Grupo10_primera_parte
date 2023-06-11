@@ -1,11 +1,15 @@
 package vista.tecnicos;
 
+import modelo.tecnicos.Tecnico;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.*;
 
 public class VentanaTecnicos implements InterfazVentanaTecnicos {
+    private JFrame ownerFrame;
     private JDialog frame;
     private ActionListener actionListener;
     private JScrollPane panelTablaTecnicos;
@@ -18,6 +22,7 @@ public class VentanaTecnicos implements InterfazVentanaTecnicos {
      * Create the application.
      */
     public VentanaTecnicos(JFrame ownerFrame) {
+        this.ownerFrame = ownerFrame;
         initialize(ownerFrame);
         this.dialogoNuevoTecnico = new DialogoNuevoTecnico(this.frame);
     }
@@ -34,11 +39,15 @@ public class VentanaTecnicos implements InterfazVentanaTecnicos {
         this.frame.setVisible(visible);
     }
 
-    @Override
-    public void actualizar() {
-        //TODO: completar
+    private ModeloTablaTecnicos getModeloTablaTecnicos() {
+        return (ModeloTablaTecnicos) this.tablaTecnicos.getModel();
     }
 
+    @Override
+    public void actualizar(List<Tecnico> tecnicos) {
+        ModeloTablaTecnicos modeloTabla = this.getModeloTablaTecnicos();
+        modeloTabla.actualizar(tecnicos);
+    }
 
     /**
      * Initialize the contents of the frame.
@@ -75,7 +84,18 @@ public class VentanaTecnicos implements InterfazVentanaTecnicos {
         return this.dialogoNuevoTecnico.pedirNuevoTecnico();
     }
 
+    public String obtenerTecnicoSeleccionado() {
+        int fila = this.tablaTecnicos.getSelectedRow();
+        if (fila == -1) return null;
+
+        return (String) this.tablaTecnicos.getValueAt(fila, 1);
+    }
+
     public void mostrarAlertaTecnicoYaExiste() {
         this.dialogoNuevoTecnico.mostrarAlertaTecnicoYaExiste();
+    }
+
+    public void mostrarAlertaTecnicoNoSePuedeBorrar() {
+        JOptionPane.showMessageDialog(ownerFrame, "El tecnico no se puede borrar ya que tiene un service en curso.\nEspere a que termine para eliminarlo.");
     }
 }

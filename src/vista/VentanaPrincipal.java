@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Observable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -35,6 +36,8 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 import vista.abonados.DialogoNuevoAbonado;
 import vista.abonados.ModeloTablaAbonados;
 import vista.abonados.NuevoAbonadoDTO;
@@ -42,6 +45,8 @@ import vista.contratos.DialogoNuevoContrato;
 import vista.contratos.ModeloTablaContratos;
 import vista.contratos.NuevoContratoDTO;
 import vista.facturas.ModeloTablaFacturas;
+import javax.swing.JProgressBar;
+import javax.swing.JComboBox;
 
 public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener {
 
@@ -88,6 +93,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JPanel panelFecha;
     private JLabel labelFecha;
     private JButton botonAvanzarMes;
+    private JPanel panelServicioTecnico;
+    private JProgressBar progresoTecnico;
+    private JLabel labelServicioTecnico;
+    private JPanel panelEnviarTecnico;
+    private JButton botonEnviarTecnico;
+    private JComboBox comboBoxTecnicos;
     
     public void setActionListener(ActionListener listener) {
         this.botonNuevoAbonado.addActionListener(listener);
@@ -102,6 +113,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.botonGestionarTecnicos.addActionListener(listener);
         this.botonBorrarContrato.addActionListener(listener);
         this.botonAvanzarMes.addActionListener(listener);
+        this.botonEnviarTecnico.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -182,6 +194,28 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.botonPagarCheque = new JButton("Pagar con cheque");
         this.botonPagarCheque.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_CHEQUE);
         this.panelAccionesAbonado.add(this.botonPagarCheque);
+        
+        this.panelServicioTecnico = new JPanel();
+        this.panelServicioTecnico.setBorder(new TitledBorder(null, "Servicio tecnico", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelAccionesAbonado.add(this.panelServicioTecnico);
+        this.panelServicioTecnico.setLayout(new BoxLayout(this.panelServicioTecnico, BoxLayout.Y_AXIS));
+        
+        this.labelServicioTecnico = new JLabel("No hay ningun servicio en curso");
+        this.panelServicioTecnico.add(this.labelServicioTecnico);
+        
+        this.progresoTecnico = new JProgressBar();
+        this.panelServicioTecnico.add(this.progresoTecnico);
+        
+        this.panelEnviarTecnico = new JPanel();
+        this.panelServicioTecnico.add(this.panelEnviarTecnico);
+        
+        this.botonEnviarTecnico = new JButton("Enviar Tecnico");
+        this.botonEnviarTecnico.setActionCommand("ENVIAR_TECNICO");
+        this.panelEnviarTecnico.add(this.botonEnviarTecnico);
+        
+        this.comboBoxTecnicos = new JComboBox();
+        this.comboBoxTecnicos.setMaximumRowCount(1);
+        this.panelEnviarTecnico.add(this.comboBoxTecnicos);
         
         this.panelPrincipalAbonado = new JPanel();
         this.panelPrincipalAbonado.setLayout(new BorderLayout(0, 0));
@@ -411,6 +445,13 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         //TODO: Implementar funciones de getIsFisico y demas a abonado, esto esta mal
         
         this.labelTipoAbonado.setText("Tipo: " + (abonado instanceof AbonadoJuridico ? "Juridico" : "Fisico"));
+
+            ServicioTecnico servicio = abonado.getServicioTecnico();
+            if (servicio != null) {
+                servicio.addObserver(this);
+            }
+
+            this.actualizarProgresoServicio(servicio);
     }
     
     @Override
@@ -500,5 +541,80 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     @Override
     public JFrame getFrame() {
         return frame;
+    }
+
+    public void actualizarComboboxTecnicos(List<Tecnico> tecnicos) {
+        this.comboBoxTecnicos.removeAllItems();
+        if (tecnicos.size() == 0) {
+            this.comboBoxTecnicos.setEnabled(false);
+            this.botonEnviarTecnico.setEnabled(false);
+        } else {
+            this.comboBoxTecnicos.setEnabled(true);
+            this.botonEnviarTecnico.setEnabled(true);
+        }
+        for (Tecnico tecnico : tecnicos) {
+            this.comboBoxTecnicos.addItem(tecnico.getNombre());
+        }
+    }
+
+    private void actualizarServicioEnCurso(int progreso) {
+        this.botonEnviarTecnico.setEnabled(false);
+        this.comboBoxTecnicos.setEnabled(false);
+        this.progresoTecnico.setVisible(true);
+        this.progresoTecnico.setValue(progreso);
+    }
+
+    private void actualizarServicioEsperandoTecnico() {
+        this.progresoTecnico.setVisible(false);
+        this.botonEnviarTecnico.setEnabled(false);
+        this.comboBoxTecnicos.setEnabled(false);
+    }
+
+    private void actualizarServicioFinalizado() {
+        this.progresoTecnico.setVisible(false);
+        this.botonEnviarTecnico.setEnabled(true);
+        this.comboBoxTecnicos.setEnabled(true);
+    }
+
+    private void actualizarServicioSinIniciar() {
+        this.progresoTecnico.setVisible(false);
+        this.botonEnviarTecnico.setEnabled(true);
+        this.comboBoxTecnicos.setEnabled(true);
+        this.labelServicioTecnico.setText("Sin servicio técnico en curso");
+    }
+
+    public void actualizarProgresoServicio(ServicioTecnico service) {
+        if (service == null) {
+            actualizarServicioSinIniciar();
+            return;
+        }
+
+        switch(service.getEstado()) {
+            case EN_CURSO:
+                actualizarServicioEnCurso(service.getProgreso());
+                break;
+            case ESPERANDO_TECNICO:
+                actualizarServicioEsperandoTecnico();
+                break;
+            case FINALIZADO:
+                actualizarServicioFinalizado();
+                break;
+        }
+
+        this.labelServicioTecnico.setText(service.getTextoEstado());
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof ServicioTecnico) {
+            ServicioTecnico service = (ServicioTecnico) o;
+            if (service.getAbonado().getDni().equals(this.obtenerAbonadoSeleccionado())) {
+                this.actualizarProgresoServicio(service);
+            }
+        }
+    }
+
+    public String obtenerTecnicoSeleccionado() {
+        return (String) this.comboBoxTecnicos.getSelectedItem();
     }
 }

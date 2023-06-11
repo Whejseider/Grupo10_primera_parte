@@ -3,17 +3,20 @@ package vista;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Observer;
 
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ServicioTecnico;
+import modelo.tecnicos.Tecnico;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.NuevoContratoDTO;
 
 import javax.swing.*;
 
-public interface InterfazVistaPrincipal {
+public interface InterfazVistaPrincipal extends Observer {
     static final String NUEVO_ABONADO = "NUEVO_ABONADO";
     static final String BORRAR_ABONADO = "BORRAR_ABONADO";
     static final String SELECCION_ABONADO = "SELECCION_ABONADO";
@@ -33,6 +36,7 @@ public interface InterfazVistaPrincipal {
 
     static final String MOSTRAR_TECNICOS = "MOSTRAR_TECNICOS";
     static final String BORRAR_CONTRATO = "BORRAR_CONTRATO";
+    static final String ENVIAR_TECNICO = "ENVIAR_TECNICO";
 
     static final String AVANZAR_MES = "AVANZAR_MES";
 
@@ -71,6 +75,10 @@ public interface InterfazVistaPrincipal {
     public JFrame getFrame();
 
     boolean confirmarAvanzarMes();
+
+    public void actualizarComboboxTecnicos(List<Tecnico> tecnicos);
+    public String obtenerTecnicoSeleccionado();
+    public void actualizarProgresoServicio(ServicioTecnico service);
 
     void actualizarFecha(LocalDate fecha);
 }
