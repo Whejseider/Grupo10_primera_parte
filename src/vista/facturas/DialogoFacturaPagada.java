@@ -11,6 +11,6 @@ public class DialogoFacturaPagada {
     }
 
     public void mostrarDialogoFacturaPagada() {
-        JOptionPane.showMessageDialog(frame, "La factura ya está paga!", "Factura pagada", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(frame, "La factura ya esta paga o aún no puede pagar!", "Error al pagar", JOptionPane.ERROR_MESSAGE);
     }
 }
