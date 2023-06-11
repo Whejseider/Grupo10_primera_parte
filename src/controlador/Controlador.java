@@ -1,9 +1,6 @@
 package controlador;
 
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.SinPromocion;
-import modelo.Sistema;
+import modelo.*;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IFactura;
@@ -150,18 +147,17 @@ public class Controlador implements ActionListener {
     }
     
     private void manejarQuitarPromocion() {
-        //TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
-        this.modelo.setPromocion(new SinPromocion());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Sin Promocion"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
     
     private void manejarPromocionDorada() {
-        this.modelo.setPromocion(new PromocionDorada());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Promocion Dorada"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
     
     private void manejarPromocionPlatino() {
-        this.modelo.setPromocion(new PromocionPlatino());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Promocion Platino"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
 
@@ -188,7 +184,7 @@ public class Controlador implements ActionListener {
         boolean deberiaAvanzar = this.vistaPrincipal.confirmarAvanzarMes();
 
         if (deberiaAvanzar) {
-
+            this.modelo.actualizadorEstado();
             LocalDate fecha = this.modelo.getFecha();
             LocalDate nuevaFecha = fecha.plusMonths(1);
             this.modelo.setFecha(nuevaFecha);

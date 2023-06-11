@@ -130,8 +130,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      * Initialize the contents of the frame.
      */
     private void initialize() {
-        this.frame = new JFrame();
-        this.frame.setBounds(100, 100, 927, 697);
+        this.frame = new JFrame("Sistema de Contratación de Servicios de Seguridad - Grupo 10");
+        this.frame.setBounds(100, 100, 1366, 768);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.getContentPane().setLayout(new BorderLayout(0, 0));
         

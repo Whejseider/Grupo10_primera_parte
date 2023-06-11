@@ -1,5 +1,8 @@
 package modelo;
 
+import modelo.estado.ConContrataciones;
+import modelo.estado.Moroso;
+import modelo.estado.SinContratacion;
 import modelo.excepciones.*;
 import modelo.input.AbonadoInput;
 import modelo.input.PromocionInput;
@@ -156,8 +159,9 @@ public class Sistema {
     public IFactura generarFactura(String dni, String medioDePago)
             throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
-
-        return abonado.generarFactura(this.promocionActiva, medioDePago, this.fecha);
+        IFactura factura = abonado.generarFactura(this.promocionActiva, medioDePago, this.fecha);
+        this.actualizadorEstado();
+        return factura;
     }
 
     /**
@@ -284,5 +288,18 @@ public class Sistema {
         return tecnicos;
     }
 
+    public void actualizadorEstado() {
 
+        for (IAbonado abonado : abonados) {
+            if (abonado.isFisico()) {
+                AbonadoFisico abonadoFisico = (AbonadoFisico) abonado;
+                if (abonadoFisico.cantidadFacturasSinPagarSeguidas() >= 2)
+                    abonadoFisico.setEstado(new Moroso(abonadoFisico));
+                else if (abonadoFisico.cantidadDeContratos() > 0)
+                    abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
+                else
+                    abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
+            }
+        }
+    }
 }

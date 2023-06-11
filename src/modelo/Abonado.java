@@ -36,9 +36,9 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Constructor de la clase Abonado.
-     * 
+     *
      * <b>pre: </b>: El nombre y dni tienen que estar definidos y no ser vacíos
-     * 
+     *
      * @param nombre El nombre del abonado a crear
      * @param dni    El DNI del abonado a crear
      */
@@ -76,9 +76,9 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Agrega un contrato a la lista del abonado <br>
-     * 
+     *
      * <b>pre:</b> La lista de contratos está inicializada
-     * 
+     *
      * @param contrato El contrato a agregar. No puede ser nulo.
      */
     public void agregaContrato(IContrato contrato) {
@@ -129,7 +129,21 @@ public abstract class Abonado implements IAbonado {
      */
     public void agregarFactura(IFactura factura) {
         assert factura != null;
+
         this.facturas.add(factura);
+    }
+
+    /**
+     * Verifica si existe la factura
+     * @param factura factura que se desea comprobar si existe o no
+     * @return si existe o no la factura
+     */
+    public boolean existeFactura(IFactura factura) {
+        Iterator<IFactura> it = this.getIteratorFacturas();
+        while (it.hasNext() && !it.next().equals(factura)) {
+            it.next();
+        }
+        return !it.hasNext();
     }
 
     /**
@@ -148,7 +162,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la lista de facturas del abonado.
-     * 
+     *
      * @return La lista de facturas.
      */
     public ArrayList<IFactura> getFacturas() {
@@ -157,7 +171,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la lista de contratos del abonado.
-     * 
+     *
      * @return La lista de contratos.
      */
     @Override
@@ -181,7 +195,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el valor de los contratos del abonado
-     * 
+     *
      * @param promo La promoción a aplicar
      */
     @Override
@@ -240,7 +254,7 @@ public abstract class Abonado implements IAbonado {
      */
     public int cantidadFacturasSinPagarSeguidas() {
         int i = 0;
-        Iterator<IFactura> it = this.getFacturas().iterator();
+        Iterator<IFactura> it = this.getIteratorFacturas();
         while (i < 2 && it.hasNext()) {
             if (!it.next().isPagada())
                 i++;
@@ -253,7 +267,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Devuelve un clon del abonado.
-     * 
+     *
      * @throws CloneNotSupportedException Si no se pudo clonar. Es el caso para
      *                                    abonados de tipo jurídico.
      */
@@ -281,7 +295,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el DNI del abonado
-     * 
+     *
      * @return El DNI del abonado
      */
     public String getDni() {
@@ -290,7 +304,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el nombre del abonado
-     * 
+     *
      * @return El nombre del abonado
      */
     public String getNombre() {
@@ -300,7 +314,7 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve verdadero si dos abonados se consideran iguales. Son iguales si
      * coincide su DNI.<br>
-     * 
+     *
      * @param obj El objeto a comparar.
      * @return Verdadero si son iguales.
      */
@@ -350,20 +364,8 @@ public abstract class Abonado implements IAbonado {
     }
 
     @Override
-    public boolean isFisico(){
+    public boolean isFisico() {
         return false;
     }
 
-    @Override
-    public void actualizadorEstado(){
-        if (this.isFisico()){
-            AbonadoFisico abonadoFisico = (AbonadoFisico) this;
-            if(abonadoFisico.cantidadFacturasSinPagarSeguidas()>=2)
-                abonadoFisico.setEstado(new Moroso(abonadoFisico));
-            else if(abonadoFisico.cantidadDeContratos()>0)
-                abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
-            else
-                abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
-        }
-    }
 }
