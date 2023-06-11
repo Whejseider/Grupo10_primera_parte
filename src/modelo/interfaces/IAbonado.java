@@ -67,4 +67,6 @@ public interface IAbonado extends Cloneable, IDetallable {
     void bajaDeServicio(IContrato contrato);
 
     boolean isFisico();
+
+    void actualizadorEstado();
 }

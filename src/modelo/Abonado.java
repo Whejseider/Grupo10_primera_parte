@@ -135,6 +135,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Verifica si existe la factura
+     *
      * @param factura factura que se desea comprobar si existe o no
      * @return si existe o no la factura
      */
@@ -366,6 +367,21 @@ public abstract class Abonado implements IAbonado {
     @Override
     public boolean isFisico() {
         return false;
+    }
+
+    @Override
+    public void actualizadorEstado() {
+
+        if (this.isFisico()) {
+            AbonadoFisico abonadoFisico = (AbonadoFisico) this;
+            if (abonadoFisico.cantidadFacturasSinPagarSeguidas() >= 2)
+                abonadoFisico.setEstado(new Moroso(abonadoFisico));
+            else if (abonadoFisico.cantidadDeContratos() > 0)
+                abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
+            else
+                abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
+        }
+
     }
 
 }

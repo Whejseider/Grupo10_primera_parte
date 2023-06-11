@@ -291,15 +291,7 @@ public class Sistema {
     public void actualizadorEstado() {
 
         for (IAbonado abonado : abonados) {
-            if (abonado.isFisico()) {
-                AbonadoFisico abonadoFisico = (AbonadoFisico) abonado;
-                if (abonadoFisico.cantidadFacturasSinPagarSeguidas() >= 2)
-                    abonadoFisico.setEstado(new Moroso(abonadoFisico));
-                else if (abonadoFisico.cantidadDeContratos() > 0)
-                    abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
-                else
-                    abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
-            }
+            abonado.actualizadorEstado();
         }
     }
 }
