@@ -23,18 +23,18 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
 
 ### Parte dos
 
-- [ ] **Técnicos**
+- [x] **Técnicos**
   - [x] ~~Clase Tecnico~~
   - [x] ~~Ciclo de vida de los servicios (usar threads)~~
   - [x] ~~Observer para cambios de estado en los servicios (podríamos usar el patrón state también)~~
 
 
-- [ ] **Abonados**
+- [x] **Abonados**
   - [x] ~~Histórico de facturas~~
   - [x] ~~Estados - moroso, sin contratos, con contratos. Solo para abonado físico. (Aplicar patrón state?)~~
 
 
-- [ ] **Sistema**
+- [x] **Sistema**
   - [x] ~~Paso del tiempo~~
   - [x] ~~ABM de técnicos~~
   - [x] ~~Asignación de técnicos a abonados~~
@@ -48,4 +48,4 @@ Se puede encontrar el [informe](https://github.com/Whejseider/Grupo10_primera_pa
   - [x] ~~Cambio de mes~~
 
 
-- [x] ~~**Persistencia**~~
+- [x] **Persistencia**
