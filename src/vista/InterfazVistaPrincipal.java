@@ -59,6 +59,8 @@ public interface InterfazVistaPrincipal extends Observer {
 
     public void mostrarAlertaDomicilioDuplicado();
 
+    public void mostrarDialogoAlertaEstado(String msg);
+
     public NuevoContratoDTO pedirNuevoContrato();
 
     public boolean confirmarBorrarContrato();

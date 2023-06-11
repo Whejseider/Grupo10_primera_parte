@@ -1,6 +1,7 @@
 package controlador;
 
 import modelo.*;
+import modelo.estado.Moroso;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
@@ -61,6 +62,12 @@ public class Controlador implements ActionListener {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
         try {
+            IAbonado abonado = this.modelo.getAbonado(dni);
+            if (abonado.isFisico()) {
+                AbonadoFisico abonadoFisico = (AbonadoFisico) abonado;
+                if (abonadoFisico.getEstado().toString().equalsIgnoreCase("Moroso"))
+                    this.vistaPrincipal.mostrarDialogoAlertaEstado("No puede crear un nuevo contrato por ser Moroso." + "\n" + "Actualice su estado.");
+            }
             this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(),
                     dto.getCantCamaras(), dto.getCantBotones());
 
@@ -110,14 +117,19 @@ public class Controlador implements ActionListener {
             String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
             try {
                 IAbonado abonado = this.modelo.getAbonado(dni);
+                if (abonado.isFisico()) {
+                    AbonadoFisico abonadoFisico = (AbonadoFisico) abonado;
+                    if (abonadoFisico.getEstado().toString().equals("Moroso") || abonadoFisico.getEstado().toString().equalsIgnoreCase("Sin contratación"))
+                        this.vistaPrincipal.mostrarDialogoAlertaEstado("No puede borrar el contrato por ser Moroso!" + "\n" + "Actualice su situación.");
+                }
                 IContrato contrato = abonado.buscaContrato(domicilio);
                 assert contrato != null;
                 abonado.bajaDeServicio(contrato); // State
                 this.modelo.actualizadorEstado();
                 this.vistaPrincipal.actualizarTablaContratos(this.modelo.getAbonado(dni).getContratos());
                 this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
-            }
-            catch (AbonadoNoExisteException e) {
+
+            } catch (AbonadoNoExisteException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -129,6 +141,7 @@ public class Controlador implements ActionListener {
         try {
             IAbonado abonado = this.modelo.getAbonado(dni);
             IFactura factura = buscaFactura(idFactura);
+            assert factura != null;
             if (factura.isPagada())
                 this.vistaPrincipal.mostrarAlertaFacturaPagada();
             else {
@@ -145,15 +158,27 @@ public class Controlador implements ActionListener {
     }
 
     private void manejarPagarFacturaCheque() {
-        this.manejarPagarFactura("cheque", this.vistaPrincipal.obtenerFacturaSeleccionado());
+        int facturaSeleccionado = this.vistaPrincipal.obtenerFacturaSeleccionado();
+        if (facturaSeleccionado != -1)
+            this.manejarPagarFactura("cheque", facturaSeleccionado);
+        else
+            this.vistaPrincipal.mostrarAlertaFacturaPagada();
     }
 
     private void manejarPagarFacturaTarjeta() {
-        this.manejarPagarFactura("tarjeta", this.vistaPrincipal.obtenerFacturaSeleccionado());
+        int facturaSeleccionado = this.vistaPrincipal.obtenerFacturaSeleccionado();
+        if (facturaSeleccionado != -1)
+            this.manejarPagarFactura("tarjeta", facturaSeleccionado);
+        else
+            this.vistaPrincipal.mostrarAlertaFacturaPagada();
     }
 
     private void manejarPagarFacturaEfectivo() {
-        this.manejarPagarFactura("efectivo", this.vistaPrincipal.obtenerFacturaSeleccionado());
+        int facturaSeleccionado = this.vistaPrincipal.obtenerFacturaSeleccionado();
+        if (facturaSeleccionado != -1)
+            this.manejarPagarFactura("efectivo", facturaSeleccionado);
+        else
+            this.vistaPrincipal.mostrarAlertaFacturaPagada();
     }
 
     private void manejarMostrarFactura(int idFactura) {

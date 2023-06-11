@@ -11,6 +11,7 @@ import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
 import vista.abonados.DialogoNuevoAbonado;
+import vista.abonados.EstadoDialogoAlerta;
 import vista.abonados.ModeloTablaAbonados;
 import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.DialogoNuevoContrato;
@@ -41,6 +42,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private DialogoNuevoAbonado dialogoNuevoAbonado;
     private DialogoNuevoContrato dialogoNuevoContrato;
     private DialogoFacturaPagada dialogoFacturaPagada;
+    private EstadoDialogoAlerta estadoDialogoAlerta;
     private JPanel panel;
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
@@ -107,6 +109,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         dialogoNuevoAbonado = new DialogoNuevoAbonado(this.frame);
         dialogoNuevoContrato = new DialogoNuevoContrato(this.frame);
         dialogoFacturaPagada = new DialogoFacturaPagada(this.frame);
+        estadoDialogoAlerta = new EstadoDialogoAlerta(this.frame);
     }
 
     /**
@@ -372,6 +375,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     @Override
+    public void mostrarDialogoAlertaEstado(String msg) {
+        this.estadoDialogoAlerta.mostrarDialogoAlertaEstado(msg);
+    }
+
+    @Override
     public boolean confirmarBorrarAbonado() {
         String dni = this.obtenerAbonadoSeleccionado();
         int result = JOptionPane.showConfirmDialog(this.frame, "Está seguro que desea borrar el abonado con dni " + dni + "?");
@@ -409,7 +417,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     @Override
     public Integer obtenerFacturaSeleccionado() {
         int fila = this.tablaFacturas.getSelectedRow();
-        if (fila == -1) return null;
+        if (fila == -1) return -1;
 
         return (Integer) this.tablaFacturas.getValueAt(fila, 0);
     }
