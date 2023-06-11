@@ -8,7 +8,7 @@ import java.util.List;
 public class ModeloTablaTecnicos extends ModeloTablaBase {
 
     public ModeloTablaTecnicos() {
-        super(new String[]{"ID", "Nombre", "Ocupado"});
+        super(new String[]{"ID", "Nombre"});
     }
 
     /**
@@ -21,7 +21,7 @@ public class ModeloTablaTecnicos extends ModeloTablaBase {
 
         this.setRowCount(0);
         for (Tecnico tecnico : tecnicos) {
-            this.addRow(new Object[]{tecnico.getId(), tecnico.getNombre(), tecnico.isDisponible() ? "No" : "Si"});
+            this.addRow(new Object[]{tecnico.getId(), tecnico.getNombre()});
         }
     }
 }
