@@ -7,7 +7,7 @@ import modelo.interfaces.IAbonado;
 public class Tecnico implements Serializable {
     private static int numero = 0;
     private final String nombre;
-    private transient boolean disponible = true;
+    private boolean disponible = true;
     private final int id;
 
     public Tecnico(String nombre) {
@@ -25,6 +25,10 @@ public class Tecnico implements Serializable {
 
     public boolean isDisponible() {
         return disponible;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.disponible = disponible;
     }
 
     public synchronized void asignarAbonado(IAbonado abonado) throws InterruptedException {

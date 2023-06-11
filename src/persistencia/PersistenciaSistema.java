@@ -3,6 +3,7 @@ package persistencia;
 import modelo.Factura;
 import modelo.Sistema;
 import modelo.interfaces.IFactura;
+import modelo.tecnicos.Tecnico;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,6 +12,9 @@ public class PersistenciaSistema {
     private static SistemaDTO crearDTO() {
         SistemaDTO dto = new SistemaDTO();
         Sistema sistema = Sistema.getInstance();
+
+        for (Tecnico tecnico : sistema.getTecnicos())
+            tecnico.setDisponible(true);
 
         dto.setAbonados(sistema.getAbonados());
         dto.setFecha(sistema.getFecha());

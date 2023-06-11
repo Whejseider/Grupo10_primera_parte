@@ -211,6 +211,7 @@ public class Controlador implements ActionListener {
     }
 
     private void manejarMostrarTecnicos() {
+        this.dialogoTecnicos.actualizar(this.modelo.getTecnicos());
         this.dialogoTecnicos.setVisible(true);
     }
 
@@ -274,7 +275,8 @@ public class Controlador implements ActionListener {
         try {
             ServicioTecnico service = this.modelo.pedirService(dni, nombreTecnico);
             service.addObserver(this.vistaPrincipal);
-            this.vistaPrincipal.actualizarProgresoServicio(service);
+            this.dialogoTecnicos.actualizar(this.modelo.getTecnicos());
+
         } catch (ServicioEnCursoException e) {
             throw new RuntimeException(e);
         } catch (AbonadoNoExisteException e) {
