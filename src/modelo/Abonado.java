@@ -23,10 +23,8 @@ import java.util.Iterator;
 public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
-
     private Thread threadServicio = null;
     private ServicioTecnico service = null;
-
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
 
@@ -346,5 +344,10 @@ public abstract class Abonado implements IAbonado {
 
     public void eliminaContrato(IContrato contrato) {
         this.contratos.remove(contrato);
+    }
+
+    @Override
+    public boolean isFisico(){
+        return false;
     }
 }

@@ -188,7 +188,7 @@ public class Controlador implements ActionListener {
         boolean deberiaAvanzar = this.vistaPrincipal.confirmarAvanzarMes();
 
         if (deberiaAvanzar) {
-            //TODO completar
+
             LocalDate fecha = this.modelo.getFecha();
             LocalDate nuevaFecha = fecha.plusMonths(1);
             this.modelo.setFecha(nuevaFecha);

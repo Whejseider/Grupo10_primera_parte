@@ -442,9 +442,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.actualizarTablaFacturas(abonado.getFacturasEmitidas());
         this.labelDniAbonado.setText("Dni: " + abonado.getDni());
         this.labelNombreAbonado.setText("Nombre: " + abonado.getNombre());
-        //TODO: Implementar funciones de getIsFisico y demas a abonado, esto esta mal
-        
-        this.labelTipoAbonado.setText("Tipo: " + (abonado instanceof AbonadoJuridico ? "Juridico" : "Fisico"));
+        this.labelTipoAbonado.setText("Tipo: " + (abonado.isFisico() ? "Fisico" : "Juridico"));
 
             ServicioTecnico servicio = abonado.getServicioTecnico();
             if (servicio != null) {

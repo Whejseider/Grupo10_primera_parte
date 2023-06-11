@@ -21,9 +21,9 @@ public class Main {
         try {
             Main main = new Main();
             main.testPersistencia();
-            // Sistema modelo = Sistema.getInstance();
-            // VentanaPrincipal vista = new VentanaPrincipal();
-            // Controlador controlador = new Controlador(vista, modelo);
+             Sistema modelo = Sistema.getInstance();
+             VentanaPrincipal vista = new VentanaPrincipal();
+             Controlador controlador = new Controlador(vista, modelo);
         } catch (Exception e) {
             System.out.println(e);
         }

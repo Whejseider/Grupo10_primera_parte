@@ -53,4 +53,9 @@ public class AbonadoFisico extends Abonado {
     public void bajaDeServicio(IContrato contrato) {
         this.estado.bajaDeServicio(contrato);
     }
+
+    @Override
+    public boolean isFisico() {
+        return true;
+    }
 }
