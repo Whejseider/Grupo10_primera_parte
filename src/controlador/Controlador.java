@@ -1,7 +1,6 @@
 package controlador;
 
 import modelo.*;
-import modelo.estado.Moroso;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
@@ -18,7 +17,6 @@ import vista.tecnicos.VentanaTecnicos;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -275,8 +273,8 @@ public class Controlador implements ActionListener {
         try {
             ServicioTecnico service = this.modelo.pedirService(dni, nombreTecnico);
             service.addObserver(this.vistaPrincipal);
+            this.vistaPrincipal.actualizarProgresoServicio(service);
             this.dialogoTecnicos.actualizar(this.modelo.getTecnicos());
-
         } catch (ServicioEnCursoException e) {
             throw new RuntimeException(e);
         } catch (AbonadoNoExisteException e) {
