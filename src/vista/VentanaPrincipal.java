@@ -68,32 +68,19 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JTable tablaFacturas;
     private JButton botonPagarTarjeta;
     private JButton botonPagarCheque;
-    private JPanel panelAccionesSistema;
-    private JPanel panelPromociones;
-    private JButton botonSinPromocion;
-    private JButton botonPromocionDorada;
-    private JButton botonPromocionPlatino;
-    private JPanel panelTecnicos;
-    private JButton botonGestionarTecnicos;
+    private PanelAccionesSistema panelAccionesSistema;
     private JButton botonBorrarContrato;
-    private JPanel panelFecha;
-    private JLabel labelFecha;
-    private JButton botonAvanzarMes;
 
     public void setActionListener(ActionListener listener) {
         panelServicioTecnico.setActionListener(listener);
+        panelAccionesSistema.setActionListener(listener);
         this.botonNuevoAbonado.addActionListener(listener);
         this.botonBorrarAbonado.addActionListener(listener);
         this.botonNuevoContrato.addActionListener(listener);
         this.botonPagarTarjeta.addActionListener(listener);
         this.botonPagarCheque.addActionListener(listener);
         this.botonPagarEfectivo.addActionListener(listener);
-        this.botonSinPromocion.addActionListener(listener);
-        this.botonPromocionPlatino.addActionListener(listener);
-        this.botonPromocionDorada.addActionListener(listener);
-        this.botonGestionarTecnicos.addActionListener(listener);
         this.botonBorrarContrato.addActionListener(listener);
-        this.botonAvanzarMes.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -274,47 +261,9 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.tabsAbonado.addTab("Facturas", this.panelFacturas);
         this.panelAbonado.add(this.panelPrincipalAbonado);
 
-        this.panelAccionesSistema = new JPanel();
-        this.panelAccionesSistema.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.LIGHT_GRAY));
+        this.panelAccionesSistema = new PanelAccionesSistema();
         this.frame.getContentPane().add(this.panelAccionesSistema, BorderLayout.NORTH);
 
-        this.panelPromociones = new JPanel();
-        FlowLayout flowLayout = (FlowLayout) this.panelPromociones.getLayout();
-        flowLayout.setAlignment(FlowLayout.LEFT);
-        this.panelPromociones.setBorder(new TitledBorder(null, "Promociones", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        this.panelAccionesSistema.add(this.panelPromociones);
-
-        this.botonSinPromocion = new JButton("Sin Promocion");
-        this.botonSinPromocion.setActionCommand(InterfazVistaPrincipal.PROMOCION_NINGUNA);
-        this.panelPromociones.add(this.botonSinPromocion);
-
-        this.botonPromocionDorada = new JButton("Promocion Dorada");
-        this.botonPromocionDorada.setActionCommand(InterfazVistaPrincipal.PROMOCION_DORADA);
-        ;
-        this.panelPromociones.add(this.botonPromocionDorada);
-
-        this.botonPromocionPlatino = new JButton("Promocion Platino");
-        this.botonPromocionPlatino.setActionCommand(InterfazVistaPrincipal.PROMOCION_PLATINO);
-        this.panelPromociones.add(this.botonPromocionPlatino);
-
-        this.panelTecnicos = new JPanel();
-        this.panelTecnicos.setBorder(new TitledBorder(null, "Tecnicos", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        this.panelAccionesSistema.add(this.panelTecnicos);
-
-        this.botonGestionarTecnicos = new JButton("Gestionar Tecnicos");
-        this.botonGestionarTecnicos.setActionCommand(InterfazVistaPrincipal.MOSTRAR_TECNICOS);
-        this.panelTecnicos.add(this.botonGestionarTecnicos);
-
-        this.panelFecha = new JPanel();
-        this.panelFecha.setBorder(new TitledBorder(null, "Sistema", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-        this.panelAccionesSistema.add(this.panelFecha);
-
-        this.labelFecha = new JLabel(LocalDate.now().toString());
-        this.panelFecha.add(this.labelFecha);
-
-        this.botonAvanzarMes = new JButton("Avanzar mes");
-        this.botonAvanzarMes.setActionCommand("AVANZAR_MES");
-        this.panelFecha.add(this.botonAvanzarMes);
         this.frame.setVisible(true);
     }
 
@@ -491,28 +440,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public void actualizarBotonesPromocion(IPromocion promo) {
-        //TODO refactorizar, se pueden hacer subclases de jbutton que implementen
-        //su propia logica de enable
-        if (promo instanceof SinPromocion) {
-            this.botonSinPromocion.setEnabled(false);
-            this.botonPromocionDorada.setEnabled(true);
-            this.botonPromocionPlatino.setEnabled(true);
-        }
-        if (promo instanceof PromocionDorada) {
-            this.botonSinPromocion.setEnabled(true);
-            this.botonPromocionDorada.setEnabled(false);
-            this.botonPromocionPlatino.setEnabled(true);
-        }
-        if (promo instanceof PromocionPlatino) {
-            this.botonSinPromocion.setEnabled(true);
-            this.botonPromocionDorada.setEnabled(true);
-            this.botonPromocionPlatino.setEnabled(false);
-        }
+        this.panelAccionesSistema.actualizarBotonesPromocion(promo);
     }
 
     @Override
     public void actualizarFecha(LocalDate fecha) {
-        this.labelFecha.setText(fecha.toString());
+        this.panelAccionesSistema.actualizarFecha(fecha);
     }
 
     @Override
@@ -539,12 +472,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public boolean confirmarAvanzarMes() {
-        int result = JOptionPane.showConfirmDialog(
-                this.frame,
-                "Está seguro que desea avanzar de mes? Se generarán facturas para todos los abonados con los contratos actuales."
-        );
-
-        return result == JOptionPane.OK_OPTION;
+        return this.panelAccionesSistema.confirmarAvanzarMes();
     }
 
     @Override
