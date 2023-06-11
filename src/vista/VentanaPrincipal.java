@@ -43,6 +43,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private DialogoNuevoContrato dialogoNuevoContrato;
     private DialogoFacturaPagada dialogoFacturaPagada;
     private EstadoDialogoAlerta estadoDialogoAlerta;
+
+    private PanelServicioTecnico panelServicioTecnico;
     private JPanel panel;
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
@@ -77,14 +79,9 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JPanel panelFecha;
     private JLabel labelFecha;
     private JButton botonAvanzarMes;
-    private JPanel panelServicioTecnico;
-    private JProgressBar progresoTecnico;
-    private JLabel labelServicioTecnico;
-    private JPanel panelEnviarTecnico;
-    private JButton botonEnviarTecnico;
-    private JComboBox comboBoxTecnicos;
 
     public void setActionListener(ActionListener listener) {
+        panelServicioTecnico.setActionListener(listener);
         this.botonNuevoAbonado.addActionListener(listener);
         this.botonBorrarAbonado.addActionListener(listener);
         this.botonNuevoContrato.addActionListener(listener);
@@ -97,7 +94,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.botonGestionarTecnicos.addActionListener(listener);
         this.botonBorrarContrato.addActionListener(listener);
         this.botonAvanzarMes.addActionListener(listener);
-        this.botonEnviarTecnico.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -189,28 +185,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.botonPagarCheque.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_CHEQUE);
         this.panelAccionesAbonado.add(this.botonPagarCheque);
 
-        this.panelServicioTecnico = new JPanel();
-        this.panelServicioTecnico.setBorder(new TitledBorder(null, "Servicio tecnico", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+        this.panelServicioTecnico = new PanelServicioTecnico();
         this.panelAccionesAbonado.add(this.panelServicioTecnico);
-        this.panelServicioTecnico.setLayout(new BoxLayout(this.panelServicioTecnico, BoxLayout.Y_AXIS));
-
-        this.labelServicioTecnico = new JLabel("No hay ningun servicio en curso");
-        this.panelServicioTecnico.add(this.labelServicioTecnico);
-
-        this.progresoTecnico = new JProgressBar();
-        this.panelServicioTecnico.add(this.progresoTecnico);
-
-        this.panelEnviarTecnico = new JPanel();
-        this.panelServicioTecnico.add(this.panelEnviarTecnico);
-
-        this.botonEnviarTecnico = new JButton("Enviar Tecnico");
-        this.botonEnviarTecnico.setActionCommand("ENVIAR_TECNICO");
-        this.panelEnviarTecnico.add(this.botonEnviarTecnico);
-
-        this.comboBoxTecnicos = new JComboBox();
-        this.comboBoxTecnicos.setPreferredSize(new Dimension(150, 30));
-        this.comboBoxTecnicos.setMaximumRowCount(5);
-        this.panelEnviarTecnico.add(this.comboBoxTecnicos);
 
         this.panelPrincipalAbonado = new JPanel();
         this.panelPrincipalAbonado.setLayout(new BorderLayout(0, 0));
@@ -577,64 +553,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     public void actualizarComboboxTecnicos(List<Tecnico> tecnicos) {
-        this.comboBoxTecnicos.removeAllItems();
-        if (tecnicos.size() == 0) {
-            this.comboBoxTecnicos.setEnabled(false);
-            this.botonEnviarTecnico.setEnabled(false);
-        } else {
-            this.comboBoxTecnicos.setEnabled(true);
-            this.botonEnviarTecnico.setEnabled(true);
-        }
-        for (Tecnico tecnico : tecnicos) {
-            this.comboBoxTecnicos.addItem(tecnico.getNombre());
-        }
-    }
-
-    private void actualizarServicioEnCurso(int progreso) {
-        this.botonEnviarTecnico.setEnabled(false);
-        this.comboBoxTecnicos.setEnabled(false);
-        this.progresoTecnico.setVisible(true);
-        this.progresoTecnico.setValue(progreso);
-    }
-
-    private void actualizarServicioEsperandoTecnico() {
-        this.progresoTecnico.setVisible(false);
-        this.botonEnviarTecnico.setEnabled(false);
-        this.comboBoxTecnicos.setEnabled(false);
-    }
-
-    private void actualizarServicioFinalizado() {
-        this.progresoTecnico.setVisible(false);
-        this.botonEnviarTecnico.setEnabled(true);
-        this.comboBoxTecnicos.setEnabled(true);
-    }
-
-    private void actualizarServicioSinIniciar() {
-        this.progresoTecnico.setVisible(false);
-        this.botonEnviarTecnico.setEnabled(true);
-        this.comboBoxTecnicos.setEnabled(true);
-        this.labelServicioTecnico.setText("Sin servicio técnico en curso");
+        this.panelServicioTecnico.actualizarComboboxTecnicos(tecnicos);
     }
 
     public void actualizarProgresoServicio(ServicioTecnico service) {
-        if (service == null) {
-            actualizarServicioSinIniciar();
-            return;
-        }
-
-        switch (service.getEstado()) {
-            case EN_CURSO:
-                actualizarServicioEnCurso(service.getProgreso());
-                break;
-            case ESPERANDO_TECNICO:
-                actualizarServicioEsperandoTecnico();
-                break;
-            case FINALIZADO:
-                actualizarServicioFinalizado();
-                break;
-        }
-
-        this.labelServicioTecnico.setText(service.getTextoEstado());
+        this.panelServicioTecnico.actualizarServicio(service);
     }
 
     @Override
@@ -648,6 +571,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     public String obtenerTecnicoSeleccionado() {
-        return (String) this.comboBoxTecnicos.getSelectedItem();
+        return this.panelServicioTecnico.obtenerTecnicoSeleccionado();
     }
 }
