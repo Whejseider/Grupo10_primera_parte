@@ -7,12 +7,11 @@ import modelo.interfaces.IAbonado;
 public class Tecnico implements Serializable {
     private static int numero = 0;
     private final String nombre;
-    private boolean disponible;
+    private transient boolean disponible = true;
     private final int id;
 
     public Tecnico(String nombre) {
         this.nombre = nombre;
-        this.disponible = true;
         this.id = numero++;
     }
 
@@ -32,6 +31,8 @@ public class Tecnico implements Serializable {
         while (!disponible) {
             wait();
         }
+
+        System.out.println("DISPONIBLE EN FALSE!!!");
 
         this.disponible = false;
         notifyAll();

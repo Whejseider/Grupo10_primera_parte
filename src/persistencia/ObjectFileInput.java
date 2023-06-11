@@ -1,4 +1,4 @@
-package modelo.input;
+package persistencia;
 
 import java.io.FileInputStream;
 import java.io.IOException;

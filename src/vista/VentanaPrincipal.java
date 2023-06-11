@@ -1,34 +1,9 @@
 package vista;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.Observable;
-
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.MouseInputAdapter;
-
-import modelo.*;
+import modelo.AbonadoFisico;
+import modelo.PromocionDorada;
+import modelo.PromocionPlatino;
+import modelo.SinPromocion;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
@@ -44,8 +19,16 @@ import vista.contratos.NuevoContratoDTO;
 import vista.facturas.DialogoFacturaPagada;
 import vista.facturas.ModeloTablaFacturas;
 
-import javax.swing.JProgressBar;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.TitledBorder;
+import javax.swing.event.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Observable;
 
 public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener {
 
@@ -134,6 +117,14 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.frame.setBounds(100, 100, 1366, 768);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.getContentPane().setLayout(new BorderLayout(0, 0));
+
+        this.frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                actionListener.actionPerformed(new ActionEvent(frame, 0, InterfazVistaPrincipal.CIERRE_VENTANA_PRINCIPAL));
+                frame.dispose();
+            }
+        });
 
         this.panelAbonados = new JPanel();
         this.panelAbonados.setBorder(new EmptyBorder(16, 16, 16, 16));

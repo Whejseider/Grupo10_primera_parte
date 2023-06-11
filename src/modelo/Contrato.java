@@ -4,10 +4,12 @@ import modelo.interfaces.IContrato;
 import modelo.interfaces.IPromocion;
 import modelo.interfaces.IServicioAlarma;
 
+import java.io.Serializable;
+
 /**
  * Clase abstracta que representa un contrato de alarma.
  */
-public abstract class Contrato implements IContrato {
+public abstract class Contrato implements IContrato, Serializable {
     private static int numero = 0;
     private int ID;
     private String domicilio;

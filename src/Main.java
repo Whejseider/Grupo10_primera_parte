@@ -4,22 +4,18 @@ import modelo.excepciones.AbonadoDuplicadoException;
 import modelo.excepciones.AbonadoNoExisteException;
 import modelo.excepciones.ContratoDuplicadoException;
 import modelo.excepciones.SinContratosException;
-import modelo.input.AbonadoInput;
 import modelo.interfaces.IAbonado;
-import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
-import modelo.output.AbonadoOutput;
-import modelo.output.PromocionOutput;
+import persistencia.PersistenciaSistema;
 import vista.VentanaPrincipal;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        try {Main main = new Main();
-            main.testPersistencia();
+        PersistenciaSistema.depersistir();
+        try {
              Sistema modelo = Sistema.getInstance();
              VentanaPrincipal vista = new VentanaPrincipal();
              Controlador controlador = new Controlador(vista, modelo);
@@ -36,47 +32,6 @@ public class Main {
         testClonacionAbonadoJuridico();
         testClonacionFactura();
         muestraFacturasEmitidas();
-    }
-
-    public void testPersistencia() throws IOException {
-        PromocionOutput promocionOutput = new PromocionOutput();
-        promocionOutput.abrir();
-        promocionOutput.escribir(new PromocionDorada());
-        promocionOutput.cerrar();
-        AbonadoOutput abonadoOutput = new AbonadoOutput();
-        ArrayList<IAbonado> abonados = new ArrayList<>();
-        IAbonado abonado1 = new AbonadoFisico("nombre1", "dni1");
-        IAbonado abonado2 = new AbonadoJuridico("nombreEmpresa2", "idEmpresa2");
-        IAbonado abonado3 = new AbonadoFisico("nombre3", "dni3");
-        IAbonado abonado4 = new AbonadoJuridico("nombreEmpresa4", "idEmpresa4");
-
-        IContrato contrato1 = ContratoFactory.getContrato("Comercio", "domicilio1", false, 1, 2);
-        abonado1.contratarNuevoServicio(contrato1);
-
-        try {
-            abonado1.generarFactura(new PromocionDorada(), "EFECTIVO", LocalDate.now());
-            abonado1.pagarFactura(abonado1.getFacturasEmitidas().get(0));
-        } catch (SinContratosException e) {
-            e.printStackTrace();
-        }
-
-        abonados.add(abonado1);
-        abonados.add(abonado2);
-        abonados.add(abonado3);
-        abonados.add(abonado4);
-        abonadoOutput.abrir();
-        abonadoOutput.escribir(abonados);
-        abonadoOutput.cerrar();
-
-        AbonadoInput abonadoInput = new AbonadoInput();
-
-        ArrayList<IAbonado> abonadosLectura = new ArrayList<>();
-        abonadoInput.abrir();
-        abonadosLectura = abonadoInput.leer();
-        for (IAbonado abonado : abonadosLectura)
-            System.out.println(abonado.toString());
-        abonadoInput.cerrar();
-
     }
 
     public void testAbonadoDuplicado() throws IOException {

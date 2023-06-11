@@ -4,18 +4,13 @@ import modelo.estado.ConContrataciones;
 import modelo.estado.Moroso;
 import modelo.estado.SinContratacion;
 import modelo.excepciones.*;
-import modelo.input.AbonadoInput;
-import modelo.input.PromocionInput;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
-import modelo.output.AbonadoOutput;
-import modelo.output.PromocionOutput;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,20 +18,34 @@ import java.util.List;
 
 /**
  * Singleton del sistema. El sistema se encarga de la creación
- * y gestión de contratos y abonados, proporcionando una interfaz
+ * y gestión de contratos, abonados, facturas y tecnicos, proporcionando una interfaz
  * unificada para el mundo del problema.
  */
 public class Sistema {
     private static Sistema instance = null;
-    private ArrayList<IAbonado> abonados;
-    private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
 
+    private ArrayList<IAbonado> abonados = new ArrayList<IAbonado>();;
+    private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
     private IPromocion promocionActiva = new SinPromocion();
-    private LocalDate fecha;
+    private LocalDate fecha = LocalDate.now();
 
     private Sistema() {
-        abonados = new ArrayList<IAbonado>();
-        this.fecha = LocalDate.now();
+    }
+
+    public void setAbonados(ArrayList<IAbonado> abonados) {
+        this.abonados = abonados;
+    }
+
+    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
+        this.tecnicos = tecnicos;
+    }
+
+    public IPromocion getPromocionActiva() {
+        return promocionActiva;
+    }
+
+    public void setPromocionActiva(IPromocion promocionActiva) {
+        this.promocionActiva = promocionActiva;
     }
 
     /**
@@ -44,10 +53,9 @@ public class Sistema {
      *
      * @return
      */
-    public static Sistema getInstance() throws IOException {
+    public static Sistema getInstance() {
         if (instance == null) {
             instance = new Sistema();
-            instance.despersistir();
         }
         return instance;
     }
@@ -58,33 +66,6 @@ public class Sistema {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
-    }
-
-    public void despersistir() throws IOException {
-        AbonadoInput abonadoInput = new AbonadoInput();
-        PromocionInput promocionInput = new PromocionInput();
-        abonadoInput.abrir();
-        promocionInput.abrir();
-
-        this.abonados = abonadoInput.leer();
-        this.promocionActiva = promocionInput.leer();
-
-        abonadoInput.cerrar();
-        promocionInput.cerrar();
-    }
-
-    public void persistir() throws IOException {
-        AbonadoOutput abonadoOutput = new AbonadoOutput();
-        PromocionOutput promocionOutput = new PromocionOutput();
-
-        abonadoOutput.abrir();
-        promocionOutput.abrir();
-
-        abonadoOutput.escribir(this.abonados);
-        promocionOutput.escribir(promocionActiva);
-
-        abonadoOutput.cerrar();
-        promocionOutput.cerrar();
     }
 
     /**
@@ -284,7 +265,7 @@ public class Sistema {
         return abonado.iniciarService(tecnico);
     }
 
-    public List<Tecnico> getTecnicos() {
+    public ArrayList<Tecnico> getTecnicos() {
         return tecnicos;
     }
 
