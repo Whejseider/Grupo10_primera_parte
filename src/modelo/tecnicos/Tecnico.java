@@ -1,8 +1,10 @@
 package modelo.tecnicos;
 
+import java.io.Serializable;
+
 import modelo.interfaces.IAbonado;
 
-public class Tecnico {
+public class Tecnico implements Serializable {
     private static int numero = 0;
     private final String nombre;
     private boolean disponible;
@@ -26,7 +28,7 @@ public class Tecnico {
         return disponible;
     }
 
-    public synchronized void asignarAbonado(IAbonado abonado) throws InterruptedException{
+    public synchronized void asignarAbonado(IAbonado abonado) throws InterruptedException {
         while (!disponible) {
             wait();
         }
