@@ -86,6 +86,18 @@ public abstract class Abonado implements IAbonado {
         this.contratos.add(contrato);
     }
 
+    public IContrato buscaContrato(String domicilio) {
+        Iterator<IContrato> it = this.getIteratorContratos();
+        while (it.hasNext()) {
+            IContrato contrato = it.next();
+            if (contrato.getDomicilio().equalsIgnoreCase(domicilio)) {
+                return contrato;
+            }
+        }
+        return null;
+    }
+
+
     /**
      * Genera un detalle de los contratos actuales del abonado.
      */

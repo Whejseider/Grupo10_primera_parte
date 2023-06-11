@@ -52,6 +52,8 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     IFactura generarFactura(IPromocion promo, String medioDePago, LocalDate fecha) throws SinContratosException;
 
+    IContrato buscaContrato(String domicilio);
+
     void agregarFactura(IFactura factura);
 
     String getDetalleFacturas();

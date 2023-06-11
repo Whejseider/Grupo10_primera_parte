@@ -3,6 +3,7 @@ package controlador;
 import modelo.*;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
+import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
@@ -58,6 +59,7 @@ public class Controlador implements ActionListener {
         try {
             this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(),
                     dto.getCantCamaras(), dto.getCantBotones());
+
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
 
@@ -100,13 +102,18 @@ public class Controlador implements ActionListener {
         String domicilio = this.vistaPrincipal.obtenerContratoSeleccionado();
 
         if (domicilio != null) {
-            this.modelo.eliminarContrato(domicilio);
-            this.modelo.actualizadorEstado();
+
             String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
             try {
+                IAbonado abonado = this.modelo.getAbonado(dni);
+                IContrato contrato = abonado.buscaContrato(domicilio);
+                assert contrato != null;
+                abonado.bajaDeServicio(contrato); // State
+                this.modelo.actualizadorEstado();
                 this.vistaPrincipal.actualizarTablaContratos(this.modelo.getAbonado(dni).getContratos());
                 this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
-            } catch (AbonadoNoExisteException e) {
+            }
+            catch (AbonadoNoExisteException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -118,7 +125,7 @@ public class Controlador implements ActionListener {
         try {
             IAbonado abonado = this.modelo.getAbonado(dni);
             IFactura factura = buscaFactura(idFactura);
-            if(factura.isPagada())
+            if (factura.isPagada())
                 this.vistaPrincipal.mostrarAlertaFacturaPagada();
             else {
                 IFactura facturaVieja = factura;
