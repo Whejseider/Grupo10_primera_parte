@@ -442,9 +442,16 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.actualizarTablaFacturas(abonado.getFacturasEmitidas());
         this.labelDniAbonado.setText("Dni: " + abonado.getDni());
         this.labelNombreAbonado.setText("Nombre: " + abonado.getNombre());
-        this.labelTipoAbonado.setText("Tipo: " + (abonado.isFisico() ? "Fisico" : "Juridico"));
 
-            ServicioTecnico servicio = abonado.getServicioTecnico();
+        String tipoAbonado = abonado.isFisico() ? "Fisico" : "Juridico";
+        this.labelTipoAbonado.setText("Tipo: " + tipoAbonado);
+
+        String estadoAbonado = abonado.isFisico() ? ((AbonadoFisico) abonado).getEstado().toString() : "-";
+        this.labelEstadoAbonado.setText("Estado: " + estadoAbonado);
+
+
+
+        ServicioTecnico servicio = abonado.getServicioTecnico();
             if (servicio != null) {
                 servicio.addObserver(this);
             }

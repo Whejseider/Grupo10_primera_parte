@@ -60,8 +60,6 @@ public class Moroso implements IEstadoFisico {
 
     @Override
     public String toString() {
-        return "Moroso{" +
-                "abonado=" + abonado +
-                '}';
+        return "Moroso";
     }
 }

@@ -62,8 +62,6 @@ public class ConContrataciones implements IEstadoFisico {
 
     @Override
     public String toString() {
-        return "ConContrataciones{" +
-                "abonado=" + abonado +
-                '}';
+        return "Con contrataciones";
     }
 }
