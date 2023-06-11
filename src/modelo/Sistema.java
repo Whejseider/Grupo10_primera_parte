@@ -1,8 +1,5 @@
 package modelo;
 
-import modelo.estado.ConContrataciones;
-import modelo.estado.Moroso;
-import modelo.estado.SinContratacion;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
@@ -13,8 +10,6 @@ import modelo.tecnicos.Tecnico;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * Singleton del sistema. El sistema se encarga de la creación
@@ -32,40 +27,16 @@ public class Sistema {
     private Sistema() {
     }
 
-    public void setAbonados(ArrayList<IAbonado> abonados) {
-        this.abonados = abonados;
-    }
-
-    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
-        this.tecnicos = tecnicos;
-    }
-
-    public IPromocion getPromocionActiva() {
-        return promocionActiva;
-    }
-
-    public void setPromocionActiva(IPromocion promocionActiva) {
-        this.promocionActiva = promocionActiva;
-    }
-
     /**
      * Obtiene la instancia del sistema
      *
-     * @return
+     * @return La instancia singleton de Sistema
      */
     public static Sistema getInstance() {
         if (instance == null) {
             instance = new Sistema();
         }
         return instance;
-    }
-
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
     }
 
     /**
@@ -121,7 +92,7 @@ public class Sistema {
     /**
      * Obtiene una lista con todos los abonados activos del sistema.
      *
-     * @return
+     * @return Una lista con los abonados
      */
     public ArrayList<IAbonado> getAbonados() {
         return abonados;
@@ -200,19 +171,6 @@ public class Sistema {
 
     }
 
-    public void eliminarContrato(String domicilio) {
-        for (IAbonado abonado : abonados) {
-            List<IContrato> contratos = abonado.getContratos();
-            Iterator<IContrato> it = contratos.iterator();
-            while (it.hasNext()) {
-                IContrato contrato = it.next();
-                if (contrato.getDomicilio().equals(domicilio)) {
-                    it.remove();
-                }
-            }
-        }
-    }
-
     /**
      * Obtiene todas las facturas emitidas por los abonados activos del sistema.
      *
@@ -226,6 +184,11 @@ public class Sistema {
         return facturas;
     }
 
+    /**
+     * Agrega un nuevo tecnico al sistema
+     * @param nombre El nombre del tecnico
+     * @throws TecnicoYaExisteException Si ya existe un tecnico con ese nombre
+     */
     public void agregarTecnico(String nombre) throws TecnicoYaExisteException {
         if (this.getTecnico(nombre) != null) {
             throw new TecnicoYaExisteException();
@@ -233,6 +196,12 @@ public class Sistema {
         this.tecnicos.add(new Tecnico(nombre));
     }
 
+    /**
+     * Elimina un tecnico del sistema
+     * @param nombre El nombre del tecnico
+     * @throws TecnicoTrabajandoException Si el tecnico está trabajando en algún service
+     * @throws TecnicoNoExisteException Si el tecnico con ese nombre no existe
+     */
     public void eliminarTecnico(String nombre) throws TecnicoTrabajandoException, TecnicoNoExisteException {
         Tecnico tecnico = this.getTecnico(nombre);
 
@@ -247,6 +216,11 @@ public class Sistema {
         this.tecnicos.remove(this.getTecnico(nombre));
     }
 
+    /**
+     * Obtiene un tecnico a partir del nombre
+     * @param nombre El nombre del tecnico
+     * @return El tecnico o null si no se encontró
+     */
     public Tecnico getTecnico(String nombre) {
         for (Tecnico tecnico : tecnicos) {
             if (tecnico.getNombre().equals(nombre)) {
@@ -257,6 +231,14 @@ public class Sistema {
         return null;
     }
 
+    /**
+     * Pide inicializar un service a un abonado
+     * @param dniAbonado El dni del abonado a mandar el service
+     * @param nombreTecnico El nombre del tecnico a asignar
+     * @return El servicio creado
+     * @throws AbonadoNoExisteException Si el abonado con el dni pasado no existe
+     * @throws ServicioEnCursoException Si el abonado ya tiene un servicio técnico en curso
+     */
     public ServicioTecnico pedirService(String dniAbonado, String nombreTecnico)
             throws AbonadoNoExisteException, ServicioEnCursoException {
         IAbonado abonado = this.getAbonado(dniAbonado);
@@ -265,17 +247,28 @@ public class Sistema {
         return abonado.iniciarService(tecnico);
     }
 
+    /**
+     * Obtiene los tecnicos activos del sistema
+     *
+     * @return Una lista con todos los tecnicos
+     */
     public ArrayList<Tecnico> getTecnicos() {
         return tecnicos;
     }
 
+    /**
+     * Actualiza el estado de todos los abonados.
+     */
     public void actualizadorEstado() {
-
         for (IAbonado abonado : abonados) {
             abonado.actualizadorEstado();
         }
     }
 
+    /**
+     * Genera facturas para todos los abonados. No se crean
+     * si el abonado no tiene contratos.
+     */
     public void generadorFacturas() {
         for (IAbonado abonado : abonados) {
             try {
@@ -286,4 +279,37 @@ public class Sistema {
             }
         }
     }
+
+    /**
+     * Sobreescribe los abonados activos del sistema. SOLO PARA SERIALIZACION.
+     * @param abonados Los abonados a usar
+     */
+    public void setAbonados(ArrayList<IAbonado> abonados) {
+        this.abonados = abonados;
+    }
+
+    /**
+     * Sobreescribe los tecnicos activos del sistema. SOLO PARA SERIALIZACION.
+     * @param tecnicos Los tecnicos a usar
+     */
+    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
+        this.tecnicos = tecnicos;
+    }
+
+    /**
+     * Obtiene la fecha actual del sistema
+     * @return La fecha actual
+     */
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    /**
+     * Sobreescribe la fecha actual del sistema. SOLO PARA SERIALIZACION.
+     * @param fecha La fecha a usar
+     */
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
 }

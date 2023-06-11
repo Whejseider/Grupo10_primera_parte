@@ -19,7 +19,7 @@ public class PersistenciaSistema {
         dto.setAbonados(sistema.getAbonados());
         dto.setFecha(sistema.getFecha());
         dto.setTecnicos(sistema.getTecnicos());
-        dto.setPromocionActiva(sistema.getPromocionActiva());
+        dto.setPromocionActiva(sistema.getPromocion());
 
         return dto;
     }
@@ -30,7 +30,7 @@ public class PersistenciaSistema {
         sistema.setAbonados(dto.getAbonados());
         sistema.setFecha(dto.getFecha());
         sistema.setTecnicos(dto.getTecnicos());
-        sistema.setPromocionActiva(dto.getPromocionActiva());
+        sistema.setPromocion(dto.getPromocionActiva());
 
         int maxId = 0;
         for (IFactura factura : sistema.getFacturasEmitidas()) {

@@ -11,8 +11,8 @@ import java.io.Serializable;
  */
 public abstract class Contrato implements IContrato, Serializable {
     private static int numero = 0;
-    private int ID;
-    private String domicilio;
+    private final int ID;
+    private final String domicilio;
     private IServicioAlarma servicioAlarma;
 
     /**
@@ -25,39 +25,6 @@ public abstract class Contrato implements IContrato, Serializable {
      *                       se usa para verificar igualdad entre contratos.
      * @param servicioAlarma Los servicios adicionales a adjuntar al contrato.
      */
-
-    public Contrato() {
-
-    }
-
-    public static void setNumero(int numero) {
-        Contrato.numero = numero;
-    }
-
-    public void setID(int iD) {
-        ID = iD;
-    }
-
-    public void setDomicilio(String domicilio) {
-        this.domicilio = domicilio;
-    }
-
-    public void setServicioAlarma(IServicioAlarma servicioAlarma) {
-        this.servicioAlarma = servicioAlarma;
-    }
-
-    public static int getNumero() {
-        return numero;
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public IServicioAlarma getServicioAlarma() {
-        return servicioAlarma;
-    }
-
     public Contrato(String domicilio, IServicioAlarma servicioAlarma) {
         assert (domicilio != null);
         assert (servicioAlarma != null);
@@ -100,11 +67,7 @@ public abstract class Contrato implements IContrato, Serializable {
     }
 
     /**
-     * Agrega camaras al contrato
-     * 
-     * <b>pre:</b> La cantidad no puede ser menor a cero.
-     * 
-     * @param cantidad
+     * Contrata movil de acompañamiento al contrato
      */
     public void contratarMovilAcompaniamiento() {
         this.servicioAlarma.contratarMovil();
@@ -122,6 +85,10 @@ public abstract class Contrato implements IContrato, Serializable {
         return this.servicioAlarma.getPrecio() + getPrecioBase();
     }
 
+    /**
+     * Obtiene el ID o identificador del contrato
+     * @return El identificador del contrato
+     */
     public int getIdentificador() {
         return this.ID;
     }
