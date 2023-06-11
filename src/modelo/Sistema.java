@@ -44,6 +44,7 @@ public class Sistema {
     public static Sistema getInstance() throws IOException {
         if (instance == null) {
             instance = new Sistema();
+            instance.despersistir();
         }
         return instance;
     }
@@ -135,6 +136,7 @@ public class Sistema {
 
     /**
      * Obtiene una lista con todos los abonados activos del sistema.
+     * 
      * @return
      */
     public ArrayList<IAbonado> getAbonados() {
@@ -239,7 +241,7 @@ public class Sistema {
         return facturas;
     }
 
-    public void agregarTecnico(String nombre) throws TecnicoYaExisteException{
+    public void agregarTecnico(String nombre) throws TecnicoYaExisteException {
         if (this.getTecnico(nombre) != null) {
             throw new TecnicoYaExisteException();
         }
@@ -270,7 +272,8 @@ public class Sistema {
         return null;
     }
 
-    public ServicioTecnico pedirService(String dniAbonado, String nombreTecnico) throws AbonadoNoExisteException, ServicioEnCursoException {
+    public ServicioTecnico pedirService(String dniAbonado, String nombreTecnico)
+            throws AbonadoNoExisteException, ServicioEnCursoException {
         IAbonado abonado = this.getAbonado(dniAbonado);
         Tecnico tecnico = this.getTecnico(nombreTecnico);
 
