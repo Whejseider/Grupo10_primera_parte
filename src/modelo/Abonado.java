@@ -120,7 +120,8 @@ public abstract class Abonado implements IAbonado {
         }
         IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo),
                 this.getPagoMedioDePago(promo), medioDePago, fecha);
-        this.agregarFactura(factura);
+        if (!this.existeFactura(factura))
+            this.agregarFactura(factura);
         return factura;
     }
 
@@ -139,13 +140,35 @@ public abstract class Abonado implements IAbonado {
      * @param factura factura que se desea comprobar si existe o no
      * @return si existe o no la factura
      */
+    @Override
     public boolean existeFactura(IFactura factura) {
         Iterator<IFactura> it = this.getIteratorFacturas();
-        while (it.hasNext() && !it.next().equals(factura)) {
-            it.next();
+        while (it.hasNext()) {
+            if (it.next().equals(factura)) {
+                return true;
+            }
         }
-        return !it.hasNext();
+        return false;
     }
+
+    /**
+     * Devulve la posicion de una factura que exista
+     *
+     * @param factura factura a verificar si existe
+     * @return posicion de una factura que exista
+     */
+    public int posFactura(IFactura factura) {
+        int i = 0;
+
+        for (IFactura factura1 : getFacturasEmitidas()) {
+            if (factura1.equals(factura))
+                return i;
+            i++;
+        }
+
+        return -1;
+    }
+
 
     /**
      * Genera un detalle completo de todas las facturas del abonado.
@@ -349,6 +372,13 @@ public abstract class Abonado implements IAbonado {
 
     public void setFacturas(ArrayList<IFactura> facturas) {
         this.facturas = facturas;
+    }
+
+    @Override
+    public void actualizarFactura(IFactura factura, IFactura facturaVieja) {
+        int i = posFactura(facturaVieja);
+        if (i != -1)
+            this.facturas.set(i, factura);
     }
 
     public String toString() {

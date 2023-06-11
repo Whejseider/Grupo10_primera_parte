@@ -294,4 +294,15 @@ public class Sistema {
             abonado.actualizadorEstado();
         }
     }
+
+    public void generadorFacturas() {
+        for (IAbonado abonado : abonados) {
+            try {
+                if (abonado.cantidadDeContratos() > 0)
+                    abonado.generarFactura(getPromocion(), "", getFecha());
+            } catch (SinContratosException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }

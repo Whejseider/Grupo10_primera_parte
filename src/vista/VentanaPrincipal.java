@@ -41,6 +41,7 @@ import vista.abonados.NuevoAbonadoDTO;
 import vista.contratos.DialogoNuevoContrato;
 import vista.contratos.ModeloTablaContratos;
 import vista.contratos.NuevoContratoDTO;
+import vista.facturas.DialogoFacturaPagada;
 import vista.facturas.ModeloTablaFacturas;
 
 import javax.swing.JProgressBar;
@@ -56,7 +57,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     private DialogoNuevoAbonado dialogoNuevoAbonado;
     private DialogoNuevoContrato dialogoNuevoContrato;
-
+    private DialogoFacturaPagada dialogoFacturaPagada;
     private JPanel panel;
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
@@ -122,6 +123,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         initialize();
         dialogoNuevoAbonado = new DialogoNuevoAbonado(this.frame);
         dialogoNuevoContrato = new DialogoNuevoContrato(this.frame);
+        dialogoFacturaPagada = new DialogoFacturaPagada(this.frame);
     }
 
     /**
@@ -291,6 +293,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
                 }
             }
         });
+        this.tablaFacturas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                actionListener.actionPerformed(new ActionEvent(tablaFacturas, 0, "SELECCION_FACTURA"));
+            }
+        });
 
         this.panelTablaFacturas.setViewportView(this.tablaFacturas);
         this.tabsAbonado.addTab("Facturas", this.panelFacturas);
@@ -368,6 +376,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     @Override
+    public void mostrarAlertaFacturaPagada() {
+        this.dialogoFacturaPagada.mostrarDialogoFacturaPagada();
+    }
+
+    @Override
     public boolean confirmarBorrarAbonado() {
         String dni = this.obtenerAbonadoSeleccionado();
         int result = JOptionPane.showConfirmDialog(this.frame, "Está seguro que desea borrar el abonado con dni " + dni + "?");
@@ -400,6 +413,14 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         if (fila == -1) return null;
 
         return (String) this.tablaAbonados.getValueAt(fila, 1);
+    }
+
+    @Override
+    public Integer obtenerFacturaSeleccionado() {
+        int fila = this.tablaFacturas.getSelectedRow();
+        if (fila == -1) return null;
+
+        return (Integer) this.tablaFacturas.getValueAt(fila, 0);
     }
 
     /**
@@ -482,8 +503,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     }
 
     @Override
-    public void mostrarAlertaPagarSinContratos() {
-        JOptionPane.showMessageDialog(this.frame, "El abonado necesita al menos 1 contrato para poder abonar");
+    public void mostrarAlertaPagarSinFacturas() {
+        JOptionPane.showMessageDialog(this.frame, "El abonado necesita al menos 1 factura para poder abonar");
     }
 
     @Override
@@ -525,6 +546,17 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         int result = JOptionPane.showConfirmDialog(
                 this.frame,
                 "Está seguro que desea eliminar el contrato con domicilio " + domicilio + "?"
+        );
+
+        return result == JOptionPane.OK_OPTION;
+    }
+
+    @Override
+    public boolean confirmarPagarFactura() {
+        Integer id = this.obtenerFacturaSeleccionado();
+        int result = JOptionPane.showConfirmDialog(
+                this.frame,
+                "Está seguro que desea pagar el contrato con id " + id + "?"
         );
 
         return result == JOptionPane.OK_OPTION;
