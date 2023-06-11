@@ -1,5 +1,8 @@
 package modelo;
 
+import modelo.estado.ConContrataciones;
+import modelo.estado.Moroso;
+import modelo.estado.SinContratacion;
 import modelo.excepciones.ServicioEnCursoException;
 import modelo.excepciones.SinContratosException;
 import modelo.interfaces.IAbonado;
@@ -23,10 +26,8 @@ import java.util.Iterator;
 public abstract class Abonado implements IAbonado {
     private String nombre;
     private String dni;
-
     private Thread threadServicio = null;
     private ServicioTecnico service = null;
-
     private ArrayList<IContrato> contratos;
     private ArrayList<IFactura> facturas;
 
@@ -35,9 +36,9 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Constructor de la clase Abonado.
-     * 
+     *
      * <b>pre: </b>: El nombre y dni tienen que estar definidos y no ser vacíos
-     * 
+     *
      * @param nombre El nombre del abonado a crear
      * @param dni    El DNI del abonado a crear
      */
@@ -75,15 +76,27 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Agrega un contrato a la lista del abonado <br>
-     * 
+     *
      * <b>pre:</b> La lista de contratos está inicializada
-     * 
+     *
      * @param contrato El contrato a agregar. No puede ser nulo.
      */
     public void agregaContrato(IContrato contrato) {
         assert (contrato != null);
         this.contratos.add(contrato);
     }
+
+    public IContrato buscaContrato(String domicilio) {
+        Iterator<IContrato> it = this.getIteratorContratos();
+        while (it.hasNext()) {
+            IContrato contrato = it.next();
+            if (contrato.getDomicilio().equalsIgnoreCase(domicilio)) {
+                return contrato;
+            }
+        }
+        return null;
+    }
+
 
     /**
      * Genera un detalle de los contratos actuales del abonado.
@@ -119,7 +132,8 @@ public abstract class Abonado implements IAbonado {
         }
         IFactura factura = FacturaFactory.getFactura(this.getDetalle(promo), this.getPagoNeto(promo),
                 this.getPagoMedioDePago(promo), medioDePago, fecha);
-        this.agregarFactura(factura);
+        if (!this.existeFactura(factura))
+            this.agregarFactura(factura);
         return factura;
     }
 
@@ -128,8 +142,45 @@ public abstract class Abonado implements IAbonado {
      */
     public void agregarFactura(IFactura factura) {
         assert factura != null;
+
         this.facturas.add(factura);
     }
+
+    /**
+     * Verifica si existe la factura
+     *
+     * @param factura factura que se desea comprobar si existe o no
+     * @return si existe o no la factura
+     */
+    @Override
+    public boolean existeFactura(IFactura factura) {
+        Iterator<IFactura> it = this.getIteratorFacturas();
+        while (it.hasNext()) {
+            if (it.next().equals(factura)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Devulve la posicion de una factura que exista
+     *
+     * @param factura factura a verificar si existe
+     * @return posicion de una factura que exista
+     */
+    public int posFactura(IFactura factura) {
+        int i = 0;
+
+        for (IFactura factura1 : getFacturasEmitidas()) {
+            if (factura1.equals(factura))
+                return i;
+            i++;
+        }
+
+        return -1;
+    }
+
 
     /**
      * Genera un detalle completo de todas las facturas del abonado.
@@ -147,7 +198,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la lista de facturas del abonado.
-     * 
+     *
      * @return La lista de facturas.
      */
     public ArrayList<IFactura> getFacturas() {
@@ -156,7 +207,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene la lista de contratos del abonado.
-     * 
+     *
      * @return La lista de contratos.
      */
     @Override
@@ -180,7 +231,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el valor de los contratos del abonado
-     * 
+     *
      * @param promo La promoción a aplicar
      */
     @Override
@@ -239,7 +290,7 @@ public abstract class Abonado implements IAbonado {
      */
     public int cantidadFacturasSinPagarSeguidas() {
         int i = 0;
-        Iterator<IFactura> it = this.getFacturas().iterator();
+        Iterator<IFactura> it = this.getIteratorFacturas();
         while (i < 2 && it.hasNext()) {
             if (!it.next().isPagada())
                 i++;
@@ -252,7 +303,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Devuelve un clon del abonado.
-     * 
+     *
      * @throws CloneNotSupportedException Si no se pudo clonar. Es el caso para
      *                                    abonados de tipo jurídico.
      */
@@ -280,7 +331,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el DNI del abonado
-     * 
+     *
      * @return El DNI del abonado
      */
     public String getDni() {
@@ -289,7 +340,7 @@ public abstract class Abonado implements IAbonado {
 
     /**
      * Obtiene el nombre del abonado
-     * 
+     *
      * @return El nombre del abonado
      */
     public String getNombre() {
@@ -299,7 +350,7 @@ public abstract class Abonado implements IAbonado {
     /**
      * Devuelve verdadero si dos abonados se consideran iguales. Son iguales si
      * coincide su DNI.<br>
-     * 
+     *
      * @param obj El objeto a comparar.
      * @return Verdadero si son iguales.
      */
@@ -335,6 +386,13 @@ public abstract class Abonado implements IAbonado {
         this.facturas = facturas;
     }
 
+    @Override
+    public void actualizarFactura(IFactura factura, IFactura facturaVieja) {
+        int i = posFactura(facturaVieja);
+        if (i != -1)
+            this.facturas.set(i, factura);
+    }
+
     public String toString() {
         String contratosString = "";
         for (IContrato contrato : contratos) {
@@ -347,4 +405,25 @@ public abstract class Abonado implements IAbonado {
     public void eliminaContrato(IContrato contrato) {
         this.contratos.remove(contrato);
     }
+
+    @Override
+    public boolean isFisico() {
+        return false;
+    }
+
+    @Override
+    public void actualizadorEstado() {
+
+        if (this.isFisico()) {
+            AbonadoFisico abonadoFisico = (AbonadoFisico) this;
+            if (abonadoFisico.cantidadFacturasSinPagarSeguidas() >= 2)
+                abonadoFisico.setEstado(new Moroso(abonadoFisico));
+            else if (abonadoFisico.cantidadDeContratos() > 0)
+                abonadoFisico.setEstado(new ConContrataciones(abonadoFisico));
+            else
+                abonadoFisico.setEstado(new SinContratacion(abonadoFisico));
+        }
+
+    }
+
 }

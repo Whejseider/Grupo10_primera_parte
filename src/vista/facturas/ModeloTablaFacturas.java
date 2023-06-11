@@ -30,7 +30,7 @@ public class ModeloTablaFacturas extends DefaultTableModel {
         for (int i = 0; i < facturas.size(); i++) {
             IFactura factura = facturas.get(i);
 
-            LocalDate fecha = factura.getFecha(); //LocalDate.of(2023,6,10);
+            LocalDate fecha = factura.getFecha();
             double subtotal = factura.getSubtotal();
             double total = factura.getValorNeto();
 

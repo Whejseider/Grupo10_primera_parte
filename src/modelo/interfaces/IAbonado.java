@@ -36,7 +36,7 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     /**
      * Obtiene el pago neto previo a cualquier descuento sobre el total.
-     * 
+     *
      * @param promo La promoción a aplicar
      * @return El precio total.
      */
@@ -44,13 +44,15 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     /**
      * Obtiene el pago total calculado con el medio de pago
-     * 
+     *
      * @param promo La promoción a aplicar
      * @return El precio total descontado.
      */
     double getPagoMedioDePago(IPromocion promo);
 
     IFactura generarFactura(IPromocion promo, String medioDePago, LocalDate fecha) throws SinContratosException;
+
+    IContrato buscaContrato(String domicilio);
 
     void agregarFactura(IFactura factura);
 
@@ -62,8 +64,15 @@ public interface IAbonado extends Cloneable, IDetallable {
 
     void pagarFactura(IFactura factura);
 
+    void actualizarFactura(IFactura factura, IFactura facturaVieja);
+
     void contratarNuevoServicio(IContrato contrato);
 
     void bajaDeServicio(IContrato contrato);
 
+    boolean isFisico();
+
+    void actualizadorEstado();
+
+    boolean existeFactura(IFactura factura);
 }

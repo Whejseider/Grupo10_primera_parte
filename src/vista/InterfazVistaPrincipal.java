@@ -62,11 +62,15 @@ public interface InterfazVistaPrincipal extends Observer {
 
     public String obtenerContratoSeleccionado();
 
+    public Integer obtenerFacturaSeleccionado();
+
+    boolean confirmarPagarFactura();
+
     public void actualizarTablaContratos(List<IContrato> contratos);
 
     public void actualizarTablaFacturas(List<IFactura> facturas);
 
-    public void mostrarAlertaPagarSinContratos();
+    public void mostrarAlertaPagarSinFacturas();
 
     public void mostrarDialogoFactura(IFactura factura);
 
@@ -77,8 +81,12 @@ public interface InterfazVistaPrincipal extends Observer {
     boolean confirmarAvanzarMes();
 
     public void actualizarComboboxTecnicos(List<Tecnico> tecnicos);
+
     public String obtenerTecnicoSeleccionado();
+
     public void actualizarProgresoServicio(ServicioTecnico service);
 
     void actualizarFecha(LocalDate fecha);
+
+    void mostrarAlertaFacturaPagada();
 }

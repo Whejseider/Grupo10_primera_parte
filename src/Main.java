@@ -18,7 +18,8 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        try {
+        try {Main main = new Main();
+            main.testPersistencia();
              Sistema modelo = Sistema.getInstance();
              VentanaPrincipal vista = new VentanaPrincipal();
              Controlador controlador = new Controlador(vista, modelo);
@@ -50,10 +51,11 @@ public class Main {
         IAbonado abonado4 = new AbonadoJuridico("nombreEmpresa4", "idEmpresa4");
 
         IContrato contrato1 = ContratoFactory.getContrato("Comercio", "domicilio1", false, 1, 2);
-        abonado1.agregaContrato(contrato1);
+        abonado1.contratarNuevoServicio(contrato1);
 
         try {
             abonado1.generarFactura(new PromocionDorada(), "EFECTIVO", LocalDate.now());
+            abonado1.pagarFactura(abonado1.getFacturasEmitidas().get(0));
         } catch (SinContratosException e) {
             e.printStackTrace();
         }

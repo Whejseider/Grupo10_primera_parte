@@ -1,11 +1,9 @@
 package controlador;
 
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.SinPromocion;
-import modelo.Sistema;
+import modelo.*;
 import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
+import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
@@ -61,6 +59,7 @@ public class Controlador implements ActionListener {
         try {
             this.modelo.agregarContrato(dni, dto.getTipo(), dto.getDomicilio(), dto.getTieneMovil(),
                     dto.getCantCamaras(), dto.getCantBotones());
+
             this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
         } catch (AbonadoNoExisteException e) {
 
@@ -82,7 +81,7 @@ public class Controlador implements ActionListener {
             this.vistaPrincipal.actualizarDetallesAbonado(null);
         }
     }
-    
+
     private void manejarSeleccionAbonado() {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
         this.vistaPrincipal.actualizarComboboxTecnicos(this.modelo.getTecnicos());
@@ -103,65 +102,82 @@ public class Controlador implements ActionListener {
         String domicilio = this.vistaPrincipal.obtenerContratoSeleccionado();
 
         if (domicilio != null) {
-            this.modelo.eliminarContrato(domicilio);
+
             String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
             try {
+                IAbonado abonado = this.modelo.getAbonado(dni);
+                IContrato contrato = abonado.buscaContrato(domicilio);
+                assert contrato != null;
+                abonado.bajaDeServicio(contrato); // State
+                this.modelo.actualizadorEstado();
                 this.vistaPrincipal.actualizarTablaContratos(this.modelo.getAbonado(dni).getContratos());
-            } catch (AbonadoNoExisteException e) {
+                this.vistaPrincipal.actualizarDetallesAbonado(this.modelo.getAbonado(dni));
+            }
+            catch (AbonadoNoExisteException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    private void manejarPagarFactura(String medioDePago) { // No habria que seleccionar la factura y pagarla?
+    private void manejarPagarFactura(String medioDePago, int idFactura) {
         String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
 
         try {
             IAbonado abonado = this.modelo.getAbonado(dni);
-            //abonado.pagarFactura(this.modelo.generarFactura(dni, medioDePago, this.vistaPrincipal.getFecha())); asi cambia el estado
-            //se podria crear otro boton o algo
-            this.modelo.generarFactura(dni, medioDePago);
-            this.vistaPrincipal.actualizarDetallesAbonado(abonado);
-        } catch (SinContratosException e) {
-            this.vistaPrincipal.mostrarAlertaPagarSinContratos();
+            IFactura factura = buscaFactura(idFactura);
+            if (factura.isPagada())
+                this.vistaPrincipal.mostrarAlertaFacturaPagada();
+            else {
+                IFactura facturaVieja = factura;
+                factura = FacturaFactory.getFactura(factura, medioDePago);
+                abonado.actualizarFactura(factura, facturaVieja);
+                abonado.pagarFactura(factura);
+                this.vistaPrincipal.actualizarTablaFacturas(abonado.getFacturasEmitidas());
+                this.vistaPrincipal.actualizarDetallesAbonado(abonado);
+            }
         } catch (AbonadoNoExisteException e) {
 
         }
     }
 
     private void manejarPagarFacturaCheque() {
-        this.manejarPagarFactura("cheque");
+        this.manejarPagarFactura("cheque", this.vistaPrincipal.obtenerFacturaSeleccionado());
     }
-    
+
     private void manejarPagarFacturaTarjeta() {
-        this.manejarPagarFactura("tarjeta");
+        this.manejarPagarFactura("tarjeta", this.vistaPrincipal.obtenerFacturaSeleccionado());
     }
-    
+
     private void manejarPagarFacturaEfectivo() {
-        this.manejarPagarFactura("efectivo");
+        this.manejarPagarFactura("efectivo", this.vistaPrincipal.obtenerFacturaSeleccionado());
     }
-    
+
     private void manejarMostrarFactura(int idFactura) {
+        IFactura factura = buscaFactura(idFactura);
+        if (factura != null)
+            this.vistaPrincipal.mostrarDialogoFactura(factura);
+    }
+
+    private IFactura buscaFactura(int idFactura) {
         for (IFactura factura : this.modelo.getFacturasEmitidas()) {
-            if (factura.getId() == idFactura) {
-                this.vistaPrincipal.mostrarDialogoFactura(factura);
-            }
+            if (factura.getId() == idFactura)
+                return factura;
         }
+        return null;
     }
-    
+
     private void manejarQuitarPromocion() {
-        //TODO: Deberia hacerse un factory o algo asi no creo directamente el objeto
-        this.modelo.setPromocion(new SinPromocion());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Sin Promocion"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-    
+
     private void manejarPromocionDorada() {
-        this.modelo.setPromocion(new PromocionDorada());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Promocion Dorada"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
-    
+
     private void manejarPromocionPlatino() {
-        this.modelo.setPromocion(new PromocionPlatino());
+        this.modelo.setPromocion(PromocionFactory.getPromocion("Promocion Platino"));
         this.vistaPrincipal.actualizarBotonesPromocion(this.modelo.getPromocion());
     }
 
@@ -178,7 +194,7 @@ public class Controlador implements ActionListener {
                 List<Tecnico> tecnicos = this.modelo.getTecnicos();
                 this.vistaPrincipal.actualizarComboboxTecnicos(tecnicos);
                 this.dialogoTecnicos.actualizar(tecnicos);
-            } catch(TecnicoYaExisteException e) {
+            } catch (TecnicoYaExisteException e) {
                 this.dialogoTecnicos.mostrarAlertaTecnicoYaExiste();
             }
         }
@@ -188,11 +204,20 @@ public class Controlador implements ActionListener {
         boolean deberiaAvanzar = this.vistaPrincipal.confirmarAvanzarMes();
 
         if (deberiaAvanzar) {
-            //TODO completar
+            this.modelo.generadorFacturas();
+            this.modelo.actualizadorEstado();
             LocalDate fecha = this.modelo.getFecha();
             LocalDate nuevaFecha = fecha.plusMonths(1);
             this.modelo.setFecha(nuevaFecha);
             this.vistaPrincipal.actualizarFecha(this.modelo.getFecha());
+            try {
+                String dni = this.vistaPrincipal.obtenerAbonadoSeleccionado();
+                IAbonado abonado = this.modelo.getAbonado(dni);
+                this.vistaPrincipal.actualizarTablaFacturas(abonado.getFacturasEmitidas());
+                this.vistaPrincipal.actualizarDetallesAbonado(abonado);
+            } catch (AbonadoNoExisteException e) {
+                throw new RuntimeException(e);
+            }
         }
 
     }
@@ -230,7 +255,7 @@ public class Controlador implements ActionListener {
 
 
     @Override
-    public void actionPerformed(ActionEvent evento){
+    public void actionPerformed(ActionEvent evento) {
         String comando = evento.getActionCommand();
         System.out.println("ACTION: " + comando);
 

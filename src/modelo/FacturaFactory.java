@@ -30,6 +30,23 @@ public class FacturaFactory {
             respuesta = new PagoChequeDecorator(encapsulado);
         else if (medioDePago.equalsIgnoreCase("TARJETA"))
             respuesta = new PagoTarjetaCreditoDecorator(encapsulado);
+        else
+            respuesta = encapsulado;
+
+        return respuesta;
+    }
+
+    public static IFactura getFactura(IFactura factura, String medioDePago) {
+        IFactura respuesta = null;
+
+        if (medioDePago.equalsIgnoreCase("EFECTIVO"))
+            respuesta = new PagoEfectivoDecorator(factura);
+        else if (medioDePago.equalsIgnoreCase("CHEQUE"))
+            respuesta = new PagoChequeDecorator(factura);
+        else if (medioDePago.equalsIgnoreCase("TARJETA"))
+            respuesta = new PagoTarjetaCreditoDecorator(factura);
+        else
+            respuesta = factura;
 
         return respuesta;
     }

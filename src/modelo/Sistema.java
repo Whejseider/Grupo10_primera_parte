@@ -1,5 +1,8 @@
 package modelo;
 
+import modelo.estado.ConContrataciones;
+import modelo.estado.Moroso;
+import modelo.estado.SinContratacion;
 import modelo.excepciones.*;
 import modelo.input.AbonadoInput;
 import modelo.input.PromocionInput;
@@ -90,10 +93,10 @@ public class Sistema {
      * @param tipo   El tipo de abonado. "Fisico" o "Juridico"
      * @param nombre El nombre del abonado
      * @param dni    El dni del abonado
+     * @return El abonado creado
      * @throws AbonadoDuplicadoException Si el DNI ya coincide con el de un abonado
      *                                   en
      *                                   el sistema
-     * @return El abonado creado
      */
     public IAbonado agregarAbonado(String tipo, String nombre, String dni) throws AbonadoDuplicadoException {
         IAbonado abonado = AbonadoFactory.getAbonado(tipo, nombre, dni);
@@ -136,7 +139,7 @@ public class Sistema {
 
     /**
      * Obtiene una lista con todos los abonados activos del sistema.
-     * 
+     *
      * @return
      */
     public ArrayList<IAbonado> getAbonados() {
@@ -156,8 +159,9 @@ public class Sistema {
     public IFactura generarFactura(String dni, String medioDePago)
             throws SinContratosException, AbonadoNoExisteException {
         IAbonado abonado = this.getAbonado(dni);
-
-        return abonado.generarFactura(this.promocionActiva, medioDePago, this.fecha);
+        IFactura factura = abonado.generarFactura(this.promocionActiva, medioDePago, this.fecha);
+        this.actualizadorEstado();
+        return factura;
     }
 
     /**
@@ -205,7 +209,7 @@ public class Sistema {
      *                                    dni pasado.
      */
     public void agregarContrato(String dni, String tipo, String domicilio, boolean tieneMovil, int cantCamaras,
-            int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
+                                int cantBotones) throws ContratoDuplicadoException, AbonadoNoExisteException {
 
         IContrato nuevoContrato = ContratoFactory.getContrato(tipo, domicilio, tieneMovil, cantBotones, cantCamaras);
         if (this.contratoExiste(nuevoContrato))
@@ -282,5 +286,23 @@ public class Sistema {
 
     public List<Tecnico> getTecnicos() {
         return tecnicos;
+    }
+
+    public void actualizadorEstado() {
+
+        for (IAbonado abonado : abonados) {
+            abonado.actualizadorEstado();
+        }
+    }
+
+    public void generadorFacturas() {
+        for (IAbonado abonado : abonados) {
+            try {
+                if (abonado.cantidadDeContratos() > 0)
+                    abonado.generarFactura(getPromocion(), "", getFecha());
+            } catch (SinContratosException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

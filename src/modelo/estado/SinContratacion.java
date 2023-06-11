@@ -52,8 +52,6 @@ public class SinContratacion implements IEstadoFisico {
 
     @Override
     public String toString() {
-        return "SinContratacion{" +
-                "abonado=" + abonado +
-                '}';
+        return "Sin contratación";
     }
 }
