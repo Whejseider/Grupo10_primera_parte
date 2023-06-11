@@ -1,6 +1,8 @@
 package persistencia;
 
+import modelo.Factura;
 import modelo.Sistema;
+import modelo.interfaces.IFactura;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,6 +27,13 @@ public class PersistenciaSistema {
         sistema.setFecha(dto.getFecha());
         sistema.setTecnicos(dto.getTecnicos());
         sistema.setPromocionActiva(dto.getPromocionActiva());
+
+        int maxId = 0;
+        for (IFactura factura : sistema.getFacturasEmitidas()) {
+            if (factura.getId() > maxId)
+                maxId = factura.getId();
+        }
+        Factura.actualizarID(maxId);
     }
 
     public static void persistir() {

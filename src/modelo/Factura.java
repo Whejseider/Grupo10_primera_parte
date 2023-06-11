@@ -29,6 +29,10 @@ public class Factura implements IFactura {
         this.fecha = fecha;
     }
 
+    public static void actualizarID(int maxId){
+        numero = maxId + 1;
+    }
+
     public LocalDate getFecha() {
         return fecha;
     }
