@@ -7,33 +7,31 @@ import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
-import vista.abonados.*;
+import vista.abonados.EstadoDialogoAlerta;
+import vista.abonados.detalle.contratos.NuevoContratoDTO;
 import vista.abonados.detalle.contratos.PanelContratos;
+import vista.abonados.detalle.facturas.DialogoFacturaPagada;
+import vista.abonados.detalle.facturas.PanelFacturas;
 import vista.abonados.detalle.servicio.PanelServicioTecnico;
 import vista.abonados.tabla.NuevoAbonadoDTO;
 import vista.abonados.tabla.PanelTablaAbonados;
-import vista.abonados.detalle.contratos.DialogoNuevoContrato;
-import vista.abonados.detalle.contratos.ModeloTablaContratos;
-import vista.abonados.detalle.contratos.NuevoContratoDTO;
-import vista.abonados.detalle.facturas.DialogoFacturaPagada;
-import vista.abonados.detalle.facturas.ModeloTablaFacturas;
 import vista.sistema.PanelAccionesSistema;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Observable;
 
-public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener {
-
+public class VentanaPrincipal implements InterfazVistaPrincipal {
     private JFrame frame;
     private ActionListener actionListener;
 
-    private DialogoNuevoContrato dialogoNuevoContrato;
     private DialogoFacturaPagada dialogoFacturaPagada;
     private EstadoDialogoAlerta estadoDialogoAlerta;
 
@@ -41,6 +39,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private PanelTablaAbonados panelTablaAbonados;
     private PanelAccionesSistema panelAccionesSistema;
     private PanelContratos panelContratos;
+    private PanelFacturas panelFacturas;
 
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
@@ -53,9 +52,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JLabel labelEstadoAbonado;
     private JButton botonPagarEfectivo;
     private JTabbedPane tabsAbonado;
-    private JPanel panelFacturas;
-    private JScrollPane panelTablaFacturas;
-    private JTable tablaFacturas;
     private JButton botonPagarTarjeta;
     private JButton botonPagarCheque;
 
@@ -64,9 +60,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         panelAccionesSistema.setActionListener(listener);
         panelTablaAbonados.setActionListener(listener);
         panelContratos.setActionListener(listener);
+        panelFacturas.setActionListener(listener);
         this.botonPagarTarjeta.addActionListener(listener);
         this.botonPagarCheque.addActionListener(listener);
         this.botonPagarEfectivo.addActionListener(listener);
+        this.botonBorrarAbonado.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -75,7 +73,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     public VentanaPrincipal() {
         initialize();
-        dialogoNuevoContrato = new DialogoNuevoContrato(this.frame);
         dialogoFacturaPagada = new DialogoFacturaPagada(this.frame);
         estadoDialogoAlerta = new EstadoDialogoAlerta(this.frame);
     }
@@ -151,44 +148,16 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.labelEstadoAbonado = new JLabel("Estado: MOROSO");
         this.panelDatosAbonado.add(this.labelEstadoAbonado);
 
-        this.panelContratos = new PanelContratos();
-
         this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
+
+        this.panelContratos = new PanelContratos(this.frame);
+        this.panelFacturas = new PanelFacturas(this.frame);
+
         this.tabsAbonado.addTab("Contratos", this.panelContratos);
+        this.tabsAbonado.addTab("Facturas", this.panelFacturas);
 
         this.panelPrincipalAbonado.add(this.tabsAbonado);
 
-        this.panelFacturas = new JPanel();
-        this.panelFacturas.setLayout(new BorderLayout(0, 0));
-
-
-        this.panelTablaFacturas = new JScrollPane();
-        this.panelFacturas.add(this.panelTablaFacturas);
-
-        this.tablaFacturas = new JTable(new ModeloTablaFacturas());
-        this.tablaFacturas.setFillsViewportHeight(true);
-        this.tablaFacturas.addMouseListener(new MouseInputAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    int selectedRow = tablaFacturas.getSelectedRow();
-                    if (selectedRow != -1) {
-                        int id = (int) tablaFacturas.getValueAt(selectedRow, 0);
-                        ActionEvent event = new ActionEvent(id, 0, "MOSTRAR_FACTURA");
-                        actionListener.actionPerformed(event);
-                    }
-                }
-            }
-        });
-        this.tablaFacturas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                actionListener.actionPerformed(new ActionEvent(tablaFacturas, 0, "SELECCION_FACTURA"));
-            }
-        });
-
-        this.panelTablaFacturas.setViewportView(this.tablaFacturas);
-        this.tabsAbonado.addTab("Facturas", this.panelFacturas);
         this.panelAbonado.add(this.panelPrincipalAbonado);
 
         this.panelAccionesSistema = new PanelAccionesSistema();
@@ -197,18 +166,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.frame.setVisible(true);
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
     /**
      * Muestra un alert indicando que ya existe un contrato con el mismo domicilio
      */
     @Override
     public void mostrarAlertaDomicilioDuplicado() {
-        this.dialogoNuevoContrato.mostrarAlertaDomicilioDuplicado();
+        this.panelContratos.mostrarAlertaDomicilioDuplicado();
     }
 
     @Override
@@ -238,10 +201,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.panelTablaAbonados.mostrarAlertaAbonadoYaExiste();
     }
 
-    private ModeloTablaFacturas getModeloTablaFacturas() {
-        return (ModeloTablaFacturas) this.tablaFacturas.getModel();
-    }
-
     /**
      * @return El Dni del abonado seleccionado, o null si no hay selección.
      */
@@ -257,10 +216,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public Integer obtenerFacturaSeleccionado() {
-        int fila = this.tablaFacturas.getSelectedRow();
-        if (fila == -1) return -1;
-
-        return (Integer) this.tablaFacturas.getValueAt(fila, 0);
+        return this.panelFacturas.obtenerFacturaSeleccionado();
     }
 
     /**
@@ -311,7 +267,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public NuevoContratoDTO pedirNuevoContrato() {
-        return this.dialogoNuevoContrato.pedirNuevoContrato();
+        return this.panelContratos.pedirNuevoContrato();
     }
 
     /**
@@ -331,7 +287,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     @Override
     public void actualizarTablaFacturas(List<IFactura> facturas) {
-        this.getModeloTablaFacturas().actualizar(facturas);
+        this.panelFacturas.actualizar(facturas);
     }
 
     @Override
@@ -341,9 +297,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public void mostrarDialogoFactura(IFactura factura) {
-        JTextArea textarea = new JTextArea();
-        textarea.setText(factura.getConcepto());
-        JOptionPane.showMessageDialog(this.frame, textarea);
+        this.panelFacturas.mostrarDialogoFactura(factura);
     }
 
     @Override
@@ -358,24 +312,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     @Override
     public boolean confirmarBorrarContrato() {
-        String domicilio = this.obtenerContratoSeleccionado();
-        int result = JOptionPane.showConfirmDialog(
-                this.frame,
-                "Está seguro que desea eliminar el contrato con domicilio " + domicilio + "?"
-        );
-
-        return result == JOptionPane.OK_OPTION;
+        return this.panelContratos.confirmarBorrarContrato();
     }
 
     @Override
     public boolean confirmarPagarFactura() {
-        Integer id = this.obtenerFacturaSeleccionado();
-        int result = JOptionPane.showConfirmDialog(
-                this.frame,
-                "Está seguro que desea pagar el contrato con id " + id + "?"
-        );
-
-        return result == JOptionPane.OK_OPTION;
+        return this.panelFacturas.confirmarPagarFactura();
     }
 
     @Override

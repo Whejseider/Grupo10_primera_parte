@@ -2,26 +2,21 @@ package vista.abonados.detalle.contratos;
 
 import modelo.interfaces.IContrato;
 import vista.InterfazVistaPrincipal;
-import vista.abonados.EstadoDialogoAlerta;
-import vista.abonados.detalle.facturas.DialogoFacturaPagada;
-import vista.abonados.detalle.servicio.PanelServicioTecnico;
-import vista.abonados.tabla.PanelTablaAbonados;
-import vista.sistema.PanelAccionesSistema;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 public class PanelContratos extends JPanel {
+    private final JFrame ownerFrame;
     private ActionListener actionListener;
-    private JScrollPane panelTablaContratos;
-    private JTable tablaContratos;
-    private JButton botonNuevoContrato;
+    private final JScrollPane panelTablaContratos;
+    private final JTable tablaContratos;
+    private final JButton botonNuevoContrato;
     private JButton botonBorrarContrato;
+    private DialogoNuevoContrato dialogoNuevoContrato;
 
     public void setActionListener(ActionListener listener) {
         this.botonNuevoContrato.addActionListener(listener);
@@ -34,12 +29,12 @@ public class PanelContratos extends JPanel {
         this.botonBorrarContrato.setActionCommand(InterfazVistaPrincipal.BORRAR_CONTRATO);
     }
 
-    private ModeloTablaContratos getModeloTablaContratos() {
-        return (ModeloTablaContratos) this.tablaContratos.getModel();
-    }
-
     public void actualizar(List<IContrato> contratos) {
         this.getModeloTablaContratos().actualizar(contratos);
+    }
+
+    private ModeloTablaContratos getModeloTablaContratos() {
+        return (ModeloTablaContratos) this.tablaContratos.getModel();
     }
 
     public String obtenerContratoSeleccionado() {
@@ -49,7 +44,28 @@ public class PanelContratos extends JPanel {
         return (String) this.tablaContratos.getValueAt(fila, 1);
     }
 
-    public PanelContratos() {
+    public boolean confirmarBorrarContrato() {
+        String domicilio = this.obtenerContratoSeleccionado();
+        int result = JOptionPane.showConfirmDialog(
+                this.ownerFrame,
+                "Está seguro que desea eliminar el contrato con domicilio " + domicilio + "?"
+        );
+
+        return result == JOptionPane.OK_OPTION;
+    }
+
+    public void mostrarAlertaDomicilioDuplicado() {
+        this.dialogoNuevoContrato.mostrarAlertaDomicilioDuplicado();
+    }
+
+    public NuevoContratoDTO pedirNuevoContrato() {
+        return this.dialogoNuevoContrato.pedirNuevoContrato();
+    }
+
+    public PanelContratos(JFrame ownerFrame) {
+        this.ownerFrame = ownerFrame;
+        this.dialogoNuevoContrato = new DialogoNuevoContrato(ownerFrame);
+
         this.setLayout(new BorderLayout(0, 0));
 
         this.panelTablaContratos = new JScrollPane();
