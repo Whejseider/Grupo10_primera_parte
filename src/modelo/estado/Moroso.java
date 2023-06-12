@@ -41,7 +41,6 @@ public class Moroso implements IEstadoFisico {
         int cantFactSinPagarSeg = this.abonado.cantidadFacturasSinPagarSeguidas();
         if (cantFactSinPagarSeg < 2) {
             this.abonado.setEstado(new ConContrataciones(this.abonado));
-            System.out.println("Ahora el estado es Con Contrataciones"); //Test
         }
     }
 

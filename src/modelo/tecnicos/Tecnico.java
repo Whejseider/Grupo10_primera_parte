@@ -64,8 +64,6 @@ public class Tecnico implements Serializable {
             wait();
         }
 
-        System.out.println("DISPONIBLE EN FALSE!!!");
-
         this.disponible = false;
         notifyAll();
     }

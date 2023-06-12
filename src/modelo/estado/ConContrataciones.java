@@ -38,7 +38,6 @@ public class ConContrataciones implements IEstadoFisico {
         int cantFactSinPagarSeg = this.abonado.cantidadFacturasSinPagarSeguidas();
         if (cantFactSinPagarSeg >= 2) {
             this.abonado.setEstado(new Moroso(this.abonado));
-            System.out.println("Ahora el estado es Moroso"); //Test
         }
     }
 
@@ -51,10 +50,8 @@ public class ConContrataciones implements IEstadoFisico {
         assert (contrato != null);
 
         this.abonado.eliminaContrato(contrato);
-        System.out.println("Se ha dado de baja el contrato");
         if (this.abonado.getContratos().size() == 0) {
             this.abonado.setEstado(new SinContratacion(this.abonado));
-            System.out.println("Ahora el estado es Sin Contratacion"); //Test
         }
     }
 
