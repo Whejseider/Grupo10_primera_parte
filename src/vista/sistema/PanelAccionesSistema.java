@@ -1,9 +1,10 @@
-package vista;
+package vista.sistema;
 
 import modelo.PromocionDorada;
 import modelo.PromocionPlatino;
 import modelo.SinPromocion;
 import modelo.interfaces.IPromocion;
+import vista.InterfazVistaPrincipal;
 
 import javax.swing.*;
 import javax.swing.border.MatteBorder;

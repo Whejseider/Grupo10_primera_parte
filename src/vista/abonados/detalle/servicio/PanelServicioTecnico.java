@@ -1,4 +1,4 @@
-package vista;
+package vista.abonados.detalle.servicio;
 
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;

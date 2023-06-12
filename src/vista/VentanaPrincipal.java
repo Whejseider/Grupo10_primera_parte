@@ -1,29 +1,26 @@
 package vista;
 
 import modelo.AbonadoFisico;
-import modelo.PromocionDorada;
-import modelo.PromocionPlatino;
-import modelo.SinPromocion;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
-import vista.abonados.DialogoNuevoAbonado;
-import vista.abonados.EstadoDialogoAlerta;
-import vista.abonados.ModeloTablaAbonados;
-import vista.abonados.NuevoAbonadoDTO;
-import vista.contratos.DialogoNuevoContrato;
-import vista.contratos.ModeloTablaContratos;
-import vista.contratos.NuevoContratoDTO;
-import vista.facturas.DialogoFacturaPagada;
-import vista.facturas.ModeloTablaFacturas;
+import vista.abonados.*;
+import vista.abonados.detalle.contratos.PanelContratos;
+import vista.abonados.detalle.servicio.PanelServicioTecnico;
+import vista.abonados.tabla.NuevoAbonadoDTO;
+import vista.abonados.tabla.PanelTablaAbonados;
+import vista.abonados.detalle.contratos.DialogoNuevoContrato;
+import vista.abonados.detalle.contratos.ModeloTablaContratos;
+import vista.abonados.detalle.contratos.NuevoContratoDTO;
+import vista.abonados.detalle.facturas.DialogoFacturaPagada;
+import vista.abonados.detalle.facturas.ModeloTablaFacturas;
+import vista.sistema.PanelAccionesSistema;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -34,31 +31,24 @@ import java.util.Observable;
 public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener {
 
     private JFrame frame;
-    private JPanel panelAbonados;
-    private JScrollPane panelTablaAbonados;
-    private JTable tablaAbonados;
     private ActionListener actionListener;
 
-    private DialogoNuevoAbonado dialogoNuevoAbonado;
     private DialogoNuevoContrato dialogoNuevoContrato;
     private DialogoFacturaPagada dialogoFacturaPagada;
     private EstadoDialogoAlerta estadoDialogoAlerta;
 
     private PanelServicioTecnico panelServicioTecnico;
-    private JPanel panel;
+    private PanelTablaAbonados panelTablaAbonados;
+    private PanelAccionesSistema panelAccionesSistema;
+    private PanelContratos panelContratos;
+
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
-    private JLabel lblNewLabel;
-    private JButton botonNuevoAbonado;
     private JPanel panelAccionesAbonado;
     private JButton botonBorrarAbonado;
     private JPanel panelDatosAbonado;
     private JLabel labelNombreAbonado;
     private JLabel labelDniAbonado;
-    private JPanel panelContratos;
-    private JScrollPane panelTablaContratos;
-    private JTable tablaContratos;
-    private JButton botonNuevoContrato;
     private JLabel labelTipoAbonado;
     private JLabel labelEstadoAbonado;
     private JButton botonPagarEfectivo;
@@ -68,19 +58,15 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
     private JTable tablaFacturas;
     private JButton botonPagarTarjeta;
     private JButton botonPagarCheque;
-    private PanelAccionesSistema panelAccionesSistema;
-    private JButton botonBorrarContrato;
 
     public void setActionListener(ActionListener listener) {
         panelServicioTecnico.setActionListener(listener);
         panelAccionesSistema.setActionListener(listener);
-        this.botonNuevoAbonado.addActionListener(listener);
-        this.botonBorrarAbonado.addActionListener(listener);
-        this.botonNuevoContrato.addActionListener(listener);
+        panelTablaAbonados.setActionListener(listener);
+        panelContratos.setActionListener(listener);
         this.botonPagarTarjeta.addActionListener(listener);
         this.botonPagarCheque.addActionListener(listener);
         this.botonPagarEfectivo.addActionListener(listener);
-        this.botonBorrarContrato.addActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -89,7 +75,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     public VentanaPrincipal() {
         initialize();
-        dialogoNuevoAbonado = new DialogoNuevoAbonado(this.frame);
         dialogoNuevoContrato = new DialogoNuevoContrato(this.frame);
         dialogoFacturaPagada = new DialogoFacturaPagada(this.frame);
         estadoDialogoAlerta = new EstadoDialogoAlerta(this.frame);
@@ -112,38 +97,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
             }
         });
 
-        this.panelAbonados = new JPanel();
-        this.panelAbonados.setBorder(new EmptyBorder(16, 16, 16, 16));
-        this.frame.getContentPane().add(this.panelAbonados, BorderLayout.WEST);
-
-        this.tablaAbonados = new JTable(new ModeloTablaAbonados());
-        this.tablaAbonados.setFillsViewportHeight(true);
-        this.tablaAbonados.getColumnModel().getColumn(0).setPreferredWidth(40);
-        this.tablaAbonados.getColumnModel().getColumn(0).setMinWidth(40);
-        this.tablaAbonados.getColumnModel().getColumn(1).setMinWidth(40);
-        this.tablaAbonados.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                actionListener.actionPerformed(new ActionEvent(tablaAbonados, 0, InterfazVistaPrincipal.SELECCION_ABONADO));
-            }
-        });
-
-        this.panelAbonados.setLayout(new BorderLayout(0, 0));
-
-        this.panelTablaAbonados = new JScrollPane();
-        this.panelTablaAbonados.setViewportView(tablaAbonados);
-        this.panelAbonados.add(panelTablaAbonados, BorderLayout.CENTER);
-
-        this.panel = new JPanel();
-        this.panelAbonados.add(this.panel, BorderLayout.WEST);
-        this.panel.setLayout(new BoxLayout(this.panel, BoxLayout.Y_AXIS));
-
-        this.lblNewLabel = new JLabel("ABONADOS");
-        this.panelAbonados.add(this.lblNewLabel, BorderLayout.NORTH);
-
-        this.botonNuevoAbonado = new JButton("Nuevo Abonado");
-        this.botonNuevoAbonado.setActionCommand(InterfazVistaPrincipal.NUEVO_ABONADO);
-        this.panelAbonados.add(this.botonNuevoAbonado, BorderLayout.SOUTH);
+        this.panelTablaAbonados = new PanelTablaAbonados(this.frame);
+        this.frame.getContentPane().add(this.panelTablaAbonados, BorderLayout.WEST);
 
         this.panelAbonado = new JPanel();
         this.panelAbonado.setBorder(new EmptyBorder(24, 16, 16, 16));
@@ -196,36 +151,11 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         this.labelEstadoAbonado = new JLabel("Estado: MOROSO");
         this.panelDatosAbonado.add(this.labelEstadoAbonado);
 
-        this.panelContratos = new JPanel();
-        this.panelContratos.setLayout(new BorderLayout(0, 0));
-
-        this.panelTablaContratos = new JScrollPane();
-        this.panelContratos.add(this.panelTablaContratos, BorderLayout.CENTER);
-
-        this.tablaContratos = new JTable(new ModeloTablaContratos());
-        this.tablaContratos.setFillsViewportHeight(true);
-        this.tablaContratos.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            @Override
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    botonBorrarContrato.setEnabled(tablaContratos.getSelectedRow() > -1);
-                    actionListener.actionPerformed(new ActionEvent(tablaContratos, 0, InterfazVistaPrincipal.SELECCION_CONTRATO));
-                }
-            }
-        });
-        this.panelTablaContratos.setViewportView(this.tablaContratos);
-
-        this.botonNuevoContrato = new JButton("Nuevo Contrato");
-        this.botonNuevoContrato.setActionCommand(InterfazVistaPrincipal.NUEVO_CONTRATO);
-        this.panelContratos.add(this.botonNuevoContrato, BorderLayout.SOUTH);
+        this.panelContratos = new PanelContratos();
 
         this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
         this.tabsAbonado.addTab("Contratos", this.panelContratos);
 
-        this.botonBorrarContrato = new JButton("Borrar contrato");
-        this.botonBorrarContrato.setActionCommand(InterfazVistaPrincipal.BORRAR_CONTRATO);
-        this.botonBorrarContrato.setEnabled(false);
-        this.panelContratos.add(this.botonBorrarContrato, BorderLayout.NORTH);
         this.panelPrincipalAbonado.add(this.tabsAbonado);
 
         this.panelFacturas = new JPanel();
@@ -273,19 +203,6 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
 
     }
 
-    @Override
-    public NuevoAbonadoDTO pedirNuevoAbonado() {
-        return this.dialogoNuevoAbonado.pedirNuevoAbonado();
-    }
-
-    /**
-     * Muestra un alert indicando que ya existe un abonado con el mismo DNI
-     */
-    @Override
-    public void mostrarAlertaAbonadoYaExiste() {
-        this.dialogoNuevoAbonado.mostrarAlertaAbonadoYaExiste();
-    }
-
     /**
      * Muestra un alert indicando que ya existe un contrato con el mismo domicilio
      */
@@ -316,16 +233,13 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
         return false;
     }
 
+    @Override
+    public void mostrarAlertaAbonadoYaExiste() {
+        this.panelTablaAbonados.mostrarAlertaAbonadoYaExiste();
+    }
+
     private ModeloTablaFacturas getModeloTablaFacturas() {
         return (ModeloTablaFacturas) this.tablaFacturas.getModel();
-    }
-
-    private ModeloTablaAbonados getModeloTablaAbonados() {
-        return (ModeloTablaAbonados) this.tablaAbonados.getModel();
-    }
-
-    private ModeloTablaContratos getModeloTablaContratos() {
-        return (ModeloTablaContratos) this.tablaContratos.getModel();
     }
 
     /**
@@ -333,10 +247,12 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     @Override
     public String obtenerAbonadoSeleccionado() {
-        int fila = this.tablaAbonados.getSelectedRow();
-        if (fila == -1) return null;
+        return this.panelTablaAbonados.obtenerAbonadoSeleccionado();
+    }
 
-        return (String) this.tablaAbonados.getValueAt(fila, 1);
+    @Override
+    public NuevoAbonadoDTO pedirNuevoAbonado() {
+        return this.panelTablaAbonados.pedirNuevoAbonado();
     }
 
     @Override
@@ -352,10 +268,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     @Override
     public String obtenerContratoSeleccionado() {
-        int fila = this.tablaContratos.getSelectedRow();
-        if (fila == -1) return null;
-
-        return (String) this.tablaContratos.getValueAt(fila, 1);
+        return this.panelContratos.obtenerContratoSeleccionado();
     }
 
     /**
@@ -365,12 +278,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     @Override
     public void actualizarTablaAbonados(List<IAbonado> abonados) {
-        if (abonados.size() == 0) {
-            this.botonBorrarAbonado.setEnabled(false);
-        } else {
-            this.botonBorrarAbonado.setEnabled(true);
-        }
-        this.getModeloTablaAbonados().actualizar(abonados);
+        this.panelTablaAbonados.actualizar(abonados);
     }
 
     @Override
@@ -413,7 +321,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal, ChangeListener 
      */
     @Override
     public void actualizarTablaContratos(List<IContrato> contratos) {
-        this.getModeloTablaContratos().actualizar(contratos);
+        this.panelContratos.actualizar(contratos);
     }
 
     /**

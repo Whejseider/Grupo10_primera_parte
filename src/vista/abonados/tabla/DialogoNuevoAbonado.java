@@ -1,4 +1,4 @@
-package vista.abonados;
+package vista.abonados.tabla;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;

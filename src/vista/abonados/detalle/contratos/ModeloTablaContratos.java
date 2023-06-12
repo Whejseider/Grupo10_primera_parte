@@ -1,7 +1,7 @@
-package vista.contratos;
+package vista.abonados.detalle.contratos;
 
 import modelo.interfaces.IContrato;
-import vista.ModeloTablaBase;
+import vista.componentes.ModeloTablaBase;
 
 import java.util.List;
 

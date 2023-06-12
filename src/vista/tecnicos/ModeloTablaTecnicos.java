@@ -1,7 +1,7 @@
 package vista.tecnicos;
 
 import modelo.tecnicos.Tecnico;
-import vista.ModeloTablaBase;
+import vista.componentes.ModeloTablaBase;
 
 import java.util.List;
 

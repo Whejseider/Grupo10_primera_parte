@@ -1,7 +1,7 @@
-package vista.abonados;
+package vista.abonados.tabla;
 
 import modelo.interfaces.IAbonado;
-import vista.ModeloTablaBase;
+import vista.componentes.ModeloTablaBase;
 
 import java.util.List;
 

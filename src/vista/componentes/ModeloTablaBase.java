@@ -1,4 +1,4 @@
-package vista;
+package vista.componentes;
 
 import javax.swing.table.DefaultTableModel;
 

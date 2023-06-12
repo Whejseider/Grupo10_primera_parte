@@ -1,4 +1,4 @@
-package vista.contratos;
+package vista.abonados.detalle.contratos;
 
 public class NuevoContratoDTO {
     private String tipo;

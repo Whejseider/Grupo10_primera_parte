@@ -1,4 +1,4 @@
-package vista.contratos;
+package vista.abonados.detalle.contratos;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;

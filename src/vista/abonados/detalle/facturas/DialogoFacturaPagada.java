@@ -1,4 +1,4 @@
-package vista.facturas;
+package vista.abonados.detalle.facturas;
 
 import javax.swing.*;
 

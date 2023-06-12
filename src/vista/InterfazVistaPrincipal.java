@@ -11,8 +11,8 @@ import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
-import vista.abonados.NuevoAbonadoDTO;
-import vista.contratos.NuevoContratoDTO;
+import vista.abonados.tabla.NuevoAbonadoDTO;
+import vista.abonados.detalle.contratos.NuevoContratoDTO;
 
 import javax.swing.*;
 

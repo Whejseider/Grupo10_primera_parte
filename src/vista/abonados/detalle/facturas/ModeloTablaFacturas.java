@@ -1,23 +1,18 @@
-package vista.facturas;
+package vista.abonados.detalle.facturas;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.swing.table.DefaultTableModel;
-
 import modelo.interfaces.IFactura;
+import vista.componentes.ModeloTablaBase;
 
-public class ModeloTablaFacturas extends DefaultTableModel {
-    private static final long serialVersionUID = 1L;
-    private String[] columnNames = {"ID", "Fecha", "Subtotal", "Total", "Pagada"};
-    
-    @Override
-    public boolean isCellEditable(int row, int column){  
-        return false;  
+public class ModeloTablaFacturas extends ModeloTablaBase {
+    public ModeloTablaFacturas() {
+        super(new String[]{"ID", "Fecha", "Subtotal", "Total", "Pagada"});
     }
-    
+
     /**
      * Actualiza la tabla de facturas con datos nuevos
      * 
@@ -40,15 +35,5 @@ public class ModeloTablaFacturas extends DefaultTableModel {
 
             this.addRow(row);
         }
-    }
-    
-    @Override
-    public String getColumnName(int col) {
-        return columnNames[col];
-    }
-    
-    @Override
-    public int getColumnCount() {
-        return columnNames.length;
     }
 }
