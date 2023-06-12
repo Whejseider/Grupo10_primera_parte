@@ -1,6 +1,5 @@
 package vista;
 
-import modelo.AbonadoFisico;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
@@ -11,6 +10,7 @@ import vista.abonados.EstadoDialogoAlerta;
 import vista.abonados.detalle.acciones.PanelAccionesAbonado;
 import vista.abonados.detalle.contratos.NuevoContratoDTO;
 import vista.abonados.detalle.contratos.PanelContratos;
+import vista.abonados.detalle.datos.PanelDatosAbonado;
 import vista.abonados.detalle.facturas.DialogoFacturaPagada;
 import vista.abonados.detalle.facturas.PanelFacturas;
 import vista.abonados.detalle.servicio.PanelServicioTecnico;
@@ -42,14 +42,10 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
     private PanelContratos panelContratos;
     private PanelFacturas panelFacturas;
     private PanelAccionesAbonado panelAccionesAbonado;
+    private PanelDatosAbonado panelDatosAbonado;
 
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
-    private JPanel panelDatosAbonado;
-    private JLabel labelNombreAbonado;
-    private JLabel labelDniAbonado;
-    private JLabel labelTipoAbonado;
-    private JLabel labelEstadoAbonado;
     private JTabbedPane tabsAbonado;
 
     public void setActionListener(ActionListener listener) {
@@ -106,23 +102,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
         this.panelPrincipalAbonado = new JPanel();
         this.panelPrincipalAbonado.setLayout(new BorderLayout(0, 0));
 
-        this.panelDatosAbonado = new JPanel();
-        this.panelDatosAbonado.setAlignmentX(Component.LEFT_ALIGNMENT);
-        this.panelDatosAbonado.setBorder(new EmptyBorder(8, 8, 8, 8));
+        this.panelDatosAbonado = new PanelDatosAbonado();
         this.panelPrincipalAbonado.add(this.panelDatosAbonado, BorderLayout.NORTH);
-        this.panelDatosAbonado.setLayout(new BoxLayout(this.panelDatosAbonado, BoxLayout.Y_AXIS));
-
-        this.labelNombreAbonado = new JLabel("Nombre: Bautista");
-        this.panelDatosAbonado.add(this.labelNombreAbonado);
-
-        this.labelDniAbonado = new JLabel("DNI: 12412");
-        this.panelDatosAbonado.add(this.labelDniAbonado);
-
-        this.labelTipoAbonado = new JLabel("Tipo: JURIDICO");
-        this.panelDatosAbonado.add(this.labelTipoAbonado);
-
-        this.labelEstadoAbonado = new JLabel("Estado: MOROSO");
-        this.panelDatosAbonado.add(this.labelEstadoAbonado);
 
         this.tabsAbonado = new JTabbedPane(JTabbedPane.TOP);
 
@@ -223,14 +204,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
         this.panelAbonado.setVisible(true);
         this.actualizarTablaContratos(abonado.getContratos());
         this.actualizarTablaFacturas(abonado.getFacturasEmitidas());
-        this.labelDniAbonado.setText("Dni: " + abonado.getDni());
-        this.labelNombreAbonado.setText("Nombre: " + abonado.getNombre());
-
-        String tipoAbonado = abonado.isFisico() ? "Fisico" : "Juridico";
-        this.labelTipoAbonado.setText("Tipo: " + tipoAbonado);
-
-        String estadoAbonado = abonado.isFisico() ? ((AbonadoFisico) abonado).getEstado().toString() : "-";
-        this.labelEstadoAbonado.setText("Estado: " + estadoAbonado);
+        this.panelDatosAbonado.actualizar(abonado);
 
 
         ServicioTecnico servicio = abonado.getServicioTecnico();
