@@ -8,7 +8,15 @@ import modelo.tecnicos.Tecnico;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * Clase con métodos estáticos para persistir con archivos binarios
+ * el singleton de sistema.
+ */
 public class PersistenciaSistema {
+    /**
+     * Crea un DTO para ser persistido a partir del singleton Sistema.
+     * @return El DTO creado.
+     */
     private static SistemaDTO crearDTO() {
         SistemaDTO dto = new SistemaDTO();
         Sistema sistema = Sistema.getInstance();
@@ -24,6 +32,10 @@ public class PersistenciaSistema {
         return dto;
     }
 
+    /**
+     * Inicializa el estado del singleton a partir del DTO de persistencia.
+     * @param dto El dto a utilizar
+     */
     private static void inicializarSingleton(SistemaDTO dto) {
         Sistema sistema = Sistema.getInstance();
 
@@ -40,6 +52,9 @@ public class PersistenciaSistema {
         Factura.actualizarID(maxId);
     }
 
+    /**
+     * Persiste el sistema
+     */
     public static void persistir() {
         OutputSistema output = new OutputSistema();
         try {
@@ -51,6 +66,9 @@ public class PersistenciaSistema {
         }
     }
 
+    /**
+     * Depersiste el sistema
+     */
     public static void depersistir() {
         InputSistema input = new InputSistema();
         try {

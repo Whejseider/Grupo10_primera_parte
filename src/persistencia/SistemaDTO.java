@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+/**
+ * DTO para la persistencia del singleton de Sistema
+ */
 public class SistemaDTO implements Serializable {
     private ArrayList<IAbonado> abonados = new ArrayList<IAbonado>();
     private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
