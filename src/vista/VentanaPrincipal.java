@@ -8,6 +8,7 @@ import modelo.interfaces.IPromocion;
 import modelo.tecnicos.ServicioTecnico;
 import modelo.tecnicos.Tecnico;
 import vista.abonados.EstadoDialogoAlerta;
+import vista.abonados.detalle.acciones.PanelAccionesAbonado;
 import vista.abonados.detalle.contratos.NuevoContratoDTO;
 import vista.abonados.detalle.contratos.PanelContratos;
 import vista.abonados.detalle.facturas.DialogoFacturaPagada;
@@ -40,20 +41,16 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
     private PanelAccionesSistema panelAccionesSistema;
     private PanelContratos panelContratos;
     private PanelFacturas panelFacturas;
+    private PanelAccionesAbonado panelAccionesAbonado;
 
     private JPanel panelPrincipalAbonado;
     private JPanel panelAbonado;
-    private JPanel panelAccionesAbonado;
-    private JButton botonBorrarAbonado;
     private JPanel panelDatosAbonado;
     private JLabel labelNombreAbonado;
     private JLabel labelDniAbonado;
     private JLabel labelTipoAbonado;
     private JLabel labelEstadoAbonado;
-    private JButton botonPagarEfectivo;
     private JTabbedPane tabsAbonado;
-    private JButton botonPagarTarjeta;
-    private JButton botonPagarCheque;
 
     public void setActionListener(ActionListener listener) {
         panelServicioTecnico.setActionListener(listener);
@@ -61,10 +58,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
         panelTablaAbonados.setActionListener(listener);
         panelContratos.setActionListener(listener);
         panelFacturas.setActionListener(listener);
-        this.botonPagarTarjeta.addActionListener(listener);
-        this.botonPagarCheque.addActionListener(listener);
-        this.botonPagarEfectivo.addActionListener(listener);
-        this.botonBorrarAbonado.addActionListener(listener);
+        panelAccionesAbonado.setActionListener(listener);
         this.actionListener = listener;
     }
 
@@ -103,26 +97,8 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
         this.panelAbonado.setVisible(false);
         this.panelAbonado.setLayout(new BorderLayout(0, 0));
 
-        this.panelAccionesAbonado = new JPanel();
-        this.panelAccionesAbonado.setBorder(new EmptyBorder(0, 8, 4, 0));
+        this.panelAccionesAbonado = new PanelAccionesAbonado();
         this.panelAbonado.add(this.panelAccionesAbonado, BorderLayout.EAST);
-        this.panelAccionesAbonado.setLayout(new BoxLayout(this.panelAccionesAbonado, BoxLayout.Y_AXIS));
-
-        this.botonBorrarAbonado = new JButton("Borrar abonado");
-        this.botonBorrarAbonado.setActionCommand(InterfazVistaPrincipal.BORRAR_ABONADO);
-        this.panelAccionesAbonado.add(this.botonBorrarAbonado);
-
-        this.botonPagarEfectivo = new JButton("Pagar con efectivo");
-        this.botonPagarEfectivo.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_EFECTIVO);
-        this.panelAccionesAbonado.add(this.botonPagarEfectivo);
-
-        this.botonPagarTarjeta = new JButton("Pagar con tarjeta");
-        this.botonPagarTarjeta.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_TARJETA);
-        this.panelAccionesAbonado.add(this.botonPagarTarjeta);
-
-        this.botonPagarCheque = new JButton("Pagar con cheque");
-        this.botonPagarCheque.setActionCommand(InterfazVistaPrincipal.PAGAR_FACTURA_CHEQUE);
-        this.panelAccionesAbonado.add(this.botonPagarCheque);
 
         this.panelServicioTecnico = new PanelServicioTecnico();
         this.panelAccionesAbonado.add(this.panelServicioTecnico);
