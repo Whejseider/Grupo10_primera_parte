@@ -1,6 +1,22 @@
 unnamed package
+controlador
 modelo
 modelo.decorators
+modelo.estado
 modelo.excepciones
 modelo.interfaces
 modelo.prueba
+modelo.tecnicos
+modelo.util
+persistencia
+vista
+vista.abonados
+vista.abonados.detalle.acciones
+vista.abonados.detalle.contratos
+vista.abonados.detalle.datos
+vista.abonados.detalle.facturas
+vista.abonados.detalle.servicio
+vista.abonados.tabla
+vista.componentes
+vista.sistema
+vista.tecnicos
