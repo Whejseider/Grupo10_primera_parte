@@ -12,17 +12,8 @@ public class ServicioTecnico extends Observable implements Runnable {
     private final IAbonado abonado;
     private final Tecnico tecnico;
     private int progreso = 0;
+    private IEstadoServicioTecnico estado;
     private final int intervaloProgreso = 10;
-    private Estado estado = Estado.ESPERANDO_TECNICO;
-
-    /**
-     * El estado actual del servicio
-     */
-    public enum Estado {
-        ESPERANDO_TECNICO,
-        EN_CURSO,
-        FINALIZADO
-    }
 
     /**
      * Constructor de la clase ServicioTecnico.
@@ -32,6 +23,7 @@ public class ServicioTecnico extends Observable implements Runnable {
     public ServicioTecnico(IAbonado abonado, Tecnico tecnico) {
         this.abonado = abonado;
         this.tecnico = tecnico;
+        this.estado = new EstadoServicioEsperandoTecnico(this);
     }
 
     /**
@@ -51,11 +43,15 @@ public class ServicioTecnico extends Observable implements Runnable {
             this.progreso += intervaloProgreso;
         }
 
-        this.estado = Estado.FINALIZADO;
+        this.estado = new EstadoServicioFinalizado(this);
         this.progreso = 0;
 
         setChanged();
         notifyObservers(100);
+    }
+
+    public void setEstado(IEstadoServicioTecnico estado) {
+        this.estado = estado;
     }
 
     /**
@@ -88,26 +84,9 @@ public class ServicioTecnico extends Observable implements Runnable {
     }
 
     /**
-     * Obtiene texto con información del estado actual del servicio.
-     * @return Una string para mostrar en pantalla.
-     */
-    public String getTextoEstado() {
-        switch (this.estado) {
-            case EN_CURSO:
-                return tecnico.getNombre() + " está trabajando";
-            case ESPERANDO_TECNICO:
-                return "Esperando la llegada del técnico";
-            case FINALIZADO:
-                return "Service finalizado";
-            default:
-                return "Servicio sin iniciar";
-        }
-    }
-
-    /**
      * Devuelve el estado actual del servicio
      */
-    public Estado getEstado() {
+    public IEstadoServicioTecnico getEstado() {
         return estado;
     }
 
@@ -120,13 +99,13 @@ public class ServicioTecnico extends Observable implements Runnable {
      */
     @Override
     public void run() {
-        this.estado = Estado.ESPERANDO_TECNICO;
+        this.estado = new EstadoServicioEsperandoTecnico(this);
         try {
             this.tecnico.asignarAbonado(abonado);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        this.estado = Estado.EN_CURSO;
+        this.estado = new EstadoServicioEnCurso(this);
         this.avanzar();
         this.tecnico.liberar();
     }

@@ -89,13 +89,15 @@ public class PanelServicioTecnico extends JPanel {
             return;
         }
 
-        switch (service.getEstado()) {
-            case EN_CURSO -> actualizarServicioEnCurso(service.getProgreso());
-            case ESPERANDO_TECNICO -> actualizarServicioEsperandoTecnico();
-            case FINALIZADO -> actualizarServicioFinalizado();
+        if (service.getEstado().isEnCurso()) {
+            actualizarServicioEnCurso(service.getProgreso());
+        } else if (service.getEstado().isEsperandoTecnico()) {
+            actualizarServicioEsperandoTecnico();
+        } else if (service.getEstado().isFinalizado()) {
+            actualizarServicioFinalizado();
         }
 
-        this.labelServicioTecnico.setText(service.getTextoEstado());
+        this.labelServicioTecnico.setText(service.getEstado().getTextoEstado());
     }
 
     public String obtenerTecnicoSeleccionado() {
