@@ -78,7 +78,6 @@ public class Factura implements IFactura {
         detalle.append("PAGADA: " + (isPagada()?"Si":"No") + "\n");
         detalle.append(concepto + "\n");
         detalle.append("SUBTOTAL: $" + subtotal + "\n");
-//        detalle.append("TOTAL: $" + valorNeto + "\n");
 
         return detalle.toString();
     }

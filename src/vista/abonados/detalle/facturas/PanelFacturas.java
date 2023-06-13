@@ -48,7 +48,7 @@ public class PanelFacturas extends JPanel {
 
     public void mostrarDialogoFactura(IFactura factura) {
         JTextArea textarea = new JTextArea();
-        textarea.setText(factura.getConcepto());
+        textarea.setText(factura.getDetalle());
         JOptionPane.showMessageDialog(this.ownerFrame, textarea);
     }
 
