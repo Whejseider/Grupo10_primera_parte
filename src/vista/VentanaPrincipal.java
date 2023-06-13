@@ -4,8 +4,9 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
+
 import vista.abonados.EstadoDialogoAlerta;
 import vista.abonados.detalle.acciones.PanelAccionesAbonado;
 import vista.abonados.detalle.contratos.NuevoContratoDTO;
@@ -280,7 +281,7 @@ public class VentanaPrincipal implements InterfazVistaPrincipal {
         return frame;
     }
 
-    public void actualizarComboboxTecnicos(List<Tecnico> tecnicos) {
+    public void actualizarComboboxTecnicos(List<ITecnico> tecnicos) {
         this.panelServicioTecnico.actualizarComboboxTecnicos(tecnicos);
     }
 

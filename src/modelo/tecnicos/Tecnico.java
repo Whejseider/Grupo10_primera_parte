@@ -1,13 +1,11 @@
 package modelo.tecnicos;
 
-import java.io.Serializable;
-
 import modelo.interfaces.IAbonado;
 
 /**
  * Clase que representa a un tecnico del sistema
  */
-public class Tecnico implements Serializable {
+public class Tecnico implements ITecnico {
     private static int numero = 0;
     private final String nombre;
     private boolean disponible = true;

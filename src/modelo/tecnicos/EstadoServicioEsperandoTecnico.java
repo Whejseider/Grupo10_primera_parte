@@ -1,5 +1,8 @@
 package modelo.tecnicos;
 
+/**
+ * Clase para el estado esperando tecnico del servicio tecnico
+ */
 public class EstadoServicioEsperandoTecnico implements IEstadoServicioTecnico {
     private final ServicioTecnico servicioTecnico;
 

@@ -10,7 +10,7 @@ import java.util.Observable;
  */
 public class ServicioTecnico extends Observable implements Runnable {
     private final IAbonado abonado;
-    private final Tecnico tecnico;
+    private final ITecnico tecnico;
     private int progreso = 0;
     private IEstadoServicioTecnico estado;
     private final int intervaloProgreso = 10;
@@ -20,7 +20,7 @@ public class ServicioTecnico extends Observable implements Runnable {
      * @param abonado El abonado a asignar.
      * @param tecnico El tecnico a asignar.
      */
-    public ServicioTecnico(IAbonado abonado, Tecnico tecnico) {
+    public ServicioTecnico(IAbonado abonado, ITecnico tecnico) {
         this.abonado = abonado;
         this.tecnico = tecnico;
         this.estado = new EstadoServicioEsperandoTecnico(this);
@@ -79,7 +79,7 @@ public class ServicioTecnico extends Observable implements Runnable {
     /**
      * Obtiene el tecnico asignado al service
      */
-    public Tecnico getTecnico() {
+    public ITecnico getTecnico() {
         return tecnico;
     }
 

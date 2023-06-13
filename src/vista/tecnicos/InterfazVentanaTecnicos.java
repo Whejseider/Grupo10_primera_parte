@@ -1,6 +1,6 @@
 package vista.tecnicos;
 
-import modelo.tecnicos.Tecnico;
+import modelo.tecnicos.ITecnico;
 
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -10,7 +10,7 @@ public interface InterfazVentanaTecnicos {
     String BORRAR_TECNICO = "BORRAR_TECNICO";
     void setVisible(boolean visible);
 
-    void actualizar(List<Tecnico> tecnicos);
+    void actualizar(List<ITecnico> tecnicos);
     void setActionListener(ActionListener listener);
 
     NuevoTecnicoDTO pedirNuevoTecnico();

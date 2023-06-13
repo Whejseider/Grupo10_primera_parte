@@ -1,6 +1,6 @@
 package vista.tecnicos;
 
-import modelo.tecnicos.Tecnico;
+import modelo.tecnicos.ITecnico;
 import vista.componentes.ModeloTablaBase;
 
 import java.util.List;
@@ -16,11 +16,11 @@ public class ModeloTablaTecnicos extends ModeloTablaBase {
      * 
      * @param tecnicos Los tecnicos a utilizar
      */
-    public void actualizar(List<Tecnico> tecnicos) {
+    public void actualizar(List<ITecnico> tecnicos) {
         assert tecnicos != null;
 
         this.setRowCount(0);
-        for (Tecnico tecnico : tecnicos) {
+        for (ITecnico tecnico : tecnicos) {
             this.addRow(new Object[]{tecnico.getId(), tecnico.getNombre()});
         }
     }

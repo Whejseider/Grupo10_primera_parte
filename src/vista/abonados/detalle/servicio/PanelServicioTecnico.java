@@ -1,7 +1,7 @@
 package vista.abonados.detalle.servicio;
 
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -43,7 +43,7 @@ public class PanelServicioTecnico extends JPanel {
         this.panelEnviarTecnico.add(this.comboBoxTecnicos);
     }
 
-    public void actualizarComboboxTecnicos(List<Tecnico> tecnicos) {
+    public void actualizarComboboxTecnicos(List<ITecnico> tecnicos) {
         this.comboBoxTecnicos.removeAllItems();
         if (tecnicos.size() == 0) {
             this.comboBoxTecnicos.setEnabled(false);
@@ -52,7 +52,7 @@ public class PanelServicioTecnico extends JPanel {
             this.comboBoxTecnicos.setEnabled(true);
             this.botonEnviarTecnico.setEnabled(true);
         }
-        for (Tecnico tecnico : tecnicos) {
+        for (ITecnico tecnico : tecnicos) {
             this.comboBoxTecnicos.addItem(tecnico.getNombre());
         }
     }

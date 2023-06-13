@@ -1,10 +1,9 @@
 package persistencia;
 
 import modelo.SinPromocion;
-import modelo.Sistema;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IPromocion;
-import modelo.tecnicos.Tecnico;
+import modelo.tecnicos.ITecnico;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  */
 public class SistemaDTO implements Serializable {
     private ArrayList<IAbonado> abonados = new ArrayList<IAbonado>();
-    private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+    private ArrayList<ITecnico> tecnicos = new ArrayList<ITecnico>();
     private IPromocion promocionActiva = new SinPromocion();
     private LocalDate fecha;
 
@@ -31,11 +30,11 @@ public class SistemaDTO implements Serializable {
         this.abonados = abonados;
     }
 
-    public ArrayList<Tecnico> getTecnicos() {
+    public ArrayList<ITecnico> getTecnicos() {
         return tecnicos;
     }
 
-    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
+    public void setTecnicos(ArrayList<ITecnico> tecnicos) {
         this.tecnicos = tecnicos;
     }
 

@@ -5,8 +5,10 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
+
+import modelo.tecnicos.TecnicoFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +22,7 @@ public class Sistema {
     private static Sistema instance = null;
 
     private ArrayList<IAbonado> abonados = new ArrayList<IAbonado>();;
-    private ArrayList<Tecnico> tecnicos = new ArrayList<Tecnico>();
+    private ArrayList<ITecnico> tecnicos = new ArrayList<ITecnico>();
     private IPromocion promocionActiva = new SinPromocion();
     private LocalDate fecha = LocalDate.now();
 
@@ -193,7 +195,7 @@ public class Sistema {
         if (this.getTecnico(nombre) != null) {
             throw new TecnicoYaExisteException();
         }
-        this.tecnicos.add(new Tecnico(nombre));
+        this.tecnicos.add(TecnicoFactory.getTecnico(nombre));
     }
 
     /**
@@ -203,7 +205,7 @@ public class Sistema {
      * @throws TecnicoNoExisteException Si el tecnico con ese nombre no existe
      */
     public void eliminarTecnico(String nombre) throws TecnicoTrabajandoException, TecnicoNoExisteException {
-        Tecnico tecnico = this.getTecnico(nombre);
+        ITecnico tecnico = this.getTecnico(nombre);
 
         if (tecnico == null) {
             throw new TecnicoNoExisteException();
@@ -221,8 +223,8 @@ public class Sistema {
      * @param nombre El nombre del tecnico
      * @return El tecnico o null si no se encontró
      */
-    public Tecnico getTecnico(String nombre) {
-        for (Tecnico tecnico : tecnicos) {
+    public ITecnico getTecnico(String nombre) {
+        for (ITecnico tecnico : tecnicos) {
             if (tecnico.getNombre().equals(nombre)) {
                 return tecnico;
             }
@@ -242,7 +244,7 @@ public class Sistema {
     public ServicioTecnico pedirService(String dniAbonado, String nombreTecnico)
             throws AbonadoNoExisteException, ServicioEnCursoException {
         IAbonado abonado = this.getAbonado(dniAbonado);
-        Tecnico tecnico = this.getTecnico(nombreTecnico);
+        ITecnico tecnico = this.getTecnico(nombreTecnico);
 
         return abonado.iniciarService(tecnico);
     }
@@ -252,7 +254,7 @@ public class Sistema {
      *
      * @return Una lista con todos los tecnicos
      */
-    public ArrayList<Tecnico> getTecnicos() {
+    public ArrayList<ITecnico> getTecnicos() {
         return tecnicos;
     }
 
@@ -292,7 +294,7 @@ public class Sistema {
      * Sobreescribe los tecnicos activos del sistema. SOLO PARA SERIALIZACION.
      * @param tecnicos Los tecnicos a usar
      */
-    public void setTecnicos(ArrayList<Tecnico> tecnicos) {
+    public void setTecnicos(ArrayList<ITecnico> tecnicos) {
         this.tecnicos = tecnicos;
     }
 

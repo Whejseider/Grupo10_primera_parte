@@ -9,8 +9,9 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
+
 import vista.abonados.tabla.NuevoAbonadoDTO;
 import vista.abonados.detalle.contratos.NuevoContratoDTO;
 
@@ -85,7 +86,7 @@ public interface InterfazVistaPrincipal extends Observer {
 
     boolean confirmarAvanzarMes();
 
-    public void actualizarComboboxTecnicos(List<Tecnico> tecnicos);
+    public void actualizarComboboxTecnicos(List<ITecnico> tecnicos);
 
     public String obtenerTecnicoSeleccionado();
 

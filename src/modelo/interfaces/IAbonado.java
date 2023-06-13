@@ -2,8 +2,8 @@ package modelo.interfaces;
 
 import modelo.excepciones.ServicioEnCursoException;
 import modelo.excepciones.SinContratosException;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ public interface IAbonado extends Cloneable, IDetallable, Serializable {
 
     boolean tieneContrato(String domicilio);
 
-    ServicioTecnico iniciarService(Tecnico tecnico) throws ServicioEnCursoException;
+    ServicioTecnico iniciarService(ITecnico tecnico) throws ServicioEnCursoException;
 
     ServicioTecnico getServicioTecnico();
 

@@ -9,8 +9,8 @@ import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
 import modelo.interfaces.IPromocion;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public abstract class Abonado implements IAbonado {
     }
 
     @Override
-    public ServicioTecnico iniciarService(Tecnico tecnico) throws ServicioEnCursoException {
+    public ServicioTecnico iniciarService(ITecnico tecnico) throws ServicioEnCursoException {
         if (!this.tieneService()) {
             this.service = new ServicioTecnico(this, tecnico);
             this.threadServicio = new Thread(this.service);

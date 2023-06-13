@@ -1,12 +1,11 @@
 package vista.tecnicos;
 
-import modelo.tecnicos.Tecnico;
+import modelo.tecnicos.ITecnico;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
-
-import javax.swing.*;
 
 public class VentanaTecnicos implements InterfazVentanaTecnicos {
     private JFrame ownerFrame;
@@ -44,7 +43,7 @@ public class VentanaTecnicos implements InterfazVentanaTecnicos {
     }
 
     @Override
-    public void actualizar(List<Tecnico> tecnicos) {
+    public void actualizar(List<ITecnico> tecnicos) {
         ModeloTablaTecnicos modeloTabla = this.getModeloTablaTecnicos();
         modeloTabla.actualizar(tecnicos);
     }

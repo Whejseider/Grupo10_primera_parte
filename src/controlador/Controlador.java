@@ -5,8 +5,8 @@ import modelo.excepciones.*;
 import modelo.interfaces.IAbonado;
 import modelo.interfaces.IContrato;
 import modelo.interfaces.IFactura;
+import modelo.tecnicos.ITecnico;
 import modelo.tecnicos.ServicioTecnico;
-import modelo.tecnicos.Tecnico;
 import persistencia.PersistenciaSistema;
 import vista.InterfazVistaPrincipal;
 import vista.abonados.tabla.NuevoAbonadoDTO;
@@ -219,7 +219,7 @@ public class Controlador implements ActionListener {
         if (nuevoTecnico != null) {
             try {
                 this.modelo.agregarTecnico(nuevoTecnico.getNombre());
-                List<Tecnico> tecnicos = this.modelo.getTecnicos();
+                List<ITecnico> tecnicos = this.modelo.getTecnicos();
                 this.vistaPrincipal.actualizarComboboxTecnicos(tecnicos);
                 this.dialogoTecnicos.actualizar(tecnicos);
             } catch (TecnicoYaExisteException e) {

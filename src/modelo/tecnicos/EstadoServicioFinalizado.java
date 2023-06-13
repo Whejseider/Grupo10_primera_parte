@@ -1,5 +1,8 @@
 package modelo.tecnicos;
 
+/**
+ * Clase para el estado finalizado del servicio tecnico
+ */
 public class EstadoServicioFinalizado implements IEstadoServicioTecnico {
     private final ServicioTecnico servicioTecnico;
 
