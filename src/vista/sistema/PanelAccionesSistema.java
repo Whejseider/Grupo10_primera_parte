@@ -83,8 +83,6 @@ public class PanelAccionesSistema extends JPanel {
     }
 
     public void actualizarBotonesPromocion(IPromocion promo) {
-        //TODO refactorizar, se pueden hacer subclases de jbutton que implementen
-        //su propia logica de enable
         if (promo instanceof SinPromocion) {
             this.botonSinPromocion.setEnabled(false);
             this.botonPromocionDorada.setEnabled(true);
